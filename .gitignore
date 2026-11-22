@@ -4,3 +4,4 @@ node_modules/
 *.genie
 .workbuddy/
 .workbuddy-ai/
+.agents/

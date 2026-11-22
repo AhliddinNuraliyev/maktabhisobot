@@ -1,0 +1,9 @@
+# Zaxira papkasi va boshqa keraksiz fayllar saytga deploy qilinmaydi
+zaxira/
+*.ps1
+.agents/
+.env*
+research/
+*.md
+TEZCHECK_MAKTABHISOBOT_QOLLASH_YORIQNOMASI.html
+MAKTABHISOBOT_GOOGLEDA_CHIQISH_YORIQNOMASI.html

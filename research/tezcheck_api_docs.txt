@@ -1,0 +1,2659 @@
+Savdogar API · TEZCHECK.UZ
+Asosiy qismga o‘tish
+TEZCHECK.UZ
+Kirish
+Ro‘yxatdan o‘tish
+Savdogar API
+Serveringizdan to‘lov havolasi yarating, natijani o‘qing va vebhuk qabul qiling. Sahifani o‘qish uchun hisob kerak emas.
+Asosiy manzil
+https://api.tezcheck.uz/api/merchant/v1
+Nusxalash
+Sizning serveringiz
+Hisob chiqarasiz
+Har bir buyurtma uchun bitta so‘rov yuborasiz, javobda to‘lov havolasi keladi.
+POST /bills
+Mijoz
+Havolani ochadi
+Xavfsiz to‘lov sahifasi ochiladi. Karta ma’lumotlarini na siz, na biz ko‘ramiz.
+payment_url
+To‘lov tizimi
+To‘lovni tasdiqlaydi
+Click yoki Payme pulni yechadi va natijani bizga imzolangan holda yuboradi.
+Click · Payme
+Sizning serveringiz
+Natijani olasiz
+Vebhuk o‘zi keladi. Xohlasangiz, natijani istalgan vaqtda o‘zingiz ham so‘rab olasiz.
+webhook · POST /bills/{bill}
+Shu sahifada
+Boshlash
+Autentifikatsiya
+Summalar
+Integratsiya
+GET
+/me
+POST
+/cash-desks
+POST
+/bills
+POST
+/bills/{bill}
+POST
+/bills/{bill}/cancel
+POST
+/transactions
+Vebhuklar
+Muammoli holatlar
+Xatoliklar
+Qo‘shimcha endpointlar
+POST
+/balance
+POST
+/stats
+POST
+/payment-methods
+POST
+/bills/{bill}/reissue
+GET
+/health
+Cheklovlar
+Boshlash
+#
+Bu API sizning serveringiz uchun. Uni brauzerdan chaqirmang — kalit maxfiy va mijoz kodiga tushmasligi kerak. So‘rov ham, javob ham JSON; vaqtlar ISO 8601 formatida.
+Asosiy manzil
+Har bir yo‘l shu manzilga qo‘shiladi. Versiya manzilning bir qismi — mavjud maydonlar hech qachon jimgina o‘zgarmaydi.
+Monitoring
+Yagona ochiq endpoint — /health. U kalitni talab qilmaydi, chunki monitoringingiz platforma ishlayotganini bilish uchun maxfiy ma’lumotga muhtoj emas.
+Sinov to‘lovlari
+Sinov rejimi yo‘q. Boshqa to‘lov tizimlari qatorida «Test provider» bor: u orqali o‘tgan to‘lov haqiqiy pul hisoblanmaydi, balansga tushmaydi va bir kundan so‘ng bekor qilingan to‘lov sifatida qoladi. Bunday to‘lovlar javoblarda environment: "test" bilan belgilanadi; balans va statistika faqat haqiqiy to‘lovlarni ko‘rsatadi.
+Autentifikatsiya
+#
+Har bir so‘rov ikkita qiymat bilan yuboriladi va ular turli vazifani bajaradi: token kim chaqirayotganini, kassa kodi esa qaysi kassa haqida ekanini bildiradi.
+Token — bu sir
+Authorization sarlavhasida Bearer sxemasi bilan yuboriladi. Kalitni kabinetda qayta nusxalash mumkin — har bir o‘qish qayd etiladi. Xohlasangiz, so‘rovlarni shu kalit bilan HMAC imzosi bilan ham yuborasiz: pastdagi «Imzo va takroriy so‘rovlar» bo‘limiga qarang.
+Kassa kodi — bu sir emas
+X-Cash-Desk-Code sarlavhasida yuboriladi. O‘zi yolg‘iz hech qanday huquq bermaydi: kassa doim tokenga tegishli tashkilot ichidan qidiriladi. Boshqa savdogarning kassa kodini yuborsangiz, resource.not_found qaytadi.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// Call this first: it proves the key and the desk code belong together.
+$data
+=
+$api
+->
+get
+(
+'/me'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Namunalarga o‘z tokenlaringizni qo‘ying
+Kalit va kassa kodini kiriting — sahifadagi barcha kod namunalari shu qiymatlar bilan yoziladi. Dasturlash tilini istalgan kod blokining tepasida tanlaysiz.
+KASSA_KODI
+Kassa kodi. X-Cash-Desk-Code sarlavhasida yuboriladi.
+API_KALIT
+API kaliti. Authorization: Bearer sarlavhasida yuboriladi.
+Kiritilgan tokenlar faqat shu brauzer oynasida qoladi: hech qayerga yuborilmaydi va saqlanmaydi. Sahifani yangilasangiz o‘chib ketadi.
+Qo‘shimcha: kalit almashtirish, IP ro‘yxati, xatoliklar
+4
+Bitta kassaga biriktirilgan kalit
+Kalitni yaratishda kassani ko‘rsatsangiz, sarlavha shart emas — kalit qaysi kassada ishlashi allaqachon hal qilingan. Bunday kalit boshqa kassa kodini yuborsa, auth.permission_denied qaytadi.
+Almashtirish va bekor qilish
+Kalitni kabinetdan bir bosishda almashtirasiz. Eski kalit yana 24 soat ishlaydi — shu vaqt ichida serverlaringizga yangisini qo‘ying; kabinet eski kalit bilan oxirgi so‘rov qachon kelganini ko‘rsatadi. Kalit sizib chiqqan bo‘lsa, almashtirishda «eskisini darhol o‘chirish» belgisini qo‘ying yoki keyin «Eski kalitni o‘chirish» tugmasini bosing.
+IP ro‘yxati bilan himoya
+Kassa sozlamalarida serveringiz manzillarini (IPv4, IPv6 yoki CIDR) yozib qo‘yishingiz mumkin. Shundan keyin boshqa manzildan kelgan so‘rov, hatto to‘g‘ri token bilan bo‘lsa ham, auth.forbidden bilan rad etiladi. Ro‘yxat bo‘sh bo‘lsa hech narsa cheklanmaydi. Token o‘g‘irlangan taqdirda ham ishlaydigan yagona himoya — shu.
+Nima uchun rad etiladi
+Sarlavha yo‘q, noto‘g‘ri yoki bekor qilingan kalit — 401 auth.unauthenticated. Noma’lum va bekor qilingan kalit bir xil javob oladi.
+Tashkilot to‘xtatilgan — 403 merchant.suspended.
+Noma’lum yoki begona kassa kodi — 404 resource.not_found.
+Ruxsat etilmagan manzildan chaqiruv — 403 auth.forbidden.
+Kassa kerak bo‘lgan endpointda kassa ko‘rsatilmagan — 422 request.validation_failed, details ichida cash_desk_code.
+Imzo noto‘g‘ri, yarim yuborilgan yoki kalit faqat imzolangan so‘rovlarni qabul qiladi — 401 request.signature_invalid; sababi details[].code ichida.
+X-TezCheck-Timestamp server vaqtidan 300 soniyadan ko‘proq farq qiladi — 401 request.timestamp_out_of_window.
+Aynan shu imzo allaqachon ishlatilgan — 401 request.nonce_replayed. Har bir urinishni yangi vaqt bilan qayta imzolang.
+So‘rov imzosi (ixtiyoriy)
+Bearer kaliti bilan birga ikkita sarlavha yuborsangiz, so‘rov imzolangan hisoblanadi: X-TezCheck-Timestamp (unix soniyalar) va X-TezCheck-Signature: v1=<hex>. Imzo — quyidagi qatorning API kalitingiz bilan HMAC-SHA256 qiymati. U metod, yo‘l, query va tanani kalitga bog‘laydi: ushlab olingan so‘rovni o‘zgartirib ham, qayta yuborib ham bo‘lmaydi.
+{timestamp}.{METHOD}.{path+query}.{sha256_hex(body)}
+path+query — so‘rov yuborilgan yo‘l, masalan /api/merchant/v1/bills; host kirmaydi.
+sha256_hex(body) — aynan yuborilgan baytlardan. GET uchun bo‘sh qatordan.
+Vaqt server soatidan ±300 soniya ichida bo‘lishi kerak.
+Har bir imzo bir marta qabul qilinadi. Qayta urinishni ham yangi vaqt bilan qayta imzolang.
+Sarlavhalardan birini yuborsangiz, ikkalasi ham to‘g‘ri bo‘lishi shart — yarim imzo imzosiz deb hisoblanmaydi.
+Kalit almashtirilgandan keyingi 24 soatda eski kalit bilan kelgan so‘rov eski kalit bilan imzolanadi.
+Faqat imzolangan so‘rovlar
+Kabinetda kalit uchun shu belgini yoqsangiz, imzosiz so‘rov 401 request.signature_invalid (signature.required) bilan rad etiladi — o‘g‘irlangan kalitning o‘zi yetmaydi. Yoqishdan oldin serveringiz imzolayotganiga ishonch hosil qiling: GET /me javobidagi request_signed true bo‘lishi kerak.
+Imzolangan va idempotent POST /bills
+Dasturlash tili
+PHP
+Node.js
+Nusxalash
+<?php
+$apiKey
+=
+'aps_REPLACE_WITH_YOUR_OWN_KEY'
+;
+$url
+=
+'https://api.tezcheck.uz/api/merchant/v1/bills'
+;
+// The exact bytes you send. Hash these, never a re-encoded copy.
+$body
+= json_encode
+(
+[
+'amount_minor'
+=>
+15000000
+,
+'title'
+=>
+'Buyurtma #1042'
+,
+'external_reference'
+=>
+'ORD-1042'
+,
+]
+)
+;
+// Re-sign EVERY attempt, retries included: a signature is accepted once.
+$timestamp
+=
+(
+string
+)
+time
+(
+)
+;
+// The path (and the query, if any) exactly as sent.
+$path
+= parse_url
+(
+$url
+,
+PHP_URL_PATH
+)
+;
+$signature
+= hash_hmac
+(
+'sha256'
+,
+$timestamp
+.
+'.POST.'
+.
+$path
+.
+'.'
+. hash
+(
+'sha256'
+,
+$body
+)
+,
+$apiKey
+,
+)
+;
+$ch
+= curl_init
+(
+$url
+)
+;
+curl_setopt_array
+(
+$ch
+,
+[
+CURLOPT_POST
+=>
+true
+,
+CURLOPT_POSTFIELDS
+=>
+$body
+,
+CURLOPT_RETURNTRANSFER
+=>
+true
+,
+CURLOPT_HEADER
+=>
+true
+,
+CURLOPT_HTTPHEADER
+=>
+[
+'Authorization: Bearer '
+.
+$apiKey
+,
+'X-Cash-Desk-Code: cdk_EXAMPLE000000000000000090001'
+,
+'Content-Type: application/json'
+,
+'X-TezCheck-Timestamp: '
+.
+$timestamp
+,
+'X-TezCheck-Signature: v1='
+.
+$signature
+,
+// The SAME key on every retry of this order: a retry is answered
+// with the first bill instead of raising a second one.
+'Idempotency-Key: order-ORD-1042'
+,
+]
+,
+]
+)
+;
+$response
+= curl_exec
+(
+$ch
+)
+;
+// "Idempotent-Replayed: true" in the headers: this is the stored
+// answer to an earlier attempt, not a new bill.
+Idempotency-Key
+POST /bills, /cancel va /reissue ixtiyoriy Idempotency-Key sarlavhasini qabul qiladi. Javob kelmay qolsa, so‘rovni AYNAN shu kalit bilan qayta yuboring: ikkinchi hisob yaratilmaydi, birinchi javob Idempotent-Replayed: true sarlavhasi bilan qaytadi. Sarlavhasiz so‘rovlar avvalgidek ishlaydi.
+Kalit — 1 dan 128 gacha chop etiladigan ASCII belgi. Buyurtma raqamingizdan yasash qulay.
+Kalit shu API kaliti va shu kassa doirasida 24 soat eslab qolinadi.
+Shu kalit bilan boshqa tana yoki boshqa yo‘l — 409 request.idempotency_key_reused.
+Birinchi so‘rov hali bajarilayotgan bo‘lsa — 409 resource.conflict va Retry-After: 1. Biroz kutib qayta yuboring.
+Faqat muvaffaqiyatli javob eslab qolinadi. Rad etilgan so‘rovni tuzatib, o‘sha kalit bilan yuborsangiz, u bajariladi.
+Qayta urinish
+Nusxalash
+POST /api/merchant/v1/bills HTTP/1.1
+Authorization: Bearer aps_REPLACE_WITH_YOUR_OWN_KEY
+X-Cash-Desk-Code: cdk_EXAMPLE000000000000000090001
+Idempotency-Key: order-ORD-1042
+Content-Type: application/json
+
+HTTP/1.1 201 Created
+Idempotent-Replayed: true
+Content-Type: application/json
+Kalit va kassa kodi kabinetda
+Summalar
+#
+Summalar har doim butun son va tiyinlarda beriladi. 1 so‘m = 100 tiyin, ya’ni 150 000 so‘m = 15 000 000. Kasr son yubormang — u yaxlitlanadi va tiyinlar yo‘qoladi.
+150 000,00 so‘m = 15 000 000 (amount_minor)
+Chegaralar
+Summa platformaning eng kichik va eng katta qiymati orasida bo‘lishi kerak. Chegaradan chiqsa 422 payment_link.amount_out_of_range qaytadi. Standart eng kichik qiymat — 100 000 (ya’ni 1 000,00 so‘m).
+Valyuta
+Platforma faqat UZS bilan ishlaydi va valyuta tanlash imkoni yo‘q: so‘rovda currency maydoni yuborilmaydi, kassaning valyutasi doim qo‘llaniladi. Javoblarda currency har doim UZS bo‘lib qaytadi, chunki summani o‘qiyotgan mijoz birlikni taxmin qilmasligi kerak.
+Integratsiya
+#
+Oltita chaqiruv va bitta vebhuk. Shularni tartib bilan bajarsangiz, integratsiya tayyor: to‘lovni qabul qilasiz, uning kelganini bilasiz va nimadir noto‘g‘ri ketganini ham bilasiz. Sahifadagi qolgan hamma narsa ixtiyoriy.
+1
+Kalitingiz ishlayotganini tekshirasiz va qaysi kassaga bog‘langanini ko‘rasiz.
+GET
+/me
+2
+Kalit ruxsat beradigan kassalar ro‘yxatini olasiz va keragining kodini nusxalaysiz.
+POST
+/cash-desks
+3
+Buyurtma uchun hisob chiqarasiz va mijozga payment_url yuborasiz.
+POST
+/bills
+4
+Hisob to‘langanini so‘raysiz — shartnomaning «so‘rab olish» tomoni.
+POST
+/bills/{bill}
+5
+Buyurtma bekor qilinsa, hisobni bekor qilasiz va havola ishlamay qoladi.
+POST
+/bills/{bill}/cancel
+6
+Kassaning to‘lovlar oqimini o‘qiysiz, kerak bo‘lsa faqat muammolilarini.
+POST
+/transactions
+7
+Natijani imzolangan vebhuk orqali olasiz — so‘ramasdan xabardor bo‘lish yo‘li.
+webhook
+Qadam
+1
+Kalit va kassa to‘g‘ri ulanganmi
+GET
+/me
+Integratsiyani boshlaganda birinchi chaqiriladigan endpoint. Hech narsani o‘zgartirmaydi va faqat siz allaqachon bilgan ma’lumotni qaytaradi: kassa kodingiz qaysi kassaga tegishli va kalitingiz qaysi muhitga.
+Token talab qiladi
+Muhim tafsilotlar
+3
+cash_desk qiymati null bo‘lsa, kalit tashkilot darajasida va siz kassa kodini yubormagansiz — POST /bills aynan shu holatda rad etadi.
+token_hint — kalitning boshlanishi: serveringiz qaysi kalitni ishlatayotganini aniqlash uchun. Alohida sinov kalitlari yo‘q — sinov to‘lovlari «Test provider» orqali o‘tadi.
+request_signed — shu so‘rov imzo bilan kelib, tekshiruvdan o‘tganmi. Imzolovchi kodingizni sinash uchun eng qulay chaqiruv. signed_requests_required true bo‘lsa, imzosiz so‘rovlar rad etiladi.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// Call this first: it proves the key and the desk code belong together.
+$data
+=
+$api
+->
+get
+(
+'/me'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"organization"
+:
+{
+"id"
+:
+"90010"
+,
+"display_name"
+:
+"Anvar Savdo"
+}
+,
+"cash_desk"
+:
+{
+"code"
+:
+"cdk_EXAMPLE000000000000000090001"
+,
+"id"
+:
+"90001"
+,
+"reference"
+:
+"DESK-90001"
+,
+"name"
+:
+"Veb kassa"
+,
+"currency"
+:
+"UZS"
+}
+,
+"api_client"
+:
+{
+"name"
+:
+"Backend"
+,
+"token_hint"
+:
+"aps_RtQ9xK2m"
+,
+"signed_requests_required"
+:
+false
+,
+"request_signed"
+:
+false
+}
+}
+}
+Qadam
+2
+Bu kalit qaysi kassalarda ishlay oladi
+POST
+/cash-desks
+X-Cash-Desk-Code sarlavhasiga nima yozishni aytadigan chaqiruv. Uni bajarmaguningizcha, ishlaydigan kalitning o‘zi hisob chiqarish uchun yetarli emas — kassa kodi ham kerak, u esa aynan shu yerdan olinadi. Bu kassa sarlavhasini yubormaydigan yagona autentifikatsiyalangan chaqiruv, chunki u aynan shu kodni bilish uchun mo‘ljallangan.
+Token talab qiladi
+Kassa kodi kerak emas
+So‘rov tanasi
+Yo‘q. Bo‘sh tana yuboring.
+Muhim tafsilotlar
+6
+code — X-Cash-Desk-Code sarlavhasiga yoziladigan qiymat. U ataylab id emas, code deb nomlangan: code nomli sarlavhaga code nomli maydonni ko‘chirish tushunarli bo‘lsin.
+Nima qaytishi kalitingizga bog‘liq, siz yuborgan narsaga emas. Tashkilot darajasidagi kalit barcha kassalarni, bitta kassaga biriktirilgan kalit esa faqat o‘sha kassani ko‘rsatadi va sarlavha bilan ro‘yxatni kengaytira olmaydi.
+meta.credential_scope shu ikkisidan qaysi biri ekanini aytadi — uchta kassa kutib bittasini olgan bo‘lsangiz, sabab shu yerda.
+accepts_payments — tarmoqlanish uchun kerak bo‘ladigan maydon: u shu kassada POST /bills hozir muvaffaqiyatli bo‘lishini aytadi, buni state ham, mode ham yolg‘iz ayta olmaydi.
+state: active, lekin accepts_payments: false — kassaning asosiy to‘lov havolasi pauzada. POST /bills 409 resource.state_invalid va cash_desk.default_link_not_active tafsilot kodi bilan rad etiladi. Kabinetda kassa sahifasida asosiy havolani qayta yoqing — webhook va kalit bunga aloqador emas.
+Arxivlangan kassalar yashirilmaydi, balki belgilanadi — o‘tgan chorakdagi to‘lovlar qaysi kassada bo‘lganini aytish kerak bo‘ladi.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// No desk header: this is how you learn the codes. Use data[].code as X-Cash-Desk-Code.
+$data
+=
+$api
+->
+post
+(
+'/cash-desks'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+[
+{
+"code"
+:
+"cdk_EXAMPLE000000000000000090001"
+,
+"id"
+:
+"90001"
+,
+"reference"
+:
+"DESK-90001"
+,
+"name"
+:
+"Veb kassa"
+,
+"currency"
+:
+"UZS"
+,
+"mode"
+:
+"test"
+,
+"state"
+:
+"active"
+,
+"accepts_payments"
+:
+true
+,
+"created_at"
+:
+"2026-07-14T08:12:00+00:00"
+}
+,
+{
+"code"
+:
+"cdk_EXAMPLE000000000000000090002"
+,
+"id"
+:
+"90002"
+,
+"reference"
+:
+"DESK-90002"
+,
+"name"
+:
+"Do'kon"
+,
+"currency"
+:
+"UZS"
+,
+"mode"
+:
+"live"
+,
+"state"
+:
+"paused"
+,
+"accepts_payments"
+:
+false
+,
+"created_at"
+:
+"2026-07-30T11:45:00+00:00"
+}
+]
+,
+"meta"
+:
+{
+"count"
+:
+2
+,
+"credential_scope"
+:
+"organization"
+}
+}
+Qadam
+3
+Bitta buyurtma uchun hisob chiqarish
+POST
+/bills
+Har bir buyurtma uchun bir marta chaqiriladi. Yaratilgan hisob doim bir martalik va qat’iy summali: API buyurtma uchun chaqiriladi, payer esa uni bir marta to‘laydi. Qayta ishlatiladigan yoki payer summani o‘zi kiritadigan havola kabinetda yaratiladi.
+Token talab qiladi
+Kassa talab qiladi
+Idempotency-Key
+Javob kelmay qolsa, o‘sha Idempotency-Key bilan qayta yuboring: ikkinchi hisob yaratilmaydi, birinchi javob payment_url bilan birga qaytadi.
+So‘rov tanasi
+amount_minor
+integer
+Majburiy
+To‘lanadigan summa, eng kichik birlikda. Butun son bo‘lishi shart.
+title
+string (2–191)
+Majburiy
+Payer to‘lov sahifasida ko‘radigan sarlavha. Buyurtma raqamini shu yerga yozing.
+description
+string (≤ 2000) | null
+To‘lov sahifasidagi qo‘shimcha izoh.
+external_reference
+string (≤ 128) | null
+Sizning buyurtma raqamingiz. Hisob va tranzaksiya javoblarida qaytariladi, shuning uchun mos qidirish uchun bizning identifikatorimizni saqlash shart emas.
+return_url
+url (≤ 255) | null
+To‘lovdan keyin payer qaytariladigan manzil. Bu qiymat kassaning ruxsat ro‘yxatiga yoziladi va checkout faqat shu ro‘yxatga mos manzilga qaytaradi.
+allowed_provider_codes
+string[] (≤ 10)
+Shu hisob uchun ruxsat etilgan provayder kodlari. Ko‘rsatilmasa kassada yoqilgan barcha usullar taklif qilinadi.
+Muhim tafsilotlar
+3
+payment_url faqat bir marta qaytariladi. Platformada payer tokenining faqat xeshi saqlanadi, shuning uchun AYNAN shu havolani qaytaradigan endpoint yo‘q — javobni buyurtmangizga darhol saqlang. Yo‘qotsangiz, POST /bills/{bill}/reissue yangi havola beradi, eskisini esa o‘chiradi.
+available_until — hisobning haqiqiy amal qilish muddati, platforma sozlamalaridan hisoblanadi.
+state yangi hisob uchun doim active.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// amount_minor is in tiyin: 15000000 is 150 000,00 UZS. Save payment_url — it is returned once.
+$data
+=
+$api
+->
+post
+(
+'/bills'
+,
+[
+'amount_minor'
+=>
+15000000
+,
+'title'
+=>
+'Buyurtma #1042'
+,
+'external_reference'
+=>
+'ORD-1042'
+,
+'return_url'
+=>
+'https://example.uz/orders/1042/thanks'
+,
+'allowed_provider_codes'
+=>
+[
+'click'
+,
+'payme'
+]
+,
+]
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"bill"
+:
+{
+"id"
+:
+"link_01JQEXAMPLEBILL0000000ABCD"
+,
+"reference"
+:
+"BILL-260806-001042"
+,
+"amount_minor"
+:
+15000000
+,
+"currency"
+:
+"UZS"
+,
+"title"
+:
+"Buyurtma #1042"
+,
+"external_reference"
+:
+"ORD-1042"
+,
+"state"
+:
+"active"
+,
+"available_until"
+:
+"2026-09-05T09:00:00+00:00"
+}
+,
+"payment_url"
+:
+"http://localhost:3103/pay/plk_REPLACE_WITH_THE_TOKEN_YOU_WERE_GIVEN"
+}
+}
+Qadam
+4
+Buyurtma to‘landimi
+POST
+/bills/{bill}
+Vebhuklar natijani o‘zi yuboradi; bu esa so‘rab olish yo‘li. Kun oxirida solishtirish yoki endpointingiz ishlamay turgan payt uchun kerak. Hisob va to‘lov alohida obyekt sifatida qaytariladi, chunki ular turli faktlarni bildiradi.
+Token talab qiladi
+Kassa talab qiladi
+Muhim tafsilotlar
+5
+Kodingizda paid maydonini tekshiring. U to‘lovdan olinadi, hisob holatidan emas: to‘langanidan keyin muddati o‘tgan hisob expired bo‘lib turadi, lekin pul kelgan.
+Tovarni faqat paid va livemode ikkalasi true bo‘lganda jo‘nating. Test provayderi orqali to‘langan hisob ham paid: true ko‘rsatadi, lekin livemode: false va environment: "test" — u haqiqiy pul emas. environment hali hech narsa to‘lanmagan bo‘lsa null.
+unavailability_reason sog‘lom hisob uchun null. Aks holda u payer hali to‘lamaganini emas, havola o‘lganini bildiradi.
+payment.amount_minor — payer haqiqatda to‘lagan summa. fee_minor komissiya, net_minor esa sizga tegishli qism.
+payment_url bu yerda doim null va bu platformaning xususiyati, kamchiligi emas. Havola yo‘qolgan bo‘lsa POST /bills/{bill}/reissue yangisini beradi — bu tiklash emas, almashtirish.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// Branch on data.bill.paid, never on state: a bill can be expired AND paid.
+$data
+=
+$api
+->
+post
+(
+'/bills/link_01JQEXAMPLEBILL0000000ABCD'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"bill"
+:
+{
+"id"
+:
+"link_01JQEXAMPLEBILL0000000ABCD"
+,
+"reference"
+:
+"BILL-260806-001042"
+,
+"state"
+:
+"exhausted"
+,
+"paid"
+:
+true
+,
+"livemode"
+:
+true
+,
+"environment"
+:
+"live"
+,
+"unavailability_reason"
+:
+"use_limit_reached"
+,
+"title"
+:
+"Buyurtma #1042"
+,
+"external_reference"
+:
+"ORD-1042"
+,
+"amount_minor"
+:
+15000000
+,
+"currency"
+:
+"UZS"
+,
+"created_at"
+:
+"2026-08-06T09:00:00+00:00"
+,
+"available_until"
+:
+"2026-09-05T09:00:00+00:00"
+,
+"paid_at"
+:
+"2026-08-06T09:04:11+00:00"
+}
+,
+"payment"
+:
+{
+"id"
+:
+"pay_01JQEXAMPLEPAY00000000ABCD"
+,
+"reference"
+:
+"PAY-00001042"
+,
+"state"
+:
+"succeeded"
+,
+"amount_minor"
+:
+15000000
+,
+"fee_minor"
+:
+150000
+,
+"net_minor"
+:
+14850000
+,
+"refunded_amount_minor"
+:
+0
+,
+"currency"
+:
+"UZS"
+,
+"succeeded_at"
+:
+"2026-08-06T09:04:11+00:00"
+,
+"livemode"
+:
+true
+,
+"environment"
+:
+"live"
+}
+,
+"payment_url"
+:
+null
+,
+"payment_url_reissued_at"
+:
+null
+,
+"payment_url_reissue_count"
+:
+0
+}
+}
+Qadam
+5
+Hisobni to‘lanmaydigan qilish
+POST
+/bills/{bill}/cancel
+Buyurtma bekor qilindi, savat muddati o‘tdi yoki mahsulot tugadi. Bu chaqiruvsiz mijozning pochtasidagi payment_url available_until kelguncha to‘lanaveradi, muddatsiz chiqarilgan hisob esa umuman to‘xtamaydi.
+Token talab qiladi
+Kassa talab qiladi
+Idempotency-Key
+O‘sha Idempotency-Key bilan qayta yuborilgan so‘rov birinchi javobni aynan qaytaradi.
+So‘rov tanasi
+reason
+string (≤ 191) | null
+Sizning izohingiz, audit tarixida saqlanadi. Ataylab ixtiyoriy: bekor qilish izoh yo‘qligi sababli buzilmasligi kerak.
+Muhim tafsilotlar
+6
+Bekor qilish qaytarilmaydi. Bu «pauza» emas: bu API’da qayta tiklash yo‘q, chunki buyurtmani allaqachon bo‘shatgan server «hozir emas» demaydi. Pauza kabinetda qoladi — u yerda uni orqaga qaytaradigan odam bor.
+Qayta yuborish xavfsiz. Allaqachon bekor qilingan hisobni bekor qilish ham muvaffaqiyatli bo‘ladi va BIRINCHI bekor qilishning cancelled_at qiymatini qaytaradi — tarmoq uzilgandan keyin qayta urinayotgan mijoz «men bekor qildim» va «u allaqachon bekor edi» ni farqlashi shart emas.
+Allaqachon to‘langan hisob 409 resource.state_invalid va bill.already_paid tafsilot kodi bilan rad etiladi. Uni bekor qilish pulga hech narsa qilmaydi, lekin loglaringizda to‘lov bekor qilinganday ko‘rinadi. Buning o‘rniga to‘lovni qaytaring.
+To‘lovi hozir provayderda turgan hisob ham 409 va bill.payment_in_progress bilan rad etiladi: bekor qilish u pulni to‘xtata olmaydi. To‘lov yakunlangach yoki muvaffaqiyatsiz tugagach qayta urining.
+Bu tekshiruv hisob holatiga emas, to‘lovga qaraydi — shuning uchun to‘langanidan keyin muddati o‘tgan hisob ham rad etiladi.
+reason ixtiyoriy va audit tarixiga yoziladi. Boshqa kassaning yoki boshqa savdogarning hisobi 404 qaytaradi — umuman mavjud bo‘lmagan identifikator bilan bir xil.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// Permanent, and safe to retry: cancelling twice succeeds and returns the first cancelled_at.
+$data
+=
+$api
+->
+post
+(
+'/bills/link_01JQEXAMPLEBILL0000000ABCD/cancel'
+,
+[
+'reason'
+=>
+'Customer abandoned the order'
+,
+]
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"bill"
+:
+{
+"id"
+:
+"link_01JQEXAMPLEBILL0000000ABCD"
+,
+"reference"
+:
+"BILL-260806-001042"
+,
+"amount_minor"
+:
+15000000
+,
+"currency"
+:
+"UZS"
+,
+"title"
+:
+"Buyurtma #1042"
+,
+"external_reference"
+:
+"ORD-1042"
+,
+"state"
+:
+"revoked"
+,
+"available_until"
+:
+"2026-09-05T09:00:00+00:00"
+}
+,
+"cancelled"
+:
+true
+,
+"cancelled_at"
+:
+"2026-08-06T10:15:33+00:00"
+}
+}
+Qadam
+6
+Kassaning to‘lovlar tasmasi va undagi muammolar
+POST
+/transactions
+Eng yangisi birinchi. O‘z tizimingizni shu tasma bo‘yicha solishtirasiz: oxirgi ko‘rgan identifikatordan keyingilarini oling, external_reference bo‘yicha moslang va to‘xtang. To‘lov yakunlanmaganda ham shu yerga qaraysiz: state tasmani toraytiradi, problem esa sababini aytadi.
+Token talab qiladi
+Kassa talab qiladi
+So‘rov tanasi
+limit
+integer (1–200)
+Bir sahifadagi yozuvlar soni. Katta qiymat rad etilmaydi, balki cheklanadi va haqiqiy qiymat meta.limit ichida qaytariladi.
+cursor
+string (pay_…)
+Oldingi sahifadan olingan meta.next_cursor. Kursor pay_ identifikatori, ya’ni siz allaqachon saqlaydigan qiymat. Birinchi sahifada uni yubormang.
+state
+string | string[] | "problems"
+Oqimni bitta holat, holatlar ro‘yxati yoki «problems» qisqartmasi bo‘yicha cheklaydi. Yubormasangiz, barcha holatlar qaytadi — solishtirish uchun aynan shu kerak. To‘lov holati bo‘lmagan qiymat 422 state.unknown bilan rad etiladi, jimgina e’tiborsiz qoldirilmaydi.
+Muhim tafsilotlar
+6
+state bitta qiymat, ro‘yxat yoki «problems» qisqartmasini qabul qiladi. To‘lov holati bo‘lmagan qiymat 422 state.unknown bilan rad etiladi — xato yozilgan so‘z sizga butun tasmani bermasligi kerak, chunki kodingiz faqat muammolarni ko‘rayapman deb o‘ylaydi.
+problem sog‘lom to‘lovda null, muammo bo‘lsa obyekt — shuning uchun holatlar jadvaliga qaramasdan uning mavjudligiga qarab tarmoqlanish mumkin. Quyidagi «Muammoli holatlar» bo‘limiga qarang: xatolik va noma’lum natija o‘rtasidagi farq — sahifadagi eng muhim narsa.
+Sahifalash kursorli, sahifa raqamli emas. Bu tezlik uchun emas, to‘g‘rilik uchun: siz ro‘yxatni o‘qib turganingizda kelgan yangi to‘lov oynani surib yuboradi va chegaradagi yozuv umuman qaytmasligi mumkin.
+next_cursor tasma tugaganda null bo‘ladi — so‘rovni to‘xtatish sharti aynan shu.
+provider_code hisob-kitobni yakunlagan urinishdan olinadi; agar bunday urinish bo‘lmasa, oxirgisidan.
+livemode va environment har bir qatorda: test provayderi orqali o‘tgan to‘lov ham succeeded bo‘ladi, lekin livemode: false. Vebhukdagi data.environment bilan bir xil qiymat.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// state accepts one value, an array, or 'problems'. A typo is a 422, never a silent full feed.
+$data
+=
+$api
+->
+post
+(
+'/transactions'
+,
+[
+'limit'
+=>
+2
+,
+'state'
+=>
+'problems'
+,
+]
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+[
+{
+"id"
+:
+"pay_01JQEXAMPLEPAY00000000ABCD"
+,
+"reference"
+:
+"PAY-00001042"
+,
+"state"
+:
+"failed"
+,
+"amount_minor"
+:
+15000000
+,
+"fee_minor"
+:
+0
+,
+"net_minor"
+:
+0
+,
+"refunded_amount_minor"
+:
+0
+,
+"currency"
+:
+"UZS"
+,
+"payment_channel"
+:
+"web"
+,
+"provider_code"
+:
+"payme"
+,
+"external_reference"
+:
+"ORD-1042"
+,
+"succeeded_at"
+:
+null
+,
+"created_at"
+:
+"2026-08-06T09:03:52+00:00"
+,
+"livemode"
+:
+true
+,
+"environment"
+:
+"live"
+,
+"problem"
+:
+{
+"category"
+:
+"insufficient_funds"
+,
+"unknown_reason"
+:
+null
+,
+"provider_code"
+:
+"payme"
+,
+"attempt_state"
+:
+"failed"
+,
+"occurred_at"
+:
+"2026-08-06T09:04:02+00:00"
+}
+}
+,
+{
+"id"
+:
+"pay_01JQEXAMPLEPAY11111111ABCD"
+,
+"reference"
+:
+"PAY-00001043"
+,
+"state"
+:
+"processing"
+,
+"amount_minor"
+:
+4500000
+,
+"fee_minor"
+:
+0
+,
+"net_minor"
+:
+0
+,
+"refunded_amount_minor"
+:
+0
+,
+"currency"
+:
+"UZS"
+,
+"payment_channel"
+:
+"web"
+,
+"provider_code"
+:
+"click"
+,
+"external_reference"
+:
+"ORD-1043"
+,
+"succeeded_at"
+:
+null
+,
+"created_at"
+:
+"2026-08-06T08:51:20+00:00"
+,
+"livemode"
+:
+true
+,
+"environment"
+:
+"live"
+,
+"problem"
+:
+{
+"category"
+:
+null
+,
+"unknown_reason"
+:
+"provider_timeout"
+,
+"provider_code"
+:
+"click"
+,
+"attempt_state"
+:
+"unknown"
+,
+"occurred_at"
+:
+"2026-08-06T08:51:35+00:00"
+}
+}
+]
+,
+"meta"
+:
+{
+"limit"
+:
+2
+,
+"has_more"
+:
+true
+,
+"next_cursor"
+:
+"pay_01JQEXAMPLEPAY11111111ABCD"
+}
+}
+Qiymatlar ro‘yxati (holatlar, kanallar, sabablar)
+6
+To‘lov holatlari
+state maydoni qabul qilishi mumkin bo‘lgan barcha qiymatlar. Barchasini hisobga oling: kodingizda «qolgan hollarda» tarmog‘i bo‘lmasa, kutilmagan qiymat kelgan kuni ilova buziladi.
+draft
+open
+requires_action
+processing
+succeeded
+failed
+canceled
+expired
+partially_refunded
+refunded
+disputed
+charged_back
+Hisob holatlari
+draft
+active
+paused
+expired
+exhausted
+revoked
+unavailability_reason qiymatlari
+not_payable
+not_yet_available
+expired
+use_limit_reached
+payment_channel qiymatlari
+web
+bot
+mobile_app
+mini_app
+Kassa holatlari
+draft
+active
+paused
+suspended
+archived
+credential_scope qiymatlari
+organization
+cash_desk
+Vebhuklar
+#
+Vebhuk — to‘lov natijasining sizga yuboriladigan nusxasi. Bu yagona yo‘l emas: har qanday natijani POST /bills/{bill} yoki POST /transactions orqali o‘zingiz o‘qib olsangiz ham bo‘ladi.
+Qadam 7
+Natijani imzolangan vebhuk orqali olasiz — so‘ramasdan xabardor bo‘lish yo‘li.
+Ro‘yxatdan o‘tkazish
+Endpointni kabinetda qo‘shasiz. Qo‘shilgan paytda imzo maxfiy kaliti bir marta ko‘rsatiladi. Manzil HTTPS bo‘lishi va tashqi tarmoqdan ochiq bo‘lishi kerak.
+Yakunlangan to‘lovning tanasi
+Bu «pul keldimi, qancha va menga qanchasi tegishli» degan savolga aniq javob. amount_minor — mijozdan yechilgan summa; fee_minor — bizning komissiyamiz; net_minor — sizga tegishli qism. Solishtirishni umumiy summa bo‘yicha emas, net_minor bo‘yicha qiling. Kalitlar tartibi qat’iy belgilangan, chunki imzo aynan shu baytlar ustidan hisoblanadi.
+To‘lov yakunlanmagandagi tana
+O‘sha konvert, faqat problem to‘ldirilgan holda. Uning ichida POST /transactions qaytaradigan aynan o‘sha obyekt bor — shuning uchun shartnomaning «yuborish» va «so‘rash» tomonlari bitta to‘lovni hech qachon ikki xil tasvirlamaydi.
+Tanada to‘lovni buyurtmaga bog‘lash uchun kerak bo‘lgan ikkala identifikator ham bor: external_reference — POST /bills da yuborgan o‘z raqamingiz, bill_id — bizning link_ identifikatorimiz. Bu qaysi buyurtma ekanini bilish uchun API ga qayta murojaat qilish shart emas.
+json
+Yakunlangan to‘lovning tanasi
+To‘langan
+Muammoli
+Nusxalash
+{
+"id"
+:
+"oev_01JQEXAMPLEEVT00000000ABCD"
+,
+"type"
+:
+"payment.succeeded"
+,
+"schema_version"
+:
+1
+,
+"created_at"
+:
+"2026-08-06T09:04:11+00:00"
+,
+"mode"
+:
+"test"
+,
+"organization_id"
+:
+"90010"
+,
+"cash_desk_id"
+:
+"90001"
+,
+"data"
+:
+{
+"payment_id"
+:
+"pay_01JQEXAMPLEPAY00000000ABCD"
+,
+"state"
+:
+"succeeded"
+,
+"previous_state"
+:
+"processing"
+,
+"amount_minor"
+:
+15000000
+,
+"currency"
+:
+"UZS"
+,
+"cash_desk_public_id"
+:
+"90001"
+,
+"external_reference"
+:
+"ORD-1042"
+,
+"bill_id"
+:
+"link_01JQEXAMPLEBILL0000000ABCD"
+,
+"payment_channel"
+:
+"web"
+,
+"fee_minor"
+:
+150000
+,
+"net_minor"
+:
+14850000
+,
+"succeeded_at"
+:
+"2026-08-06T09:04:11+00:00"
+,
+"provider_code"
+:
+"payme"
+,
+"environment"
+:
+"live"
+,
+"reason_code"
+:
+null
+,
+"problem"
+:
+null
+,
+"sequence"
+:
+4
+}
+}
+Yuqoridagi mode emas, data.environment ni o‘qing
+Yuqori darajadagi mode maydoni barcha to‘lov hodisalarida, jonlilarida ham, test qiymatini ko‘rsatadi — u to‘lovning emas, konvertning xususiyati. Ishonchli qiymat — data.environment, u to‘lovning o‘zida qotirilgan.
+Hodisa turlari
+Hodisa turi payment. bilan boshlanadi va to‘lovning yangi holati bilan tugaydi — masalan payment.succeeded, payment.failed, payment.refunded. Endpoint yaratishda turlarni tanlamasangiz, barchasi yuboriladi.
+payment.draft
+payment.open
+payment.requires_action
+payment.processing
+payment.succeeded
+payment.failed
+payment.canceled
+payment.expired
+payment.partially_refunded
+payment.refunded
+payment.disputed
+payment.charged_back
+Sarlavhalar
+X-Checkout-Delivery yetkazishni bildiradi va o‘sha yetkazishning barcha qayta urinishlarida BIR XIL qoladi — u faqat qo‘lda qayta yuborishda o‘zgaradi. Bu qo‘llab-quvvatlashga aytiladigan qiymat. Takrorlanishni aniqlash uchun undan foydalanmang; quyiga qarang.
+http
+Nusxalash
+POST /webhooks/tezcheck HTTP/1.1
+Content-Type: application/json
+User-Agent: Checkout-Webhooks/1.0
+Cache-Control: no-store
+X-Checkout-Event: payment.succeeded
+X-Checkout-Event-Id: oev_01JQEXAMPLEEVT00000000ABCD
+X-Checkout-Delivery: whd_01JQEXAMPLEDLV00000000ABCD
+X-Checkout-Timestamp: 1786000000
+X-Checkout-Signature: v1=6c1f…9ab2,v1=03d7…41ee
+Imzo HMAC-SHA256
+Imzo v1= bilan boshlanadi. Prefiksni ham tekshiring — aks holda kelajakdagi v2 imzo jimgina qabul qilinib ketadi. Vaqt belgisi imzoning ichida, shuning uchun eski so‘rov qayta yuborilsa, uni rad etishingiz mumkin. Solishtirishni doimiy vaqtda bajaring va xom baytlarni hashlang: JSON ni o‘qib qayta yozish kalitlar tartibini, slash va unicode belgilanishini o‘zgartiradi, imzo esa biz yuborgan baytlar ustidan hisoblangan.
+{timestamp}.{delivery_id}.{raw_body}
+Xuddi shu tekshiruv PHP, Node va Python’da. Integratsiyalarda eng ko‘p xato qilinadigan joy shu, shuning uchun formuladan o‘zingiz yozmang — shulardan birini nusxalang.
+Imzo HMAC-SHA256
+Dasturlash tili
+PHP
+Shell
+Node.js
+Python
+Nusxalash
+<?php
+// The RAW body. Never json_decode() and re-encode before hashing: key order,
+// slash escaping and unicode escaping all change the bytes, and the signature
+// is over the bytes we sent.
+$body
+= file_get_contents
+(
+'php://input'
+)
+;
+$timestamp
+=
+$_SERVER
+[
+'HTTP_X_CHECKOUT_TIMESTAMP'
+]
+??
+''
+;
+$deliveryId
+=
+$_SERVER
+[
+'HTTP_X_CHECKOUT_DELIVERY'
+]
+??
+''
+;
+$header
+=
+$_SERVER
+[
+'HTTP_X_CHECKOUT_SIGNATURE'
+]
+??
+''
+;
+// Reject anything older than five minutes, so a genuinely-signed request
+// captured months ago cannot be replayed at you.
+if
+(
+abs
+(
+time
+(
+)
+-
+(
+int
+)
+$timestamp
+)
+>
+300
+)
+{
+http_response_code
+(
+400
+)
+;
+exit
+;
+}
+$expected
+=
+'v1='
+. hash_hmac
+(
+'sha256'
+,
+$timestamp
+.
+'.'
+.
+$deliveryId
+.
+'.'
+.
+$body
+,
+'whsec_REPLACE_WITH_YOUR_OWN_SECRET'
+,
+)
+;
+// The header carries BOTH signatures during a secret rotation. Accept the
+// request if any one of them matches, or every integration breaks the moment
+// its secret is rotated.
+$ok
+=
+false
+;
+foreach
+(
+explode
+(
+','
+,
+$header
+)
+as
+$candidate
+)
+{
+// hash_equals, not ===: a byte-by-byte comparison leaks how much of the
+// signature was correct through its timing.
+if
+(
+hash_equals
+(
+$expected
+,
+trim
+(
+$candidate
+)
+)
+)
+{
+$ok
+=
+true
+;
+}
+}
+if
+(
+!
+$ok
+)
+{
+http_response_code
+(
+401
+)
+;
+exit
+;
+}
+// Deduplicate on the BODY's "id", not on any header. A retry after your 200
+// was lost, and an operator replay, both deliver this event again — and a
+// replay arrives with a DIFFERENT X-Checkout-Event-Id while the body id stays
+// the same. The body is the one value that identifies the event in both cases.
+$event
+= json_decode
+(
+$body
+,
+true
+)
+;
+if
+(
+$alreadyProcessed
+(
+$event
+[
+'id'
+]
+)
+)
+{
+http_response_code
+(
+200
+)
+;
+exit
+;
+}
+http_response_code
+(
+200
+)
+;
+Yetkazib berilmasa: qayta urinish, saqlash, imzo almashtirish
+6
+Kalit almashtirilganda
+Imzo kaliti almashtirilganda eski kalit belgilangan muddat (standart holatda 24 soat) davomida amal qiladi va sarlavhada IKKALA imzo vergul bilan yuboriladi. Shu sababli tekshiruvingiz sarlavhadagi har bir qiymatni ko‘rib chiqishi kerak.
+Qayta urinishlar
+Standart holatda har bir hodisa BIR marta yuboriladi — qayta urinish yo‘q. Endpoint sozlamalarida qayta urinishni yoqsangiz, yetkazilmagan hodisa jami 3 martagacha yuboriladi; ikkinchi va uchinchi urinish orasidagi kutish 5 soniyadan kam bo‘lmaydi.
+Urinish
+Kechikish (siljishsiz)
+1
+0s
+2
+5s
+3
+5s
+5xx, timeout va tarmoq xatoliklari qayta urinadi.
+429 ham qayta urinadi — bu qayta urinishni so‘ragan yagona 4xx.
+Boshqa 4xx qayta urinilmaydi: serveringiz so‘rovni tushundi va rad etdi. Bunga 408 ham kiradi — so‘rov timeout bo‘lganda 408 qaytarib, yana urinishimizni kutmang.
+3xx ham qayta urinilmaydi. Qayta yo‘naltirish kuzatilmaydi, shuning uchun 301 yoki 302 birinchi urinishdayoq muvaffaqiyatsiz bo‘ladi.
+Har bir urinish vaqti ±25% ga tasodifiy siljitiladi. Busiz barcha qayta urinishlar bir soniyada kelib, allaqachon qiynalayotgan serveringizga qo‘shimcha yuk bo‘lardi.
+Dead-letter
+Oxirgi urinish (standart holatda yagona, qayta urinish yoqilgan bo‘lsa uchinchisi) ham natija bermasa, yetkazish dead_lettered holatiga o‘tadi va o‘zidan-o‘zi boshqa takrorlanmaydi. Uni kabinetdan qo‘lda qayta yuborasiz.
+pending
+retrying
+delivered
+dead_lettered
+Qayta yuborish
+Har qanday yetkazishni kabinetdan qayta yuborishingiz mumkin. Qayta yuborish YANGI yozuv yaratadi va eskisiga ishora qiladi — birinchi urinish tarixi saqlanib qoladi, chunki qaror qabul qilishda siz aynan o‘sha tarixga qaraysiz. Tana bayt-bayt nusxalanadi, shuning uchun bu o‘sha hodisaning o‘zi.
+Karantin
+Javob bermagan endpoint hech qachon o‘chirilmaydi — har yangi hodisa unga yana yuboriladi. Faqat manzili xavfsiz ochiq manzil bo‘lmay qolgan (ichki tarmoqqa olib boradigan) endpoint birinchi rad javobidayoq karantinga olinadi. Bunday karantinni yechish uchun manzilni tuzatib, qo‘llab-quvvatlashga murojaat qilinadi.
+Endpointingizdan talablar
+2xx qaytaring. Boshqa har qanday kod muvaffaqiyatsizlik hisoblanadi.
+Tez javob bering: ulanish uchun 5 soniya, umumiy 10 soniya chegara bor. Og‘ir ishni navbatga qo‘ying.
+Qayta yo‘naltirish qo‘llanmaydi. 301 yoki 302 muvaffaqiyatsizlik.
+Sertifikat haqiqiy bo‘lishi shart — TLS tekshiriladi.
+Xom tanani hashlashdan oldin o‘zgartirmang.
+Takrorlanishga tayyor bo‘ling — va tanaga qarab aniqlang
+Bitta hodisa bir necha marta kelishi mumkin: sizning 200 javobingiz yo‘qolsa biz qayta yuboramiz, operator esa qo‘lda qayta yuborishi mumkin. JSON tanasidagi id qiymatini saqlang va allaqachon qayta ishlangan hodisani o‘tkazib yuboring. X-Checkout-Event-Id sarlavhasiga QARAB aniqlamang: qayta yuborishda bu sarlavhada yangi qiymat keladi, tanadagi id esa o‘sha-o‘sha bo‘lib qoladi, ya’ni sarlavhaga tayangan tizim har bir qayta yuborishni qaytadan qayta ishlaydi.
+Muammoli holatlar
+#
+To‘lovlarning ko‘pi muvaffaqiyatli bo‘ladi. Bu bo‘lim qolganlari haqida va, eng muhimi, bitta farq haqida: XATOLIKKA uchragan to‘lov va natijasi NOMA’LUM to‘lov sizning tizimingizdan qarama-qarshi harakatni talab qiladi.
+Har bir holatda nima qilish kerak
+problem null, state succeeded, livemode true
+Pul kelgan. Jo‘nating.
+problem bor, unknown_reason null
+To‘lov ko‘rsatilgan sabab bo‘yicha amalga oshmadi. Savatni bo‘shating, mijozga ayting, qayta urinishiga imkon bering.
+problem bor, unknown_reason null EMAS
+Natija noma’lum. Buyurtmani ushlab turing: jo‘natmang, bekor qilmang, qayta pul yechmang. POST /bills/{bill} ni so‘rang yoki vebhukni kuting.
+state requires_action yoki processing, problem yo‘q
+Mijoz shunchaki tugatmagan. Kutishda davom eting.
+unknown_reason to‘ldirilgan bo‘lsa, hech narsa qilmang
+Bu platforma mijozdan pul yechilgan-yechilmaganini hali bilmasligini bildiradi. Mahsulotni jo‘natmang va buyurtmani bekor ham qilmang — solishtirish buni hal qiladi, odatda bir necha daqiqada. Noma’lum natijani xatolik deb hisoblagan savdogar puli allaqachon yechilgan mijozga mahsulotni bermaydi, natijada esa saqlangan savdo emas, chargeback va yo‘qotilgan mijoz bo‘ladi.
+problem obyekti
+Tasmadagi har bir yozuvda problem bor. To‘lov sog‘lom bo‘lsa — yakunlangan yoki hali urinilmagan bo‘lsa — u null, aytadigan gap bo‘lsa obyekt. Uning null yoki yo‘qligiga qarab tarmoqlaning, holatdan taxmin qilmang.
+category
+Barqaror va mashina o‘qiy oladigan umumiy sinf, masalan insufficient_funds yoki provider_declined. Bu hech qachon provayderning o‘z xabari emas — u na barqaror, na bizning va’damiz. Uni ochiq ro‘yxat deb biling va «qolgan hollarda» tarmog‘ini qoldiring: platforma yangi qiymat qo‘shishi mumkin.
+unknown_reason
+FAQAT natija haqiqatan noma’lum bo‘lganda bo‘ladi. Uning QIYMATI qo‘llab-quvvatlash uchun diagnostik satr; shartnoma esa uning MAVJUDLIGI. category null bo‘lganda ham to‘ldirilishi mumkin.
+provider_code
+Bu natijani qaysi provayder bergani — o‘sha provayderning o‘z hisoboti bilan solishtirish uchun.
+attempt_state
+Asosdagi urinishning holati.
+occurred_at
+Urinish shu natijaga kelgan vaqt, ISO 8601.
+Filtr, holatlar va category qiymatlari
+5
+Muammoli to‘lovlarni so‘rash
+POST /transactions state filtrini qabul qiladi. Bitta holat, holatlar ro‘yxati yoki «problems» qisqartmasini yuboring. Yubormasangiz, butun tasma qaytadi — kun oxiridagi solishtirish uchun aynan shu kerak.
+«problems» qisqartmasi
+U quyidagi yettita holatga yoyiladi. requires_action va processing ataylab kiritilgan: soatlab shu holatda qotib qolgan to‘lov — bu platformadagi eng ko‘p uchraydigan haqiqiy murojaat, faqat yakuniy xatoliklarni ko‘rsatadigan filtr esa uni yashirar edi.
+failed
+canceled
+expired
+requires_action
+processing
+disputed
+charged_back
+refunded va partially_refunded ataylab muammo emas. Qaytarish — bu sizning o‘zingiz qilgan odatiy amal, uni bu yerga qo‘shish esa haqiqiy muammolarni oddiy harakatlar ostida ko‘mib yuborardi. Kerak bo‘lsa, ularni nomma-nom so‘rang.
+Xato yozilgan qiymat rad etiladi, e’tiborsiz qoldirilmaydi
+Noma’lum holat 422 request.validation_failed va state.unknown tafsilot kodi bilan qaytadi, xabarda esa ishlaydigan barcha qiymatlar sanab o‘tiladi. Jimgina butun tasmani qaytarish sizga hamma to‘lovni berardi, kodingiz esa faqat xatoliklarni ko‘rayapman deb o‘ylardi.
+category qiymatlari
+Provayder xatoliklari solishtiriladigan umumlashtirilgan sinflar. Bu yopiq ro‘yxat emas, platforma bugun qaytaradigan qiymatlar — shuning uchun «qolgan hollarda» tarmog‘i bilan tarmoqlaning.
+configuration
+authentication
+authorization
+validation
+not_found
+conflict
+duplicate
+insufficient_funds
+limit_exceeded
+provider_declined
+rate_limited
+provider_unavailable
+timeout
+network
+unknown
+unknown_reason — ro‘yxat emas
+provider_timeout kabi qiymatlar qo‘llab-quvvatlash suhbati uchun mo‘ljallangan diagnostik satrlar va provayder noaniq bo‘lishning yangi yo‘lini topganda yangilari paydo bo‘ladi. Qiymatga qarab tarmoqlanmang. Maydon bor-yo‘qligiga qarab tarmoqlaning.
+Xatoliklar
+#
+Har bir kutilgan xatolik bir xil ko‘rinishda qaytadi. Kod barqaror va hech qachon o‘zgarmaydi — shartlaringizni matnga emas, kodga qurang.
+Format
+details faqat maydon darajasidagi xatoliklarda bo‘ladi. retryable — oddiy qayta urinish natija berishi mumkinmi degan savolga javob.
+So‘rov identifikatori
+Har bir javobda X-Request-Id sarlavhasi bor va u xatolik tanasidagi request_id bilan bir xil. Qo‘llab-quvvatlashga murojaat qilganda shu qiymatni yuboring — biz o‘sha so‘rovni loglardan topamiz.
+X-Request-Id
+Format
+Nusxalash
+{
+"error"
+:
+{
+"code"
+:
+"request.validation_failed"
+,
+"message"
+:
+"The request could not be completed."
+,
+"status"
+:
+422
+,
+"request_id"
+:
+"req_01JQEXAMPLEREQ00000000ABCD"
+,
+"details"
+:
+[
+{
+"field"
+:
+"cash_desk_code"
+,
+"code"
+:
+"cash_desk_code.required"
+}
+]
+,
+"retryable"
+:
+false
+}
+}
+Shu API qaytaradigan kodlar
+Kod
+HTTP
+Qayta urinsa bo‘ladimi
+Ma’nosi
+auth.unauthenticated
+401
+Yo‘q
+Token yo‘q, noto‘g‘ri yoki bekor qilingan. Noma’lum va bekor qilingan kalit ataylab bir xil javob oladi.
+request.signature_invalid
+401
+Yo‘q
+Imzo mos kelmadi, yarim yuborildi yoki kalit faqat imzolangan so‘rovlarni qabul qiladi. Aniq sabab details[].code ichida: signature.mismatch, signature.malformed yoki signature.required.
+request.timestamp_out_of_window
+401
+Yo‘q
+X-TezCheck-Timestamp server vaqtidan 300 soniyadan ko‘proq farq qiladi. Serveringiz soatini tekshiring va joriy vaqt bilan imzolang.
+request.nonce_replayed
+401
+Yo‘q
+Aynan shu imzo allaqachon qabul qilingan. Har bir urinishni, qayta urinishni ham, yangi vaqt bilan imzolang.
+auth.permission_denied
+403
+Yo‘q
+Bitta kassaga biriktirilgan kalit boshqa kassa kodini yubordi.
+auth.forbidden
+403
+Yo‘q
+Chaqiruv kassaning IP ro‘yxatiga kirmaydigan manzildan keldi.
+merchant.suspended
+403
+Yo‘q
+Tashkilot hozircha savdo qila olmaydi.
+resource.not_found
+404
+Yo‘q
+Kassa kodi yoki hisob identifikatori topilmadi. Begona kassa, begona hisob va umuman mavjud bo‘lmagan identifikator bir xil javob oladi.
+resource.state_invalid
+409
+Yo‘q
+Resurs hozirgi holatida bu amalni qabul qilmaydi.
+request.idempotency_key_reused
+409
+Yo‘q
+Bu Idempotency-Key boshqa so‘rov (boshqa tana yoki boshqa yo‘l) bilan ishlatilgan. Yangi so‘rov uchun yangi kalit oling.
+resource.conflict
+409
+Yo‘q
+Shu Idempotency-Key bilan birinchi so‘rov hali bajarilmoqda. Retry-After soniyadan keyin o‘sha kalit bilan qayta yuboring.
+request.validation_failed
+422
+Yo‘q
+So‘rov maydonlari noto‘g‘ri. Qaysi maydon ekani details ichida.
+payment_link.amount_out_of_range
+422
+Yo‘q
+Summa platforma chegaralaridan tashqarida.
+payment.currency_unsupported
+422
+Yo‘q
+Valyuta qo‘llab-quvvatlanmaydi yoki yoqilmagan.
+request.rate_limited
+429
+Ha
+Daqiqadagi so‘rovlar chegarasi oshib ketdi. Biroz kutib qayta urining.
+server.internal_error
+500
+Ha
+Bizning tomondagi nosozlik. Qayta urinish o‘rinli.
+Qo‘shimcha endpointlar
+#
+Bu endpointlar qo‘llab-quvvatlanadi va barqaror, lekin ishlaydigan integratsiya uchun shart emas. Aniq savol paydo bo‘lganda oching: balansim qancha, o‘tgan hafta qancha tushdi, mijoz nimani bosa oladi, yo‘qolgan to‘lov havolasini qanday tiklayman.
+Qo‘shimcha endpointlarni ko‘rsatish
+5
+Balans, to‘g‘ridan-to‘g‘ri ledjerdan
+POST
+/balance
+Balans tashkilotga tegishli, kassaga emas — hisob-kitob, zaxira va ushlab turishlar savdogar bilan kelishiladi. Kassa baribir kerak: u kalitning doirasi va qaysi tashkilot balansi o‘qilishini bildiradi. Faqat haqiqiy pul ko‘rsatiladi.
+Token talab qiladi
+Kassa talab qiladi
+Muhim tafsilotlar
+3
+null qiymat “bu hisob amaldagi pul oqimi modelida mavjud emas” degani, nol esa “sizda yo‘q” degani. Ular bir xil emas.
+meta.funds_flow_model qaysi model amalda ekanini aytadi. direct_to_merchant modelida provayder puli to‘g‘ridan-to‘g‘ri sizning bankingizga tushadi, shuning uchun platformada yechib olinadigan balans bo‘lmaydi.
+available boshqalarning yig‘indisi emas va odatda ulardan kichik.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// Reads the desk's own UZS balance. There is no currency to choose.
+$data
+=
+$api
+->
+post
+(
+'/balance'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"currency"
+:
+"UZS"
+,
+"balance"
+:
+{
+"available_minor"
+:
+null
+,
+"reserved_minor"
+:
+null
+,
+"held_minor"
+:
+0
+,
+"pending_minor"
+:
+24500000
+}
+}
+,
+"meta"
+:
+{
+"funds_flow_model"
+:
+"direct_to_merchant"
+}
+}
+Bugun, kecha, 7 kun va 30 kun
+POST
+/stats
+Kabinet o‘qiydigan bir xil rollaplardan olinadi, shuning uchun ikkalasi hech qachon bir-biriga zid javob bermaydi. Kunlar biznes kalendarida (Asia/Tashkent) hisoblanadi.
+Token talab qiladi
+Kassa talab qiladi
+Muhim tafsilotlar
+3
+week va month — aylanuvchi oraliqlar (7 va 30 kun), kalendar oy emas. Kalendar oy oyning birinchi kunida bitta kunni ko‘rsatadi va savdo qulaganday tuyuladi.
+as_of null bo‘lsa, bu oraliq uchun yig‘uvchi hali ishlamagan — bu “savdo bo‘lmagan” degani emas.
+is_partial bugun uchun doim true.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// today.is_partial is true until the day closes in Asia/Tashkent.
+$data
+=
+$api
+->
+post
+(
+'/stats'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"today"
+:
+{
+"from"
+:
+"2026-08-06"
+,
+"to"
+:
+"2026-08-06"
+,
+"count"
+:
+12
+,
+"total_minor"
+:
+184000000
+,
+"fees_minor"
+:
+1840000
+,
+"net_minor"
+:
+182160000
+,
+"refunded_minor"
+:
+0
+,
+"as_of"
+:
+"2026-08-06T09:00:00+00:00"
+,
+"is_partial"
+:
+true
+}
+,
+"yesterday"
+:
+{
+"..."
+:
+"same shape"
+}
+,
+"week"
+:
+{
+"..."
+:
+"same shape"
+}
+,
+"month"
+:
+{
+"..."
+:
+"same shape"
+}
+}
+,
+"meta"
+:
+{
+"cash_desk"
+:
+"90001"
+,
+"currency"
+:
+"UZS"
+,
+"timezone"
+:
+"Asia/Tashkent"
+}
+}
+Payer haqiqatda tanlay oladigan usullar
+POST
+/payment-methods
+O‘z savat sahifangizni shu ro‘yxatdan chizasiz. Ro‘yxat ataylab checkoutning o‘z javobidan tor: bu yerda ko‘rinmagan usul sizga bitta savol keltiradi, bu yerda ko‘rinib checkoutda rad etilgan usul esa sotuvni yo‘qotadi.
+Token talab qiladi
+Kassa talab qiladi
+Muhim tafsilotlar
+2
+Bo‘sh ro‘yxat — haqiqiy javob, xatolik emas. Kassada hech qanday usul yoqilmagan bo‘lsa shunday bo‘ladi.
+min_amount_minor va max_amount_minor — yakuniy chegaralar, kassangizning torroq sozlamasi allaqachon qo‘llangan.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// What this desk can actually offer right now, after platform and desk rules.
+$data
+=
+$api
+->
+post
+(
+'/payment-methods'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+[
+{
+"provider_code"
+:
+"payme"
+,
+"channel_code"
+:
+"payme_checkout"
+,
+"name"
+:
+"Payme"
+,
+"logo_path"
+:
+"providers/payme.svg"
+,
+"currency"
+:
+"UZS"
+,
+"min_amount_minor"
+:
+100000
+,
+"max_amount_minor"
+:
+5000000000
+}
+]
+,
+"meta"
+:
+{
+"cash_desk"
+:
+"90001"
+}
+}
+Yo‘qolgan to‘lov havolasini qayta chiqarish
+POST
+/bills/{bill}/reissue
+POST /bills javobidagi payment_url bir marta beriladi. Agar u yo‘qolgan bo‘lsa, eski havolani qaytaradigan yo‘l yo‘q — platformada faqat token xeshi saqlanadi. Bu endpoint esa YANGI token chiqaradi va eskisini o‘chiradi.
+Token talab qiladi
+Kassa talab qiladi
+Idempotency-Key
+O‘sha Idempotency-Key bilan qayta yuborilgan so‘rov yangi havola chiqarmaydi — birinchi chiqarilgan havola qaytadi.
+Muhim tafsilotlar
+5
+Bu buzuvchi amal. Chaqirgan zahoti payerdagi eski havola ishlashdan to‘xtaydi — agar hisobni allaqachon yuborgan bo‘lsangiz, yangi havolani qayta yuboring.
+Qayta chaqirsangiz yana yangi token chiqadi va oldingisi o‘ladi — o‘sha Idempotency-Key bilan yuborilmasa. Buni kalitsiz retry ichiga qo‘ymang.
+previous_payment_url_invalidated doim true. payment_url_reissue_count esa POST /bills/{bill} javobida ham bor — retry siklingiz havolalarni qanchalik almashtirayotganini shu yerdan ko‘rasiz.
+Bekor qilingan, muddati o‘tgan yoki limitini tugatgan hisob uchun 409 resource.state_invalid qaytadi: o‘lik havolani qayta chiqarish foydasiz. Pauza qilingan hisob uchun ruxsat beriladi.
+Boshqa kassa yoki boshqa savdogar hisobi uchun 404 — mavjud bo‘lmagan identifikator bilan bir xil javob.
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$api
+= Http
+::
+baseUrl
+(
+'https://api.tezcheck.uz/api/merchant/v1'
+)
+->
+withToken
+(
+'API_KALIT'
+)
+->
+withHeaders
+(
+[
+'X-Cash-Desk-Code'
+=>
+'KASSA_KODI'
+]
+)
+->
+acceptJson
+(
+)
+->
+timeout
+(
+15
+)
+;
+// Destructive: the previous payment_url stops working the moment this returns.
+$data
+=
+$api
+->
+post
+(
+'/bills/link_01JQEXAMPLEBILL0000000ABCD/reissue'
+)
+->
+throw
+(
+)
+->
+json
+(
+'data'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"bill"
+:
+{
+"id"
+:
+"link_01JQEXAMPLEBILL0000000ABCD"
+,
+"reference"
+:
+"BILL-260806-001042"
+,
+"amount_minor"
+:
+15000000
+,
+"currency"
+:
+"UZS"
+,
+"title"
+:
+"Buyurtma #1042"
+,
+"external_reference"
+:
+"ORD-1042"
+,
+"state"
+:
+"active"
+,
+"available_until"
+:
+"2026-09-05T09:00:00+00:00"
+}
+,
+"payment_url"
+:
+"http://localhost:3103/pay/plk_REPLACE_WITH_THE_TOKEN_YOU_WERE_GIVEN"
+,
+"previous_payment_url_invalidated"
+:
+true
+,
+"payment_url_reissued_at"
+:
+"2026-08-09T11:20:04+00:00"
+,
+"payment_url_reissue_count"
+:
+1
+}
+}
+Platforma ishlayaptimi
+GET
+/health
+Kalitsiz chaqiriladigan yagona endpoint. Monitoringingiz uchun mo‘ljallangan.
+Ochiq
+So‘rov
+Dasturlash tili
+PHP
+cURL
+JavaScript
+Python
+Nusxalash
+<?php
+use
+Illuminate\Support\Facades\Http
+;
+$status
+= Http
+::
+timeout
+(
+5
+)
+->
+get
+(
+'https://api.tezcheck.uz/api/merchant/v1/health'
+)
+->
+json
+(
+'data.status'
+)
+;
+Javob
+Nusxalash
+{
+"data"
+:
+{
+"status"
+:
+"ok"
+}
+}
+Cheklovlar
+#
+Cheklovlar integratsiyangiz kutilmagan yukda ham bir xil ishlashi uchun bor.
+So‘rov / daqiqa
+300
+Standart sahifa hajmi
+25
+Eng katta sahifa hajmi
+200
+Vebhuk urinishlari (qaytarish yoqilganda)
+1 (3)
+Vebhuk uchun umumiy vaqt (soniya)
+10
+Imzo kaliti almashuvi (soat)
+24
+So‘rovlar chastotasi
+Daqiqasiga 300 so‘rov. Chegaradan oshsa 429 request.rate_limited qaytadi va bu kod retryable deb belgilangan.
+Sahifa hajmi
+POST /transactions standart holatda 25 ta yozuv, eng ko‘pi 200 ta qaytaradi. Kattaroq so‘rasangiz rad etilmaydi — shunchaki 200 taga tushiriladi.
+Savol bormi
+Xatolik haqida yozganda X-Request-Id qiymatini qo‘shing. Usiz javob berish uchun bizga bir necha soat kerak bo‘ladi.
+Qo‘llab-quvvatlashga yozish

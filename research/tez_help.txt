@@ -1,0 +1,29 @@
+Yordam · TEZCHECK.UZ
+Asosiy qismga o‘tish
+TEZCHECK.UZ
+Kirish
+Ro‘yxatdan o‘tish
+Yordam
+Savolingiz bo‘lsa — javobni shu yerdan toping yoki bizga yozing.
+Biz bilan bog‘lanish
+Yordam xizmati
+Muammo bo‘lsa shu yerga yozing — odam javob beradi.
+Telegramda yozish:
+@call_menejer
+Yangiliklar kanali
+Yangiliklar va texnik ishlar haqida e’lonlar. Xabarlarga javob berilmaydi.
+Kanal:
+@tezcheck
+Ko‘p beriladigan savollar
+Ro‘yxatdan o‘tish uchun nima kerak?
+Telefon raqami yoki elektron pochta manzili yetarli. Ikkalasi ham bir martalik kod bilan tasdiqlanadi.
+Shaxsni tasdiqlash nima uchun kerak?
+Shaxsingiz tasdiqlanmaguncha savdo arizasini yuborib bo‘lmaydi. Tekshiruvni odam o‘tkazadi va odatda bir necha ish kuni oladi.
+To‘lov qanday amalga oshiriladi?
+Sizga yuborilgan to‘lov havolasini oching, to‘lov usulini tanlang va tasdiqlang. To‘lov tugagach, chek havolasi darhol ko‘rsatiladi.
+To‘lovim o‘tmadi. Nima qilishim kerak?
+Avval bankingizdan mablag‘ yechilgan-yechilmaganini tekshiring. Pul yechilgan bo‘lsa-yu, sotuvchi tasdiqlamagan bo‘lsa, chek raqami bilan qo‘llab-quvvatlash xizmatiga murojaat qiling.
+Pulni qachon yechib olsam bo‘ladi?
+Balansingiz yechish uchun yetarli bo‘lganda so‘rov yuborasiz. So‘rovni administrator tasdiqlaydi va o‘tkazma chekini ilova qiladi.
+Yangiliklar
+API

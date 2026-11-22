@@ -1,0 +1,69 @@
+Maktab Hisobot — Elektron hisobotlar tizimi
+maktab
+hisobot
+O'zb
+O'zbekcha
+Русский
+English
+Kirish
+Yordam
+Chiqish
+O'quv yili: 2026–2027
+Kirilmagan
+46-maktab
+Bildirishnomalar
+Yordam
+Admin
+Chiqish
+1. Hisobot ma'lumotlari
+2. O'quvchilar ro'yxati
+Excel faylni tanlash
++ O'quvchi qo'shish
+Hammasini tozalash
+Excel faylni
+emaktab.uz
+platformasidan kerakli sinf jurnalini eksport qilib yuklang. Yangi fayl yuklansa, kiritilgan ballar o'chadi.
+3. Ballarni kiriting
+Savollar soni
+"5" baho (% dan)
+"4" baho (% dan)
+"3" baho (% dan)
+Har bir savol ustuni sarlavhasidagi kichkina katakka shu savolning eng yuqori ballini (mezon) yozing. Faqat son kiriting. Mezondan yuqori ball yozilsa,
+"Baho noto'g'ri"
+ogohlantirishi chiqadi va u qabul qilinmaydi. Baho foizi chegaralarini o'z mezoningizga moslang.
+Hozircha o'quvchi yo'q. Excel faylni yuklang yoki qo'lda qo'shing.
+4. Hisobot
+PDF yuklab olish
+Excel yuklab olish
+Yuklab olish bu ko'rinishda mavjud emas.
+CHSB hisobot bo'limi tez orada ishga tushiriladi.
+LI hisobot bo'limi tez orada ishga tushiriladi.
+Kuratorlik hisobot bo'limi tez orada ishga tushiriladi.
+Choraklik hisobot
+Emaktab jurnalini yuklang (.xls / .xlsx). BSB, CHSB, LI, FB, Ballar va chorak baholari asosida hisobot jadvali hamda diagrammalar avtomatik hosil bo‘ladi.
+📂
+Jurnal tanlash (.xls / .xlsx)
+📊 Excel yuklab olish
+🖨 Chop etish
+O'qituvchi ma'lumotlari
+Viloyat, tuman, maktab va o'qituvchi ma'lumotlari doimiy saqlanadi va har bir hisobotning boshiga avtomatik qo'yiladi. Sinf, fan, chorak kabi o'zgaruvchi ma'lumotlarni BSB hisoboti ichida kiriting.
+Ma'lumotlarni saqlash
+Tozalash
+Hisob holati
+Tarifingiz va hisobingiz bo'yicha qisqa ma'lumot.
+Tarif
+—
+Telegram orqali kiring
+Yuklab olishlar
+—
+PDF va Excel hisobotlari soni
+Admin panel
+Saytga Telegram orqali kirgan foydalanuvchilar va ularning statistikasi. Bu bo'lim faqat administratorga ko'rinadi.
+#
+F.I.Sh.
+Viloyat / Tuman / Maktab
+Premium
+Yuklab olishlar
+Yuklanmoqda...
+Yangilash
+Xabar

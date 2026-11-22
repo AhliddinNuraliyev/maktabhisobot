@@ -1,0 +1,157 @@
+Vositachilik shartnomasi · TEZCHECK.UZ
+Asosiy qismga o‘tish
+TEZCHECK.UZ
+Kirish
+Ro‘yxatdan o‘tish
+Barcha hujjatlar
+Vositachilik shartnomasi
+Versiya
+2026-09.1
+Kuchga kirgan
+17.09.2026
+Mundarija
+1
+.
+Vositachilik shartnomasi (Platformadan to'lovlarni qabul qilish bo'yicha)
+2
+.
+ATAMALAR
+3
+.
+SHARTNOMA PREDMETI
+4
+.
+TOMONLARNING MAJBURIYATLARI
+5
+.
+TOMONLARNING JAVOVGARLIGI
+6
+.
+BAHOLAR, TOPSHIRIQLARNI BAJARISH VA HISOB-KITOBLAR TARTIBI
+7
+.
+SHARTNOMANI BEKOR QILISH TARTIBI
+8
+.
+FORS MAJOR HOLATLARI
+9
+.
+NIZOLARNING KO'RIB CHIQILISHI
+10
+.
+BOSHQA SHARTLAR
+Farg’ona viloyati, Quva tumani, 1-sentabr, 2026-yil. "Hamkor" Vositachilik shartnomasi shartlari
+Vositachilik shartnomasi (Platformadan to'lovlarni qabul qilish bo'yicha)
+Ushbu hujjat O‘zbekiston Respublikasi Fuqarolik kodeksining 360-moddasi, 367-moddasi va boshqa tegishli huquqiy normalar asosida tuzilgan bo‘lib, O'O'BQ <<Olloyor Mamasaidov>> (keyingi o‘rinlarda “Vositachi”) tomonidan ommaviy tarzda taklif etilayotgan xizmatlar uchun tuzilgan shartnoma hisoblanadi. Ushbu taklif cheklanmagan doiradagi shaxslarga qaratilgan va platforma (veb-sayt, mobil ilova, Telegram bot va boshqalar) orqali e’lon qilinadi.
+Har qanday jismoniy yoki yuridik shaxs (Keyingi o'rinlarda “Mijoz” yoki “Do'kon egasi”) ushbu platformada buyurtma berish yoki ro‘yxatdan o‘tish orqali ushbu ofertaning barcha shartlarini qabul qilgan (ya’ni, aksept qilgan) hisoblanadi va tomonlar o‘rtasida elektron shartnoma tuzilgan deb hisoblanadi.
+Shartnoma elektron tarzda tuziladi va elektron hujjatlar to‘g‘risidagi qonunlarga muvofiq yuridik kuchga ega.
+ATAMALAR
+Oferta – Vositachi tomonidan ommaga taqdim etilgan shartnoma taklifi.
+Platforma – Vositachi tomonidan ishlab chiqilgan va xizmatlar taklif qilinadigan raqamli muhit: veb-sayt, Telegram bot, mobil ilova va boshqalar.
+Aksept – Do'kon egasi tomonidan ushbu ofertani qabul qilish, ya’ni xizmatga buyurtma berish, to‘lovni amalga oshirish yoki rozilik tugmasini bosish va h.k orqali rozilik bildirilishi.
+Xizmat – vositachilik xizmatlari, API tizimlari yoki boshqa turdagi raqamli mahsulotlarni yaratish, joylashtirish, sozlash, texnik yordam ko‘rsatish, shuningdek boshqa turdagi xizmatlar taqdim etish.
+Veb sayt - Vositachining shaxsiy yoki ommaviy loyhasi bo'lgan veb sayt
+To'lov tizimi - Bu O‘zbekiston Respublikasi Markaziy banki tomonidan litsenziyalangan, foydalanuvchilarga elektron tarzda qonuniy to‘lovlar va pul o‘tkazmalarini amalga oshirish imkonini beruvchi tizimdir. Ushbu tizim orqali Payme, Click, Upay, Apelsin va boshqa mahalliy to‘lov xizmatlari orqali xavfsiz va nazorat ostidagi moliyaviy operatsiyalar bajariladi.
+To'lovchi – Platforma orqali xizmat (yoki mahsulot) uchun to‘lovni amalga oshiruvchi jismoniy yoki yuridik shaxs. To‘lovchi do‘kon egasi foydasiga to‘lov qiladi va to‘lovni tasdiqlash orqali platformaning ommaviy ofertasiga rozilik bildirgan hisoblanadi.
+To'lov havolasi - Vositachi tomonidan mijozga taqdim etiladigan, to'lovlarni to'lov tizimi orqali amalga oshirishga yordam beradigan elektron sahifa
+SHARTNOMA PREDMETI
+Vositachi Mijoz topshirigʻiga muvofiq haq evaziga oʻz nomidan va Mijoz hisobidan quyidagi bitimlarni tuzish majburiyatini oladi:
+Mahsulot yoki xizmatlar bo‘yicha shartnomalarni tuzish.
+To'lov tizimlari bilan bitimlarni imzolash.
+Vositachi Mijozlarga pulli asosda taqdim etilishi mumkin bo‘lgan xizmatlarni o‘z ichiga olishi mumkin. Bunday xizmatlarni faollashtirish Mijoz tomonidan mustaqil ravishda, o‘z xohishiga ko‘ra hamda xizmat tavsifi, uni taqdim etish shartlari, foydalanish narxi va boshqa ma’lumotlar ko‘rsatilgan ommaviy oferta bilan tanishib chiqilgandan so‘ng amalga oshiriladi.
+Bitimlarni tuzishning aniq shartlari, sotishning eng past baholari darajasi, shuningdek mazkur shartnomaning 2.1-bandida koʻrsatilgan bitimlarga nisbatan Mijozning boshqa koʻrsatmalari Shartnomaga ilovasi sifatida yoxud alohida hujjat koʻrinishida taqdim etilishi mumkin.
+TOMONLARNING MAJBURIYATLARI
+Vositachining majburiyatlari:
+Vositachi mijozning topshirig‘i asosida, o‘z nomidan, ammo mijoz hisobidan litsenziyalangan to‘lov tizimlari (Payme, Click va boshqalar) bilan shartnomalar tuzish va hamkorlik aloqalarini yuritish huquqiga ega.
+Vositachi bu faoliyatni mijoz manfaatlarini ko‘zlab, eng foydali shartlarda amalga oshirishi shart.
+Shu bilan birga, to‘lov tizimlari bilan tuzilgan shartnomalar bo‘yicha barcha to‘lovlar, hisoblar va xizmatlar Vositachi orqali amalga oshiriladi va ular bo‘yicha mas’uliyat Vositachiga yuklanadi.
+Mijoz esa Vositachining bu boradagi harakatlarini o‘z topshirig‘i asosida bajarilgan deb hisoblaydi.
+Vositachi topshiriqni bajarish bilan bogʻliq holda unga maʼlum boʻlgan va Mijozning tijorat sirini tashkil etadigan maʼlumotlarni sir saqlash majburiyatini oladi.
+Vositachining huquqlari:
+Vositachi Mijoz topshirigʻiga asosan, oʻz nomidan, lekin Mijoz hisobidan litsenziyalangan toʻlov tizimlari (Payme, Click, Apelsin, Uzum Pay va boshqalar) bilan shartnomalar tuzish va ularga xizmatlar ulash huquqiga ega.
+Vositachi toʻlov tizimlari orqali amalga oshirilgan barcha tranzaksiyalarni qayd etish, tushgan mablagʻlarni vaqtincha oʻz hisobida saqlab turish, audit yuritish, shuningdek mijoz bilan kelishilgan tartibda mablagʻlarni Mijozga oʻtkazish huquqiga ega.
+Vositachi amalga oshirilgan har bir toʻlov yoki xizmat koʻrsatish uchun belgilangan komissiya (vositachilik haqi) miqdorini avtomatik tarzda ushlab qolish va bu miqdorni o‘z foydasi sifatida saqlab qolish huquqiga ega.
+Vositachi toʻlov tizimlarining texnik talablari asosida API integratsiyasi, xavfsizlik sozlamalari, SMS-kodlar va interfeyslarni mustaqil tarzda boshqarish, sozlash va xizmatni yo‘lga qo‘yish huquqiga ega.
+Vositachi shubhali yoki noto‘g‘ri identifikatsiya qilingan to‘lovlar holatida mablagʻlarni vaqtincha bloklash yoki Mijozga to‘lovni qaytarishdan bosh tortish huquqiga ega, agar bu holatlar qonuniy va shartnoma asosida asoslangan bo‘lsa.
+O‘zbekiston Respublikasi qonunchiligi yoki mazkur Shartnoma shartlarining Vositachi tomonidan buzilishiga olib kelsa, Vositachi operatsiyalarni amalga oshirishda Mijozga rad etish huquqiga ega.
+Mijozning majburiyatlari
+mazkur Shartnoma talablarini bajarish
+Mijoz shartnomaning 2.1-bandida koʻzda tutilgan bitimlarni tuzish shartlari va xususiyatlari toʻgʻrisida oʻz vaqtida Vositachini xabardor qilishi shart.
+Mijoz topshiriqqa muvofiq ijro etilgan hamma narsani Vositachidan qabul qilib olishi, oʻzi uchun Vositachi tomonidan sotib olingan mol-mulkni koʻzdan kechirishi va ushbu mol-mulkda aniqlangan kamchiliklar toʻgʻrisida darhol Vositachini xabardor qilishi, Vositachini vositachilik topshirigʻini bajarish yuzasidan uchinchi shaxs oldida oʻz zimmasiga olgan majburiyatlardan ozod qilishi shart.
+To'lovlar bajarilgandan soʻng Mijoz Vositachiga ushbu shartnomaning 5.4-bandida nazarda tutilgan miqdorda haq toʻlashi shart.
+Mijoz vositachilik haqidan tashqari, topshiriqni bajarish uchun sarf qilingan, ushbu shartnomaning 5.8- bandida nazarda tutilgan zarur xarajatlarni ham Vositachiga toʻlashi shart.
+Platforma orqali noqonuniy moliyaviy operatsiyalarni, noqonuniy savdo, jinoiy faoliyatdan olingan daromadlarni legallashtirish yoki terrorizmni moliyalashtirishga qaratilgan operatsiyalarni, qonunchilik bilan taqiqlangan boshqa xatti-harakatlar yoki daromadni yashirish kabi harakatlarni bajarmaslik.
+Vositachi Ofertaning o‘zgartirilgan tahririni www.tezcheck.uz saytida e’lon qilish orqali bir tomonlama tartibda ushbu Ofertani o‘zgartirish huquqiga ega. Vositachi, shuningdek, Platformaning tegishli interfeysida axborot xabari orqali Mijozga Ofertaning o‘zgartirilgan tahriri e’lon qilinganligi to‘g‘risida xabar yuborishi mumkin.
+Ofertaning o‘zgartirilgan tahriri, asosan, www.tezcheck.uz veb-saytida joylashtirilgan kundan boshlab 15 (o‘n besh) kalendar kundan kech bo‘lmagan muddatda, biroq Ofertaning birinchi xatboshisida ko‘rsatilgan sanadan ilgari bo‘lmagan muddatda kuchga kiradi. Agar ushbu Ofertaning ma’lum shartlari alohida Siyosatlar (jumladan, Vositachining shaxsga doir ma’lumotlarning maxfiylik siyosati) va Vositachining boshqa hujjatlari bilan ham tartibga solinsa, Vositachi Siyosatlari va boshqa hujjatlari bilan ham tartibga solinadigan Oferta shartlari ushbu hujjatlarda nazarda tutilgan tartibda va muddatlarda o‘zgartiriladi.
+Agar Ofertaning o‘zgartirilgan tahriri kuchga kirgunga qadar Mijoz akkauntini o'chirib tashlamasa, o‘zgartirishlar Mijoz tomonidan qabul qilingan hisoblanadi.
+Ofertaga kiritilgan o‘zgartirishlar haqida o‘z vaqtida ma’lumot olish uchun Foydalanuvchi www.tezcheck.uz veb-saytini muntazam ravishda tekshirib borishi lozim.
+Mijozning aybi bilan sodir etilgan har qanday zarar uchun Vositachi javobgarlikni o'z zimmasiga olmaydi
+TOMONLARNING JAVOVGARLIGI
+Tomonlar ushbu Shartnoma shartlarini bajarmaganlik yoki lozim darajada bajarmaganlik uchun O‘zbekiston Respublikasi qonun hujjatlariga muvofiq javobgar bo‘ladilar.
+Mijoz mazkur Shartnoma bo‘yicha majburiyatlarni bajarmaslik yoki lozim darajada bajarmaslik natijasida yuzaga keladigan har qanday zarar yoki boshqa salbiy oqibatlar uchun javobgar bo‘ladi.
+Muvaffaqiyatli to'langan to'lovlarni yechib olish uchun mijoz Vositachini xabardor qilishi shart. Agarda mijoz bu xaqida vositachiga xabar bermasa, Vositachi buning uchun javobgar bo'lmaydi
+Mijoz himoyalanmagan ulanishlardan foydalanadigan yoki zararli dasturlar va ilovalar tahdidi ostida bo‘lgan qurilmada shaxsiy ma’lumotlarini kiritganda ularning xavfsizligi uchun to‘liq javobgar bo‘ladi
+Vositachi mazkur shartnomaning 5.8-bandida nazarda tutilgan summani toʻlash muddatini kechiktirgan taqdirda, har bir kechiktirilgan kuni uchun toʻlanishi lozim boʻlgan summaning kelishilgan miqdorda penyani Mijozga toʻlaydi.
+Mazkur Shartnoma shartlarining lozim darajada bajarilmaganligi uchun, agar bunday bajarmaslik Mijoz tomonidan Shartnoma shartlarining ijro etilmaganligi oqibatida yuzaga kelsa, Vositachi javobgar bo‘lmaydi.
+Vositachi Mijozning ushbu Ofertaning shartlari, shuningdek, Platformada faollashtirilgan pulli xizmatlar ofertalari bilan tanishib chiqmaganligi va (yoki) o‘z vaqtida tanishib chiqmaganligi sababli yuzaga kelgan har qanday yo‘qotishlar uchun javobgar bo‘lmaydi.
+Agar Shartnoma shartlarining tegishlicha bajarilmasligi Vositachi nazorati bilan bogʻliq boʻlmagan sabablar tufayli yuzaga kelgan bo‘lsa, Vositachi ushbu Shartnoma shartlarining lozim darajada bajarilmaganligi uchun javobgar bo‘lmaydi. Vositachi nazorat doirasi faqatgina Platformaning ishlash imkoniyatlari bilan cheklanadi va uchinchi shaxslarning aybi bilan yoki davlat yoki sud organlari tomonidan qo‘yilgan taqiqlar va cheklovlar tufayli yoxud Vositachiga bog‘liq bo‘lmagan holatlar sababli yuzaga kelgan nosozliklar uchun javobgarlikni o‘z ichiga olmaydi.
+platforma barcha ma’lumotlar oqimi, shu jumladan so‘rovga muvofiq taqdim etiladigan yoki platforma orqali foydalanish mumkin bo‘lgan barcha kontent, dasturiy ta’minot, funksiyalar, materiallar va ma’lumotlar “qanday boʻlsa”, ya’ni hech qanday istisno va qo‘shimchalarsiz, o‘zgarishsiz taqdim etadi.
+Vositachi platformada mavjud bo‘lgan xizmatlar yoki kontent, materiallar, axborot va funksionallarga nisbatan yoki platformadan ushbu Shartnomada ko‘zda tutilmagan usullarda foydalanilgan hollarda platforma orqali maxfiy axborotlarni uzatish bilan bog‘liq har qanday himoya buzilishlariga nisbatan hech qanday kafolat yoki kafillik bermaydi.
+Vositachi Mijozdan platformaga ulangan mobil telefon raqamiga kirish imkoniyati yo‘qolganligi to‘g‘risidagi arizani olgunga qadar mobil telefon raqamiga kirish imkoniyati yo‘qolgan taqdirda Mijoz platformadan foydalangan holda amalga oshirilgan buyurtmalar bo'yicha operatsiyalarni amalga oshirish bo'yicha Vositachiga talab qo‘yishga haqli emas.
+Mijoz platforma ulangan mobil telefon raqamidan, shuningdek, uning mobil qurilmasiga o‘rnatilgan ilovalar va dasturlar yordamida yoki platformadan foydalanish uchun uning rekvizitlari yordamida Mijoz nomidan amalga oshirilgan har qanday uchinchi tomon xatti-harakatlari uchun xavf va javobgarlikni o‘z zimmasiga oladi.
+Mijoz ushbu Shartnomada belgilangan Vositachining cheklangan javobgarligini tan olgan holda ushbu Shartnomani tuzishini va ushbu cheklovlar Tomonlar o‘rtasidagi kelishuvlarning zaruriy asosi ekanligini tasdiqlaydi. Shu bilan birga, Tomonlardan hech biri bunday tomonning oqilona nazoratidan chiqadigan har qanday holatlar, jumladan, hukumat faoliyati yoki terroristik harakatlar, zilzilalar, yong‘inlar, suv toshqinlari yoki boshqa tabiiy ofatlar, mehnat sharoitlari bilan bog‘liq vaziyatlar, ta’minotdagi uzilishlar va Internet aloqasining yomonlashuvi kabi holatlar tufayli, lekin bu holatlar bilan cheklanmagan holda, yuzaga kelgan majburiyatlarning bajarilmasligi yoki kechikish uchun javobgar bo‘lmaydi.
+BAHOLAR, TOPSHIRIQLARNI BAJARISH VA HISOB-KITOBLAR TARTIBI
+Vositachiga Mijoz hisobidan tushgan barcha summalar hisobidan, ushbu shartnoma boʻyicha toʻlanishi lozim boʻlgan xizmat haqi, xarajatlar va boshqa belgilangan summalarni ushlab qolish huquqi beriladi.
+Mijoz ushbu shartnoma shartlarini buzgan holatlar yoki uzrli sabablarga koʻra topshiriqni bajarishning iloji bo‘lmagan holatlardan tashqari, Vositachi qabul qilingan topshiriqni bajarishdan bosh tortishga haqli emas. Agar Vositachi topshiriqni bajarishdan bosh tortmoqchi bo‘lsa, bu haqda Mijozga yozma (yoki elektron) ravishda bildirishga majbur. Bunday bildirishnoma Mijoz tomonidan olingan kundan boshlab ikki hafta davomida ushbu shartnoma kuchda bo‘ladi.
+Mijoz istagan vaqtda Vositachiga berilgan topshiriqni ushbu shartnomaning ko‘zda tutilgan tartibga rioya qilgan holda bekor qilishga haqli.
+Xizmat komissiyasi va boshqa to‘lovlar:
+To‘lov turi
+Tavsif
+Miqdori / Foizi
+Izoh
+Xizmat komissiyasi
+Vositachining har bir amalga oshirilgan to‘lov uchun oladigan xizmat haqi
+3% – 5%
+Mijoz bilan alohida kelishuvga asosan belgilanadi
+Integratsiya to‘lovi
+To‘lov tizimlari bilan texnik ulanish va sozlash ishlari uchun
+0 so‘m
+Dastlabki ulanish jarayonida olinadi
+Qo‘shimcha xizmatlar
+"Rasmiy" belgisi
+9,900 so‘m (1 marta)
+Talabga ko‘ra faollashtiriladi
+Penalti (kechiktirilgan to‘lov)
+To‘lovlar belgilangan muddatda o‘tkazilmasa, jarima qo‘llaniladi
+0.03% kuniga
+O‘tgan har bir kun uchun hisoblanadi
+Agar Mijoz yuridik shaxs bo‘lib, uning faoliyati tugatilgan taqdirda, Vositachi Mijoz vakillaridan rasmiy ko‘rsatmalar olmaguniga qadar, mavjud topshiriqni bajarishda davom etishga haqli.
+Vositachi Mijoz belgilagan tariflar yoki komissiya shartlariga nisbatan foydaliroq (ya’ni pastroq komissiya yoki qo‘shimcha bonuslar) bilan toʻlov tizimi bilan bitim tuzgan taqdirda, bu foydaning ma’lum foizi Mijozga, qolgan foizi esa Vositachiga tegishli bo‘ladi. Bu foizlar alohida kelishuv bilan belgilanadi.
+Agar Vositachi Mijoz belgilagan tarifdan yuqoriroq komissiya yoki yomonroq shartlarda shartnoma tuzsa, u bunday holat zarurat tufayli yuz berganini isbotlashi shart. Aks holda, ortiqcha toʻlangan komissiya farqini Mijozga qaytarib berishi lozim.
+Toʻlov tizimlari orqali qabul qilingan umumiy mablag‘lardan:
+Vositachi xizmat haqi (komissiyasi),
+texnik xizmatlar uchun sarflangan xarajatlar,
+boshqa asosli xarajatlar chegirib qolinadi, qolgan summa esa Mijozga topshiriq bajarilganidan so‘ng 1 - 5 ish kuni ichida oʻtkaziladi.
+Vositachi toʻlov tizimlari orqali Mijoz hisobiga tushgan barcha mablag‘lardan o‘zining ushbu shartnomaga asosan olishi lozim bo‘lgan summalarni avtomatik ushlab qolish huquqiga ega.
+SHARTNOMANI BEKOR QILISH TARTIBI
+Mijoz istalgan vaqtda platformadagi akkauntni o‘chirib tashlash orqali Shartnomani ijro etishdan bosh tortish huquqiga ega.
+Mijoz bilan tuzilgan Shartnoma akkaunt o‘chirib tashlanganidan so‘ng darhol bekor qilingan hisoblanadi. Akkauntni o‘chirib tashlash, shuningdek, agar xizmatlar faollashtirilgan bo‘lsa, platforma doirasida pulli xizmatlar bo‘yicha Shartnomalarning bekor qilinishini anglatadi.
+Vositachi mazkur Shartnomada belgilangan holatlarda Shartnomani bir tomonlama bekor qilishga haqli.
+FORS MAJOR HOLATLARI
+Taraflar shartnoma tuzilgandan keyin oqilona vositalar bilan oldindan koʻra olmagan yoki bartaraf eta olmagan favqulodda hodisalar natijasida yuzaga kelgan yengib boʻlmas kuch oqibatida bajarmaslikka sabab boʻlgan holda, Shartnoma boʻyicha majburiyatlarini toʻliq yoki qisman bajarmaganlik uchun javobgarlikdan ozod qilinadilar. Bunday holatlar boʻlib tabiiy ofatlar, harbiy harakatlar, epidemiyalar, hamda Taraflar fors-major holati deb hisoblaydigan holatlar boʻlishi mumkin.
+NIZOLARNING KO'RIB CHIQILISHI
+Ushbu Shartnomadan kelib chiqadigan har qanday nizo Mijozing murojaatiga asosan kelishuv yo‘li bilan yoki da’vo tartibida hal qilinishi kerak. Murojaatni ko‘rib chiqish muddati va tartibi hamda uning mazmuniga qo‘yiladigan talablar www.tezcheck.uz saytida joylashtirilgan Vositachida murojaatlarni ko‘rib chiqish qoidalari bilan belgilanadi.
+Agar yuzaga kelgan nizo da’vo tartibida hal etilmasa, u da’vogarning tanloviga ko‘ra quyidagi sudlarda ko‘rilishi lozim: Fuqarolik ishlari bo'yicha Termiz tumanlararo sudi, yoki javobgarning yashash/ro‘yxatdan o‘tgan joyi bo‘yicha O‘zbekiston Respublikasining amaldagi qonun hujjatlarida nazarda tutilgan tartibda.
+Texnik qo‘llab-quvvatlash xizmatlari Foydalanuvchilarga faqat so‘rovlarni qabul qilish orqali taqdim etiladi. Foydalanuvchilarning so‘rovlari Vositachininh qo‘llab-quvvatlash xizmati tomonidan info@tezcheck.uz elektron pochtasi yoki www.tezcheck.uz saytida ko‘rsatilgan telefon raqami orqali qabul qilinadi.
+BOSHQA SHARTLAR
+Shartnomada bevosita nazarda tutilmagan barcha holatlarda Tomonlar O‘zbekiston Respublikasining amaldagi qonunchiligiga va ish yuritish odatlariga amal qiladilar.
+Ushbu Ofertani qabul qilish orqali Mijoz Shartnomaning barcha shartlariga va www.tezcheck.uz saytida joylashtirilgan Vositachining shaxsga doir ma’lumotlarning maxfiylik siyosatiga so‘zsiz roziligini tasdiqlaydi.
+Shartnoma bilan nazarda tutilmagan barcha masalalar amaldagi qonun hujjatlari bilan tartibga solinadi
+Mazkur shartnomaga barcha ilovalar uning ajralmas qismi boʻlib hisoblanadi.
+Hujjat haqida
+Versiya
+2026-09.1
+Kuchga kirgan
+17.09.2026
+Matn raqamli izi
+e149d27dddc79f34a6ccd03a51001b47819507ea43eee83a296613902cedcc68

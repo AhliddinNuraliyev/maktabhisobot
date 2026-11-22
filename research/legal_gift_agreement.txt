@@ -1,0 +1,138 @@
+Do‘kon yoki kassani hadya qilish shartnomasi · TEZCHECK.UZ
+Asosiy qismga o‘tish
+TEZCHECK.UZ
+Kirish
+Ro‘yxatdan o‘tish
+Barcha hujjatlar
+Do‘kon yoki kassani hadya qilish shartnomasi
+Versiya
+2026-09.1
+Kuchga kirgan
+17.09.2026
+Mundarija
+1
+.
+Ommaviy oferta ("tezcheck.uz telegram boti" orqali do'kon yoki kassaning egalik huquqini hadya qilish boyicha)
+2
+.
+ATAMALAR VA TARIFLAR
+3
+.
+OFERTANI QABUL QILISH TARTIBI
+4
+.
+SHARTNOMA PREDMETI
+5
+.
+XIZMATLARNING NARXI VA TOLOV TARTIBI
+6
+.
+TOMONLARNING HUQUQLARI VA MAJBURIYATLARI
+7
+.
+TOMONLARNING JAVOBGARLIGI
+8
+.
+QO'SHIMCHA SHARTLAR
+Farg’ona viloyati, Quva tumani, 1-sentabr, 2026-yil. "Hadya yuborish" shartnomasi shartlari
+Ommaviy oferta ("tezcheck.uz telegram boti" orqali do'kon yoki kassaning egalik huquqini hadya qilish boyicha)
+Ushbu hujjat O‘zbekiston Respublikasi Fuqarolik kodeksining 360-moddasi, 367-moddasi va boshqa tegishli huquqiy normalar asosida tuzilgan bo‘lib, O'O'BQ << Olloyor Mamasaidov >> (keyingi o‘rinlarda “Vositachi”) tomonidan ommaviy tarzda taklif etilayotgan xizmatlar uchun tuzilgan shartnoma hisoblanadi. Ushbu taklif cheklanmagan doiradagi shaxslarga qaratilgan va platforma (veb-sayt, mobil ilova, Telegram bot va boshqalar) orqali e’lon qilinadi.
+Har qanday jismoniy yoki yuridik shaxs (Keyingi o'rinlarda “Mijoz” yoki “Do'kon egasi”) ushbu platformada buyurtma berish yoki ro‘yxatdan o‘tish orqali ushbu ofertaning barcha shartlarini qabul qilgan (ya’ni, aksept qilgan) hisoblanadi va tomonlar o‘rtasida elektron shartnoma tuzilgan deb hisoblanadi.
+Shartnoma elektron tarzda tuziladi va elektron hujjatlar to‘g‘risidagi qonunlarga muvofiq yuridik kuchga ega.
+ATAMALAR VA TARIFLAR
+Oferta - Vositachi tomonidan ommaga taqdim etilgan shartnoma taklifi.
+Aksept - Mijoz tomonidan ofertaning barcha shartlarini qabul qilish harakati.
+Shartnoma - Vositachi va Mijoz o‘rtasida elektron shaklda tuzilgan huquqiy bitim.
+Do'kon egasi - Vositachi orqali do'kon yoki kassaning egalik huquqini hadya qiluvchi shaxs.
+Yangi egasi - Vositachi orqali do'kon yoki kassaning egalik huquqini qabul qiluvchi shaxs.
+Platforma - Vositachi tomonidan taqdim etilgan xizmatlar orqali do'kon yoki kassaning egalik huquqini hadya qilish imkoniyatini beruvchi veb-sayt, mobil ilova yoki Telegram boti.
+Xizmatlar - Vositachi tomonidan Mijozga taqdim etiladigan do'kon yoki kassaning egalik huquqini hadya qilish bo‘yicha xizmatlar majmuasi.
+Shaxsiy ma'lumotlar - Mijozga tegishli bo‘lgan va xizmatlar ko‘rsatilishi jarayonida yig‘iladigan har qanday ma'lumotlar, jumladan, ism, aloqa ma'lumotlari, identifikatsiya raqamlari va boshqalar.
+Maxfiylik siyosati - Vositachi tomonidan Mijozning shaxsiy ma'lumotlarini qanday yig‘ilishi, saqlanishi va ishlatilishini belgilovchi hujjat.
+OFERTANI QABUL QILISH TARTIBI
+Oferta qabul qilinishi tezcheck.uz Telegram boti orqali amalga oshiriladi. Mijoz botdagi "Hadya yuborish" bo'limiga kirib, kerakli ma'lumotlarni to'ldirib va "Yuborish" tugmasini bosish orqali aksept qiladi.
+Oferta qabul qilingandan so‘ng, Vositachi tomonidan Mijozga elektron pochta yoki Telegram orqali tasdiqlash xabari yuboriladi. Ushbu xabar Mijoz va Vositachi o‘rtasida shartnoma tuzilganligini tasdiqlaydi.
+SHARTNOMA PREDMETI
+Ushbu shartnoma do'kon yoki kassani boshqa odamga hadya qilish bo'yicha xizmatlar ko'rsatishni o'z ichiga oladi.
+Foydalanuvchiga shartnoma shartlariga muvofiq quyidagi xizmatlarni ko'rsatiladi:
+Do'kon yoki kassani boshqa odamga hadya qilish bo'yicha xizmatlarni taqdim etish;
+Hadya qilingan do'kon yoki kassani yangi egasiga o'tkazish jarayonini boshqarish;
+Hadya jarayonida yuzaga kelishi mumkin bo'lgan muammolarni hal qilishda yordam berish.
+Foydalanuvchi shartnoma bo‘yicha ma'lum qilinadiki, suiistemol qilish, jinoiy faoliyatdan olingan daromadlarni legallashtirish, firibgarlik va h.kdan saqlanish uchun Checkout xizmatida hadyalar yuborish bo‘yicha admin tasdiqlovi joriy etilgan.
+XIZMATLARNING NARXI VA TOLOV TARTIBI
+Xizmat narxi hadya vaqtida belgilangan bo‘lib, foydalanuvchi tomonidan to‘lanadi. To‘lov tezcheck.uz Telegram boti orqali amalga oshiriladi.
+To‘lov amalga oshirilgandan so‘ng, foydalanuvchiga xizmat ko‘rsatiladi va shartnoma shartlari bajariladi.
+Agar to‘lov amalga oshirilganidan so‘ng ariza rad etilsa, to‘lov summasi mijozning bank plastik kartasiga 24 soat ichida qaytariladi.
+TOMONLARNING HUQUQLARI VA MAJBURIYATLARI
+Vositachi quyidagi huquqlarga ega:
+Xizmat ko‘rsatish tartibini va texnik talablarni belgilash, yangilash va o‘zgartirish;
+Xizmatlarni butunlay yoki qisman to‘xtatib turish, texnik ta’mirlash yoki texnik sabablarga ko‘ra vaqtincha cheklash;
+Mijozning shartnoma yoki platforma qoidalarini buzgan taqdirda xizmatni rad etish yoki hisobini bloklash;
+Shartnoma shartlarini bir tomonlama o‘zgartirish va yangilanishlarni e’lon qilish (agar qonunchilik boshqacha belgilamagan bo‘lsa);
+Mijozdan xizmat ko‘rsatish uchun zarur bo‘lgan ma’lumotlarni so‘rash va tasdiqlash;
+Uchinchi tomon xizmatlari yoki integratsiyalarini ishga tushirish yoki to‘xtatish, va buning natijasida yuzaga kelgan o‘zgarishlarni mijozga bildirish;
+Firibgarlik, noqonuniy yoki xavfli faoliyatni aniqlagan holatda qo‘shimcha tekshiruv o‘tkazish va tegishli organlarga xabar berish;
+Xizmat ko‘rsatish bilan bog‘liq to‘lovlarni boshqarish, qaytarish tartibini belgilash va moliyaviy tranzaksiyalar bo‘yicha cheklovlar joriy etish;
+Vositachi platforma xavfsizligini ta’minlash maqsadida foydalanuvchi hisoblariga xavfsizlik choralarini (parolni qayta tiklash, ikki bosqichli autentifikatsiya talab qilish va h.k.) joriy etish huquqiga ega.
+Mijoz quyidagi huquqlarga ega:
+Xizmatlardan platforma qoidalari va shartlariga muvofiq foydalanish;
+Shartnoma shartlari, xizmat ko‘rsatish tariflari va to‘lov tartibi bo‘yicha aniq va to‘liq ma’lumot olish;
+Shikoyat yoki takliflarni ariza orqali yuborish va ularga o‘z vaqtida javob olish (Vositachi tomonidan belgilangan javob muddatlariga muvofiq);
+O‘z shaxsiy ma’lumotlarining qanday ishlatilishi va saqlanishi haqida ma’lumot so‘rash va Maxfiylik siyosatiga rioya etilishini talab qilish;
+Yuborilgan xizmatni bekor qilish yoki o‘zgartirishni so‘rash va bekor qilish shartlari doirasida pulni qaytarishni talab qilish;
+Xizmat ko‘rsatilmagan yoki noto‘g‘ri ko‘rsatilgan holatlarda dalillar bilan murojaat qilish va kompensatsiya talab etish;
+Muntazam bildirishnomalar va yangiliklar olish uchun ro‘yxatdan o‘tish yoki undan chiqish huquqi;
+O‘z hisobining xavfsizligini ta’minlash uchun hisob sozlamalarini boshqarish va bekor qilish, shuningdek autentifikatsiya usullarini o‘zgartirish huquqi.
+Vositachi quyidagi majburiyatlarga ega:
+Xizmatlarni e’lon qilingan tavsif va standartlarga muvofiq, professional darajada va imkon qadar o‘z vaqtida ko‘rsatish;
+Mijozning shaxsiy ma’lumotlarini amaldagi qonunchilik va Maxfiylik siyosatida belgilangan tartibda yig‘ish, saqlash va himoya qilish;
+Shartnoma shartlariga va platforma qoidalariga rioya qilish hamda xizmat ko‘rsatish shartlarini aniq va tushunarli qilib e’lon qilish;
+Mijozdan kelib tushgan shikoyatlarni rasman qabul qilib, ularga ma’lum muddat ichida (masalan, 7–30 kun ichida) javob berish;
+Texnik muammolar yoki ma’lumotlar buzilishi aniqlanganda zarur choralarni ko‘rib, ta’sirlangan foydalanuvchilarga xabar berish;
+Uchinchi tomon xizmatlari orqali amalga oshirilayotgan funksiyalar uchun zaruriy shart-sharoitlarni ta’minlash va ularning xavfsizligi bo‘yicha minimal tekshiruvlarni o‘tkazish;
+Xizmatlar va to‘lovlar bo‘yicha aniq hisob-kitoblar yuritish, qoidalarga rioya qilib qaytarish va kompensatsiya tartibini ta’minlash;
+Shartnoma yoki qonun hujjatlarida belgilangan boshqa majburiyatlarga amal qilish va mijozlarni o‘zgarishlar haqida o‘z vaqtida xabardor qilish.
+Mijoz quyidagi majburiyatlarga ega:
+To‘lovlarni belgilangan muddatlarda to‘liq va o‘z vaqtida amalga oshirish;
+Xizmatlardan faqat qonuniy, axloqiy va platforma qoidalariga muvofiq maqsadlarda foydalanish;
+Shartnoma shartlariga va platforma qoidalariga rioya qilish, hamda Vositachi so‘ragan vaqtda to‘liq va haqqoniy ma’lumot taqdim etish;
+Hisob ma’lumotlari, login va parollarni xavfsiz saqlash; ular orqali sodir bo‘lgan noxush holatlar uchun Vositachi darhol xabar berishni ta’minlash;
+Yuborilgan ma’lumotlar yoki hujjatlarning to‘g‘riligini tasdiqlash va noto‘g‘ri yoki aldovli ma’lumotlar yetkazmaganlik uchun javobgarlikni o‘z zimmasiga olish;
+Platforma orqali ta’qdim etilgan xizmatlardan foydalanish bilan bog‘liq uchinchi tomon qonunlariga rioya qilish va kerakli ruxsatnomalarni taqdim etish;
+Shikoyat yoki da’volarni aniqlik bilan va zarur hujjatlar bilan taqdim etish hamda nizolarni hal qilish jarayonida hamkorlik qilish;
+Agar mijoz o‘z majburiyatlarini bajarmasa, kelib chiqadigan barcha to‘lovlar, jarimalar va huquqiy xarajatlar uchun javobgar bo‘lish.
+Vositachi ushbu ofertaga bir tomonlama ravishda o'zgartirishlar kiritish huquqiga ega bo'lib, bunday o'zgartirishlar haqida foydalanuvchilarga "Checkout" agregatori interfeysi yoki www.tezcheck.uz veb-saytida e'lon qilinadi.
+Mijoz ushbu ofertaning o'zgartirilgan shartlarini qabul qilmasa, u xizmatlardan foydalanishni to'xtatishi va shartnomani bekor qilishi mumkin.
+TOMONLARNING JAVOBGARLIGI
+Tomonlar shartnoma shartlarini bajarmaslik yoki noto‘g‘ri bajarish natijasida qonunlarda belgilangan tartibda javobgar bo‘ladi.
+Vositachi xizmatlar ko‘rsatishda e’tibor va kasbiy standartlarga rioya qilib harakat qiladi; ammo, xizmatlar sifatining yaratuvchi va texnik cheklovlar, uchinchi tomon tizimlari yoki foydalanuvchining noto‘g‘ri harakatlari tufayli yuzaga kelgan noqulayliklar uchun to‘liq javobgar bo‘lmasligi mumkin.
+Foydalanuvchi ushbu shartnoma bo‘yicha o‘z majburiyatlarini bajarmaganligi yoki noto‘g‘ri bajarganligi natijasida yuzaga kelgan to‘g‘ridan-to‘g‘ri va bilvosita zararlar uchun javobgar hisoblanadi; shu jumladan, zararlar, sanksiyalar, jarimalar va huquqiy xarajatlar kiradi.
+Vositachi foydalanuvchining xabarsiz yoki ruxsatsiz kirishi, hisoblarning buzilishi yoki shaxsiy ma’lumotlarning oshkor bo‘lishi natijasida yuzaga kelgan zararlar uchun, agar u o‘z majburiyatlarini qasddan yoki og‘ir beparvolik bilan buzgan bo‘lsa, javobgar bo‘ladi; boshqa holatlarda javobgarlik qonun bilan cheklanishi mumkin.
+Foydalanuvchi shaxsiy ma’lumotlarni noto‘g‘ri taqdim etishi, xavfsiz saqlamasligi yoki ruxsatsiz baham ko‘rishi natijasida uchragan zararlar uchun mas’uliyatni o‘z zimmasiga oladi.
+Agar shartnoma shartlarining bajarilishi bank, to‘lov tizimlari, kommunikatsiya xizmatlari yoki boshqa uchinchi tomonlarning nazorati va texnik holatlariga bog‘liq bo‘lsa, Vositachi ushbu omillarga bog‘liq bo‘lgan zararlar uchun to‘liq yoki qisman javobgar bo‘lmasligi mumkin, bunda amaldagi qonunlar tatbiq etiladi.
+Vositachi o‘zining nojo‘ya harakatlari yoki og‘ir beparvoligi tufayli shartnoma shartlarini buzgan taqdirda, u to‘liq javobgarlikni o‘z zimmasiga oladi va zararlarni qoplash uchun zarur choralarni ko‘radi.
+Tomonlar o‘rtasida kelib chiqqan nizolarni avvalo o‘zaro muzokaralar orqali hal qilishga harakat qilinadi; kelishuvga erishilmasa, nizolar O‘zbekiston Respublikasi qonunchiligiga muvofiq hal qilinadi va tegishli sud organlariga murojaat qilinadi.
+Majburiyatlarning cheklanishi: Ushbu shartnoma bo‘yicha Vositachining umumiy javobgarligi bevosita zararlar bilan cheklanadi va hech qachon tasodifiy, maxsus, bilvosita yoki oqibatli zararlar uchun javobgar bo‘lmaydi, agar bunday cheklov amaldagi qonunchilikka zid bo‘lmasa.
+Majburiyatlarning muddati: Tomonlarning tarafidan qo‘yilgan da’volar shartnoma tugaganidan keyin 1 (bir) yil ichida bildirilishi kerak, aks holda bunday da’vo bekor hisoblanadi, agar amaldagi qonunlar boshqa muddatni talab qilmasa.
+Ma’lumotlar buzilishi va xabar berish: Agar shaxsiy ma’lumotlarning buzilishi yoki kirib borilishi aniqlansa, Vositachi imkon qadar tezkor ravishda foydalanuvchiga va belgilangan organlarga xabar beradi hamda vaziyatni bartaraf etish uchun zarur texnik va tashkiliy choralarni ko‘radi.
+Tomonlardan biri shartnoma shartlarini buzsa va bunday buzilishni 30 kun ichida bartaraf etmasa, boshqa tomon shartnomani bekor qilish yoki xizmatlarni to‘xtatib qo‘yish huquqiga ega.
+O‘tkazib bo‘lmaydigan kuch (fors major): Tabiiy ofatlar, urush, pandemiya, davlat taqiqlari, elektr va aloqa uzilishlari kabi omillar tufayli tomonlar majburiyatlarini bajarolmasa, bunday holat rasmiy ravishda bildirilgandan so‘ng majburiyatlar vaqtincha to‘xtatiladi; agar bunday holat 90 kundan ortiq davom etsa, tomonlardan har biri shartnomani bekor qilish huquqiga ega.
+Ajratiluvchanlik va yuridik kuchga ega bo‘lishi: Agar ushbu shartnoma bandlaridan birortasi amaldagi qonunlarga zid ekani aniqlansa, qolgan bandlar kuchda qoladi va tomonlar qonunga muvofiq muqobil tartibni belgilashga harakat qiladi.
+Shartnoma bilan bog‘liq barcha xabarnomalar va bildirishnomalar yozma shaklda yuborilishi va tomonlar ro‘yxatda ko‘rsatilgan elektron pochta yoki Telegram manzillari orqali amalga oshiriladi.
+Vositachi ushbu ofertani oldindan ogohlantirmasdan yangilash yoki o‘zgartirish huquqiga ega; o‘zgartirishlar e’lon qilingandan so‘ng Mijoz ulardan xabardor hisoblanadi va agar u yangilangan shartlarni qabul qilmasa, xizmatlardan foydalanishni to‘xtatishi kerak.
+Shartnoma bo‘yicha barcha savollar va da’volar uchun Mijoz Vositachiga quyidagi manzillar orqali murojaat qilishi mumkin: info@tezcheck.uz yoki rasmiy Telegram bot orqali.
+QO'SHIMCHA SHARTLAR
+Ushbu shartnoma tomonlarning to‘liq kelishuvini tashkil etadi va avvalgi barcha og‘zaki yoki yozma kelishuvlarni bekor qiladi.
+Tomonlar ushbu shartnomani o‘z vakolatlari doirasida imzolaganliklarini tasdiqlaydilar.
+Vositachi mijozga taqdim etilayotgan xizmatlar sifatini yaxshilash maqsadida statistika va anonim ma’lumotlarni yig‘ishi va tahlil qilishi mumkin.
+Vositachi va Mijoz o‘rtasidagi o‘zaro munosabatlar hamda kelib chiqqan nizolarni hal qilish bo‘yicha qo‘shimcha tartiblar, muddatlar va javobgarlik cheklovlari alohida belgilanishi mumkin.
+Hujjatlarda keltirilgan barcha majburiyatlar va huquqlar amaldagi qonunchilikka muvofiq tushunilishi va tatbiq etilishi lozim.
+Agar Vositachi tomonidan xizmat ko‘rsatishda kechikish yoki nosozlik yuzaga kelsa, Mijoz o‘z huquqlarini qonuniy tartibda himoya qilish huquqiga ega.
+Ushbu bo‘limdagi huquq va majburiyatlar xizmatlarning turiga qarab qo‘shimcha shartlar bilan kengaytirilishi yoki aniqlashtirilishi mumkin.
+Hujjat haqida
+Versiya
+2026-09.1
+Kuchga kirgan
+17.09.2026
+Matn raqamli izi
+8c49933bf71cf47e0937cf8c2706892f3bb76039c8f9d24300f926a37f0d936f

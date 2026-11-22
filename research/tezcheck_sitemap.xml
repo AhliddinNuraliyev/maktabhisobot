@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url>
+<loc>https://tezcheck.uz/</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/" />
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/" />
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/" />
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/api-docs</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/api-docs" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/api-docs" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/api-docs" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/api-docs" />
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/api-docs</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/api-docs" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/api-docs" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/api-docs" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/api-docs" />
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/api-docs</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/api-docs" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/api-docs" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/api-docs" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/api-docs" />
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/news</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/news" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/news" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/news" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/news" />
+<changefreq>daily</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/news</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/news" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/news" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/news" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/news" />
+<changefreq>daily</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/news</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/news" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/news" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/news" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/news" />
+<changefreq>daily</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/help</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/help" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/help" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/help" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/help" />
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/help</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/help" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/help" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/help" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/help" />
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/help</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/help" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/help" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/help" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/help" />
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/legal</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal" />
+<changefreq>yearly</changefreq>
+<priority>0.3</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/legal</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal" />
+<changefreq>yearly</changefreq>
+<priority>0.3</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/legal</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal" />
+<changefreq>yearly</changefreq>
+<priority>0.3</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/legal/terms</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/terms" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/terms" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/terms" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/legal/terms</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/terms" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/terms" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/terms" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/legal/terms</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/terms" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/terms" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/terms" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/legal/privacy</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/privacy" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/legal/privacy</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/privacy" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/legal/privacy</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/privacy" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/privacy" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/legal/public_offer</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/public_offer" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/ru/legal/public_offer</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/public_offer" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://tezcheck.uz/en/legal/public_offer</loc>
+<xhtml:link rel="alternate" hreflang="uz" href="https://tezcheck.uz/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="ru" href="https://tezcheck.uz/ru/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="en" href="https://tezcheck.uz/en/legal/public_offer" />
+<xhtml:link rel="alternate" hreflang="x-default" href="https://tezcheck.uz/legal/public_offer" />
+<lastmod>2026-09-17T06:45:34+00:00</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+</urlset>

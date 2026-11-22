@@ -1,0 +1,36 @@
+Shaxsiy ma'lumotlarni qayta ishlashga rozilik · TEZCHECK.UZ
+Asosiy qismga o‘tish
+TEZCHECK.UZ
+Kirish
+Ro‘yxatdan o‘tish
+Barcha hujjatlar
+Shaxsiy ma'lumotlarni qayta ishlashga rozilik
+Versiya
+2026-09.1
+Kuchga kirgan
+17.09.2026
+Ushbu bilan men Farg’ona viloyati, Quva tumanidan ro‘yxatdan o‘tgan O'O'BQ "Olloyor Mamasaidov" (keyingi o‘rinlarda “Vositachi”), “Vositachi” tomonidan vakolat berilgan boshqa tashkilotlarga O‘zbekiston Respublikasi hududida hamda uning hududidan tashqarida avtomatlashtirilgan, shuningdek, avtomatlashtirish vositalaridan foydalanmasdan, shaxsiy ma’lumotlarimni qayta ishlash, ya’ni toʻplash, qayd etish, tizimlashtirish, yigʻish, saqlash, aniqlashtirish (yangilash, oʻzgartirish, qoʻshish), koʻchirma olish, foydalanish, uchinchi shaxslarga berish, shu bilan birga shaxsiy maʼlumotlar subyektlarining huquqlarini yetarli darajada himoyasini taʼminlovchi va taʼminlamaydigan xorijiy davlatlar hududiga uzatish, tarqatish, ochiq Internet-resurslarda – “Vositachi” veb-saytlari sahifalarida joylashtirish, shaxsga doir ma’lumotlarni shaxssizlantirish va yoʻq qilish, shu jumladan, lekin ular bilan cheklanmagan holda, o‘z roziligimni beraman:
+ism, familiya va otasining ismi;
+biometrik ma’lumotlar;
+tugʻilgan kun;
+yashash manzili;
+pasport ma’lumotlar;
+bogʻlanish uchun telefon raqam;
+elektron pochta manzili;
+soliq to‘lovchining identifikatsiya raqami;
+shaxsiy identifikatsiya raqami (JShShIR);
+bank kartasi haqidagi ma’lumotlar, shuningdek, bank kartalari yordamida amalga oshirilgan har qanday pul operatsiyalari;
+Quyidagi maqsadlar uchun:
+O‘zbekiston Respublikasi qonunchiligi va ichki normativ hujjatlarga rioya etilishini ta’minlash;
+men ishtirok etgan shartnomalarni tuzish va bajarish, shu jumladan shartnomalar boʻyicha majburiyatlarning joriy va kelajakda bajarilishini nazorat qilish va bashorat qilish boʻyicha choralar koʻrish;
+O‘zbekiston Respublikasi qonunchiligiga muvofiq men haqimda har qanday ma’lumotni istalgan vaqtda istalgan manbadan istalgan miqdorda so‘rash;
+“Vositachi” tomonidan statistik va/yoki marketing tadqiqotlar oʻtkazish, aksiyalar, so‘rovnomalar, so‘rovlar va/yoki yangi mahsulotlar/xizmatlar to‘g‘risida ma’lumotlar berish;
+men bilan bogʻlanish, shu jumladan mahsulot/xizmatlardan foydalanish boʻyicha xabarnomalar, soʻrovlar va ma’lumotlarni yuborish, shuningdek, mendan olingan soʻrovlar va arizalarni qayta ishlash, shu jumladan bunday soʻrovlar va arizalarni kontragentlarga ijro uchun keyinchalik taqdim etish;
+@tezcheckbot telegram botidan foydalangan holda qonunchilik yoki kelishuv talablariga zid bo‘lgan xatti-harakatlarning oldini olish. Ushbu rozilik noma’lum muddatga beriladi. O‘zbekiston Respublikasining 02.07.2019 yildagi “Shaxsga doir ma’lumotlar to‘g‘risida”gi O‘RQ-547-sonli Qonunining 22-moddasida nazarda tutilgan huquqlarimni, ya’ni shaxsga doir ma’lumotlarga ishlov berish borasida ma’lumotlarni olish huquqim mavjudligi toʻgʻrisida bilaman va ular quyidagilarni oʻz ichiga oladi: 1) shaxsga doir ma’lumotlarni qayta ishlash faktini tasdiqlash; 2) shaxsga doir ma’lumotlarni qayta ishlash asoslari va maqsadlari; 3) shaxsga doir ma’lumotlarni qayta ishlashda qoʻllaniladigan usullar; 4) operatorning nomi va joylashgan joyi, shaxsga doir ma’lumotlarga kirish huquqiga ega boʻlgan yoki shaxsga doir ma’lumotlar operator bilan tuzilgan shartnoma yoki qonun asosida oshkor etilishi mumkin boʻlgan shaxslar (operator xodimlaridan tashqari) toʻgʻrisidagi ma’lumotlar; 5) tegishli shaxsga doir ma’lumotlar subyektining qayta ishlanayotgan shaxsga doir ma’lumotlarning tarkibi, ularni olish manbasi, agar qonun hujjatlarida bunday ma’lumotlarni taqdim etishning boshqa tartibi nazarda tutilmagan boʻlsa; 6) shaxsga doir ma’lumotlarni qayta ishlash muddatlari, shu jumladan ularni saqlash muddatlari; 7) shaxsga doir ma’lumotlar subyektining “Shaxsga doir ma’lumotlar toʻgʻrisida”gi Oʻzbekiston Respublikasi Qonunida nazarda tutilgan huquqlarni amalga oshirish tartibi; 8) uzatilgan yoki ma’lumotlar uzatilishi moʻljallangan transchegaraviy uzatishlar toʻgʻrisidagi ma’lumot. Men “Vositachi”ga istalgan shaklda ariza berish orqali Shaxsga doir ma’lumotlarni qayta ishlashga berilgan rozilikni bekor qilishim mumkinligini bilaman.
+Hujjat haqida
+Versiya
+2026-09.1
+Kuchga kirgan
+17.09.2026
+Matn raqamli izi
+4206c75b75fc4c18ab687fb8029ad371fb7bde37d55baf6ad7f941cde15cc8be

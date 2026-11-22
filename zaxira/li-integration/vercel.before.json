@@ -1,0 +1,23 @@
+{
+  "rewrites": [
+    { "source": "/favicon.ico", "destination": "/maktabhisobot_icon.svg.png" },
+    { "source": "/bsb", "destination": "/index.html" },
+    { "source": "/chsb", "destination": "/index.html" },
+    { "source": "/li", "destination": "/li.html" },
+    { "source": "/kuratorlik", "destination": "/index.html" },
+    { "source": "/choraklik", "destination": "/index.html" },
+    { "source": "/malumotlarim", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://telegram.org https://*.telegram.org" }
+      ]
+    }
+  ]
+}

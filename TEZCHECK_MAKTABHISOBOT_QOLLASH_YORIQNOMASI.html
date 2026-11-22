@@ -1,0 +1,920 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEZCHECK → Maktab Hisobot yo‘riqnomasi</title><style>body{font:15px/1.65 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#1a2340;background:#f7f9fc;margin:0;padding:32px 20px}main{max-width:1000px;margin:0 auto;background:#fff;border:1px solid #dfe6f0;border-radius:14px;padding:36px 44px;box-shadow:0 6px 30px rgba(20,33,58,.06)}h1{font-size:28px;color:#123b73;border-bottom:3px solid #1f5fbf;padding-bottom:12px}h2{font-size:21px;color:#17477f;margin-top:36px;border-left:4px solid #1f5fbf;padding-left:10px}h3{color:#1d3155}h4{color:#31517f}table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px}th,td{border:1px solid #d7e0ec;padding:8px 10px;text-align:left;vertical-align:top}th{background:#eaf1fc;color:#153a6b}code{background:#eef3fa;color:#b3261e;padding:1px 5px;border-radius:4px;font-size:13px}pre{background:#f2f5f9;border:1px solid #d7e0ec;border-radius:8px;padding:14px;overflow:auto;line-height:1.45}pre code{background:none;color:#1a2340;padding:0}blockquote{border-left:4px solid #f0a500;background:#fff8e8;margin:16px 0;padding:10px 16px;color:#5c4400}ul,ol{padding-left:24px}li{margin:4px 0}hr{border:0;border-top:1px solid #e1e5eb;margin:30px 0}@media(max-width:700px){main{padding:20px}body{padding:12px}}
+</style></head><body><main><h1 id="tezcheckuz-maktabhisobotuz-qollash-integratsiya-yoriqnomasi">TEZCHECK.UZ → MAKTABHISOBOT.UZ qo‘llash (integratsiya) yo‘riqnomasi</h1>
+<p><strong>Hujjat holati:</strong> tadqiqot va tayyorgarlik. <strong>Hech narsa joriy qilinmadi, kod o‘zgartirilmadi, deploy qilinmadi.</strong>
+<strong>Tayyorlangan sana:</strong> 21.11.2026
+<strong>Manbalar:</strong> <code>https://tezcheck.uz</code> (asosiy sahifa, API hujjatlari, huquqiy hujjatlar, yordam, status), <code>https://maktabhisobot.uz</code> (tirik sayt) va ish maydonidagi haqiqiy manba kod (<code>index.html</code>, <code>api/*</code>, <code>supabase-encrypt-setup.ps1</code>).</p>
+<blockquote>
+<p>Muhim: <code>index.html</code> ning mahalliy nusxasi bilan tirik saytdagi nusxasi MD5 bo‘yicha bir xil (<code>733320c4...</code>). Demak, pastdagi tahlil aynan hozir ishlab turgan tizimga tegishli.</p>
+</blockquote>
+<hr />
+<h2 id="0-qisqa-xulosa">0. Qisqa xulosa</h2>
+<table>
+<thead>
+<tr>
+<th>Savol</th>
+<th>Javob</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tezcheck.uz nima?</td>
+<td>O‘zbekistondagi to‘lov agregatori: Click, Payme, Uzcard/Humo va boshqa provayderlarni <strong>bitta REST API + imzolangan webhook</strong> orqali qabul qilish platformasi.</td>
+</tr>
+<tr>
+<td>Maktabhisobot.uz nima?</td>
+<td>Maktab o‘qituvchilari uchun elektron hisobot tizimi (BSB, CHSB, LI, kuratorlik, choraklik hisobotlar; emaktab.uz jurnalidan Excel import; PDF/Excel eksport).</td>
+</tr>
+<tr>
+<td>Ikkisini nima bog‘laydi?</td>
+<td><strong>To‘lov → huquq (Premium tarif)</strong> oqimi. Hozir maktabhisobot.uz da to‘lov kodi yo‘q: <code>premium</code> ni faqat admin qo‘lda <code>/api/admin/premium</code> orqali yoqadi.</td>
+</tr>
+<tr>
+<td>Integratsiya qanday ishlashi kerak?</td>
+<td>Foydalanuvchi saytda “Premium sotib olish” tugmasini bosadi → <strong>bizning serverimiz</strong> Tezcheck API orqali hisob (bill) yaratadi → <code>payment_url</code> ga o‘tadi → to‘lovdan keyin Tezcheck <strong>imzolangan webhook</strong> yuboradi → server uni tekshirib, <code>mh_users.is_premium = true</code> qiladi.</td>
+</tr>
+<tr>
+<td>Eng katta xavf nima?</td>
+<td>Tezcheckning <strong>“Foydalanish shartlari” va “Savdogar shartlari” hali placeholder</strong> matn (<code>Publish the approved ... before this platform accepts real money</code>). Haqiqiy pul qabul qilishdan oldin bu hujjatlar tasdiqlanishi shart.</td>
+</tr>
+<tr>
+<td>Hozir nima qilish kerak?</td>
+<td>Faqat Tezcheckda ro‘yxatdan o‘tib, kassa/API kalit/webhook uchun ma’lumotlarni olish. Keyin birga joriy qilamiz.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-tezcheckuz-chuqur-tahlili">1. TEZCHECK.UZ chuqur tahlili</h2>
+<h3 id="11-platforma-haqida">1.1. Platforma haqida</h3>
+<ul>
+<li><strong>Asosiy manzil:</strong> <code>https://tezcheck.uz</code></li>
+<li><strong>API manzili:</strong> <code>https://api.tezcheck.uz/api/merchant/v1</code></li>
+<li><strong>API hujjatlari (hisobsiz ochiq):</strong> <code>https://tezcheck.uz/api-docs</code></li>
+<li><strong>Tizim holati (hisobsiz ochiq):</strong> <code>https://tezcheck.uz/status</code></li>
+<li><strong>Monitoring:</strong> <code>GET /api/merchant/v1/health</code> — kalit talab qilmaydi</li>
+<li><strong>Yordam:</strong> <code>https://tezcheck.uz/help</code>; Telegram: <code>@call_menejer</code>, kanal: <code>@tezcheck</code></li>
+<li><strong>E-pochta:</strong> <code>info@tezcheck.uz</code></li>
+<li><strong>Tillar:</strong> uz / ru / en</li>
+<li><strong>Huquqiy shaxs:</strong> O‘O‘BQ “Olloyor Mamasaidov” (Farg‘ona viloyati, Quva tumani)</li>
+<li><strong>Huquqiy hujjatlar versiyasi:</strong> <code>2026-09.1</code>, kuchga kirgan <code>17.09.2026</code></li>
+<li><code>/legal/public_offer</code>, <code>/legal/intermediary_agreement</code>, <code>/legal/privacy</code>, <code>/legal/consent</code>, <code>/legal/terms</code>, <code>/legal/merchant_terms</code>, <code>/legal/gift_agreement</code></li>
+</ul>
+<p>Asosiy sahifadagi va’dalar: karta ma’lumotlari platformada saqlanmaydi; to‘lov faqat provayder tasdig‘i bilan yakunlanadi; maxfiy kalitlar interfeysda ko‘rsatilmaydi; har bir amal audit iziga tushadi.</p>
+<h3 id="12-imkoniyatlar">1.2. Imkoniyatlar</h3>
+<ul>
+<li>To‘lov havolalari: bir martalik yoki qayta ishlatiladigan, belgilangan yoki mijoz kiritadigan summa.</li>
+<li>Moslashgan to‘lov sahifasi (<code>payment_url</code>).</li>
+<li>Kassalar: har bir savdo nuqtasi/kanal uchun alohida kassa va alohida hisobot.</li>
+<li>Ikkitaliq yozuv (ledger), cheklar (7 kun ochiladi), audit izi.</li>
+<li>REST API + imzolangan webhook + idempotency.</li>
+<li>«Test provider» — alohida kalitsiz sinov to‘lovlari.</li>
+</ul>
+<h3 id="13-royxatdan-otish-va-faollashtirish-siz-hozir-qilayotgan-bosqich">1.3. Ro‘yxatdan o‘tish va faollashtirish (siz hozir qilayotgan bosqich)</h3>
+<p><code>https://tezcheck.uz/register</code> dagi 3 bosqich:</p>
+<ol>
+<li><strong>Ma’lumotlar:</strong> ism, familiya, telefon (<code>+998</code>) <strong>yoki</strong> e-pochta, shartlarga rozilik. Google orqali ham kirish mumkin.</li>
+<li><strong>Tasdiqlash:</strong> telefon SMS kod bilan, yoki e-pochta orqali. Telefonni keyinroq tasdiqlash mumkin, <strong>lekin kassa ochishdan oldin majburiy</strong>.</li>
+<li><strong>Parol</strong> + ikki bosqichli himoyani yoqish (tavsiya qilinadi).</li>
+</ol>
+<p>Keyingi bosqichlar (kabinetda):</p>
+<ol start="4">
+<li><strong>Shaxsni tasdiqlash</strong> — odam ko‘rib chiqadi, odatda bir necha ish kuni. Tasdiqlanmaguncha savdo arizasini yuborib bo‘lmaydi.</li>
+<li><strong>Savdogar arizasi</strong> → tasdiqlangach kassa ochish ruxsati.</li>
+<li><strong>Kassa yaratish:</strong> nom, valyuta (faqat UZS), to‘lov usullari, <code>return_url</code> ruxsat ro‘yxati, IP oq ro‘yxati (IPv4/IPv6/CIDR).</li>
+<li><strong>API kalit yaratish:</strong> tashkilot darajasida (barcha kassalar) yoki bitta kassaga biriktirilgan. Kalit faqat bir marta to‘liq ko‘rsatiladi/keyin qayta nusxalanadi.</li>
+<li><strong>Webhook endpoint qo‘shish:</strong> HTTPS, tashqi tarmoqdan ochiq bo‘lishi shart; imzo maxfiy kaliti (<code>whsec_...</code>) bir marta ko‘rsatiladi.</li>
+<li><strong>Sinov:</strong> «Test provider» orqali to‘lov. <code>endpoint: "test"</code> / <code>livemode: false</code> bilan keladi, balansga tushmaydi, 1 kundan keyin bekor qilingan holatda qoladi.</li>
+</ol>
+<h3 id="14-autentifikatsiya-va-xavfsizlik">1.4. Autentifikatsiya va xavfsizlik</h3>
+<p>Har bir so‘rovda ikki qiymat:</p>
+<table>
+<thead>
+<tr>
+<th>Qiymat</th>
+<th>Qayerda</th>
+<th>Ma’nosi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API kalit (<code>aps_...</code>)</td>
+<td><code>Authorization: Bearer ...</code></td>
+<td><strong>Sir.</strong> Kim chaqirayotgani.</td>
+</tr>
+<tr>
+<td>Kassa kodi (<code>cdk_...</code>)</td>
+<td><code>X-Cash-Desk-Code: ...</code></td>
+<td>Sir emas. Qaysi kassa haqida ekani. Yolg‘iz huquq bermaydi.</td>
+</tr>
+</tbody>
+</table>
+<p>Muhim qoidalar:</p>
+<ul>
+<li>API’ni <strong>faqat serverdan</strong> chaqirish kerak, brauzerdan emas.</li>
+<li>Kalit tashkilot darajasida bo‘lsa, <code>X-Cash-Desk-Code</code> shart; bitta kassaga biriktirilgan bo‘lsa, boshqa kassa kodi → <code>auth.permission_denied</code>.</li>
+<li>Kalit almashtirilganda <strong>eskisi 24 soat yashaydi</strong>. Shoshilinch bo‘lsa “eskisini darhol o‘chirish” belgisini qo‘yish kerak.</li>
+<li>IP ro‘yxati bo‘sh bo‘lsa, hech qanday manzil cheklanmaydi; to‘ldirilsa, ruxsat etilmagan IP dan <code>auth.forbidden</code>.</li>
+<li><strong>Ixtiyoriy imzolangan so‘rovlar:</strong> <code>X-TezCheck-Timestamp</code> (unix soniya) va <code>X-TezCheck-Signature: v1=&lt;hex&gt;</code>:
+  <code>{timestamp}.{METHOD}.{path+query}.{sha256_hex(body)}</code>
+  HMAC-SHA256, kalit bilan. Vaqt ±300 s. Har bir imzo <strong>bir marta</strong> ishlaydi → har bir retry yangi vaqt bilan qayta imzolanadi. Ikkala headerdan biri kelsa, ikkalasi ham to‘g‘ri bo‘lishi shart. Kabinetda “faqat imzolangan” yoqilsa, imzosiz so‘rov <code>request.signature_invalid (signature.required)</code>.</li>
+<li><strong>Idempotency-Key:</strong> <code>POST /bills</code>, <code>/cancel</code>, <code>/reissue</code> uchun. 1–128 ASCII belgi. 24 soat eslab qolinadi. Qayta yuborsangiz birinchi javob <code>Idempotent-Replayed: true</code> bilan qaytadi, ikkinchi hisob yaratilmaydi. Boshqa tana/yo‘l bilan same kalit → <code>409 request.idempotency_key_reused</code>.</li>
+</ul>
+<h3 id="15-summalar">1.5. Summalar</h3>
+<ul>
+<li>Hammasi <strong>tiyin</strong> da, butun son: <code>1 so‘m = 100 tiyin</code>. <code>150 000 so‘m = 15 000 000</code>.</li>
+<li>Kasr yubormang — yaxlitlanadi.</li>
+<li>Faqat <strong>UZS</strong>. So‘rovda <code>currency</code> yuborilmaydi, javobda har doim <code>UZS</code>.</li>
+<li>Standart minimal summa <code>100 000</code> tiyin = <strong>1 000 so‘m</strong>; chegaradan chiqsa <code>422 payment_link.amount_out_of_range</code>.</li>
+</ul>
+<h3 id="16-endpointlar-toliq-royxati">1.6. Endpointlar to‘liq ro‘yxati</h3>
+<p>Bazaviy URL: <code>https://api.tezcheck.uz/api/merchant/v1</code></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Endpoint</th>
+<th>Auth</th>
+<th>Kassa</th>
+<th>Vazifa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>GET /me</code></td>
+<td>ha</td>
+<td>ixtiyoriy</td>
+<td>Kalit/kassa bog‘lanishini tekshirish. <code>token_hint</code>, <code>request_signed</code>, <code>signed_requests_required</code>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>POST /cash-desks</code></td>
+<td>ha</td>
+<td><strong>yo‘q</strong></td>
+<td>Kalit ko‘radigan kassalar ro‘yxati va <code>code</code> larni olish.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>POST /bills</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Buyurtma uchun hisob yaratish, <code>payment_url</code> olish.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>POST /bills/{bill}</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Hisob va to‘lov holatini so‘rab olish (webhookni tekshirish uchun).</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>POST /bills/{bill}/cancel</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Havolani o‘chirish (qaytarib bo‘lmaydi).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>POST /transactions</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Kassaning to‘lovlar oqimi, kursorli sahifalash.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>POST /balance</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Tashkilot balansi (kassaga emas).</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>POST /stats</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Bugun/kecha/7 kun/30 kun statistikasi (<code>Asia/Tashkent</code>).</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>POST /payment-methods</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Haqiqatda tanlab bo‘ladigan to‘lov usullari.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>POST /bills/{bill}/reissue</code></td>
+<td>ha</td>
+<td>ha</td>
+<td>Yo‘qolgan havolani <strong>yangisiga almashtirish</strong> (eskisi o‘ladi).</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>GET /health</code></td>
+<td>yo‘q</td>
+<td>yo‘q</td>
+<td>Monitoring: <code>{"data":{"status":"ok"}}</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>POST /bills</code> tanasi:</strong></p>
+<pre><code class="language-json">{
+  &quot;amount_minor&quot;: 15000000,
+  &quot;title&quot;: &quot;Premium obuna&quot;,
+  &quot;description&quot;: &quot;...&quot;,
+  &quot;external_reference&quot;: &quot;mh:&lt;user-id&gt;:premium-30d:&lt;timestamp&gt;&quot;,
+  &quot;return_url&quot;: &quot;https://maktabhisobot.uz/malumotlarim&quot;,
+  &quot;allowed_provider_codes&quot;: [&quot;click&quot;, &quot;payme&quot;]
+}
+</code></pre>
+<p>Javobda: <code>bill.id</code> (<code>link_...</code>), <code>bill.reference</code>, <code>bill.state</code>, <code>available_until</code>, va <strong><code>payment_url</code> — faqat bir marta qaytariladi</strong>. Uni darhol bazaga saqlash kerak; yo‘qotsa <code>reissue</code> yangi token beradi va eskisini o‘chiradi.</p>
+<p><strong><code>POST /bills/{bill}</code> javobining muhim qismlari:</strong></p>
+<ul>
+<li><code>bill.paid</code>, <code>bill.livemode</code>, <code>bill.environment</code>, <code>bill.unavailability_reason</code></li>
+<li><code>payment.state</code>, <code>payment.amount_minor</code>, <code>payment.fee_minor</code>, <code>payment.net_minor</code>, <code>payment.succeeded_at</code></li>
+<li><code>payment_url</code> bu yerda <strong>har doim <code>null</code></strong> — bu normal.</li>
+<li><strong>To‘langanligini <code>bill.state</code> ga qarab emas, <code>bill.paid</code> ga qarab tekshirish kerak</strong>: to‘langan hisob keyinchalik <code>expired</code> bo‘lib qolishi mumkin, lekin pul kelgan.</li>
+</ul>
+<p><strong>To‘lov holatlari:</strong> <code>draft</code>, <code>open</code>, <code>requires_action</code>, <code>processing</code>, <code>succeeded</code>, <code>failed</code>, <code>canceled</code>, <code>expired</code>, <code>partially_refunded</code>, <code>refunded</code>, <code>disputed</code>, <code>charged_back</code>.
+<strong>Hisob holatlari:</strong> <code>draft</code>, <code>active</code>, <code>paused</code>, <code>expired</code>, <code>exhausted</code>, <code>revoked</code>.
+<strong>Kassa holatlari:</strong> <code>draft</code>, <code>active</code>, <code>paused</code>, <code>suspended</code>, <code>archived</code>.</p>
+<h3 id="17-webhook-eng-muhim-qism">1.7. Webhook — eng muhim qism</h3>
+<p><strong>Headerlar:</strong></p>
+<pre><code>POST /webhooks/tezcheck HTTP/1.1
+Content-Type: application/json
+User-Agent: Checkout-Webhooks/1.0
+Cache-Control: no-store
+X-Checkout-Event: payment.succeeded
+X-Checkout-Event-Id: oev_...
+X-Checkout-Delivery: whd_...
+X-Checkout-Timestamp: 1786000000
+X-Checkout-Signature: v1=...,v1=...
+</code></pre>
+<p><strong>Imzo:</strong> <code>HMAC-SHA256(secret, "{timestamp}.{delivery_id}.{raw_body}")</code>, natija <code>v1=&lt;hex&gt;</code>.</p>
+<ul>
+<li><strong>Xom body</strong> hashlanadi: <code>json_decode</code> qilib qayta <code>encode</code> qilish mumkin emas (kalit tartibi/slash/unicode o‘zgaradi).</li>
+<li><code>v1=</code> prefiksini tekshirish kerak (kelajakdagi <code>v2</code> jimgina qabul qilinib ketmasligi uchun).</li>
+<li>Vaqt 5 minutdan eski bo‘lsa rad etish kerak.</li>
+<li>Kalit almashuvi paytida headerda <strong>ikki imzo</strong> vergul bilan keladi → har birini tekshirish, <code>hash_equals</code> ishlatish.</li>
+<li><strong>Dedup qilish <code>X-Checkout-Event-Id</code> bo‘yicha emas, tanadagi <code>id</code> bo‘yicha.</strong> Qayta yuborishda header yangi, tana <code>id</code> bir xil bo‘ladi.</li>
+<li><code>X-Checkout-Delivery</code> faqat qo‘llab-quvvatlash uchun; u bo‘yicha dedup qilish noto‘g‘ri.</li>
+</ul>
+<p><strong>Tana (muvaffaqiyatli):</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;oev_...&quot;,
+  &quot;type&quot;: &quot;payment.succeeded&quot;,
+  &quot;schema_version&quot;: 1,
+  &quot;created_at&quot;: &quot;...&quot;,
+  &quot;mode&quot;: &quot;test&quot;,
+  &quot;organization_id&quot;: &quot;90010&quot;,
+  &quot;cash_desk_id&quot;: &quot;90001&quot;,
+  &quot;data&quot;: {
+    &quot;payment_id&quot;: &quot;pay_...&quot;,
+    &quot;state&quot;: &quot;succeeded&quot;,
+    &quot;previous_state&quot;: &quot;processing&quot;,
+    &quot;amount_minor&quot;: 15000000,
+    &quot;currency&quot;: &quot;UZS&quot;,
+    &quot;cash_desk_public_id&quot;: &quot;90001&quot;,
+    &quot;external_reference&quot;: &quot;mh:...&quot;,
+    &quot;bill_id&quot;: &quot;link_...&quot;,
+    &quot;payment_channel&quot;: &quot;web&quot;,
+    &quot;fee_minor&quot;: 150000,
+    &quot;net_minor&quot;: 14850000,
+    &quot;succeeded_at&quot;: &quot;...&quot;,
+    &quot;provider_code&quot;: &quot;payme&quot;,
+    &quot;environment&quot;: &quot;live&quot;,
+    &quot;reason_code&quot;: null,
+    &quot;problem&quot;: null,
+    &quot;sequence&quot;: 4
+  }
+}
+</code></pre>
+<blockquote>
+<p><strong>Tuzoq:</strong> yuqoridagi <code>mode</code> barcha hodisalarda <code>test</code> bo‘lishi mumkin (bu konvert xususiyati). Ishonchli qiymat — <strong><code>data.environment</code></strong> (<code>live</code> / <code>test</code>).</p>
+</blockquote>
+<p><strong>Hodisa turlari:</strong> <code>payment.draft</code>, <code>open</code>, <code>requires_action</code>, <code>processing</code>, <code>succeeded</code>, <code>failed</code>, <code>canceled</code>, <code>expired</code>, <code>partially_refunded</code>, <code>refunded</code>, <code>disputed</code>, <code>charged_back</code>.</p>
+<p><strong>Yetkazib berish:</strong></p>
+<ul>
+<li>Standart: <strong>1 urinish</strong>, qayta urinish yo‘q. Kabinetda yoqsangiz: jami 3 urinish (0s / 5s / 5s, ±25% tasodifiy siljish).</li>
+<li>Qayta urinadi: <code>5xx</code>, timeout, tarmoq xatoliklari, <code>429</code>.</li>
+<li>Qayta urinmaydi: boshqa <code>4xx</code> (jumladan <code>408</code>), <code>3xx</code> (redirect kuzatilmaydi).</li>
+<li>Oxirgi urinish ham o‘tmasa → <code>dead_lettered</code>, keyin qo‘lda qayta yuborish.</li>
+<li>Endpoint <strong>2xx</strong> qaytarishi shart; ulanish 5 s, umumiy 10 s chegara; TLS haqiqiy bo‘lishi shart.</li>
+</ul>
+<p><strong>“Muammoli to‘lov” qoidasi (eng muhim biznes qoidasi):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Holat</th>
+<th>Nima qilish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>problem == null</code>, <code>state == succeeded</code>, <code>livemode == true</code></td>
+<td>Pul kelgan — huquqni bering.</td>
+</tr>
+<tr>
+<td><code>problem</code> bor, <code>unknown_reason == null</code></td>
+<td>Aniq rad etish — buyurtmani bekor qiling, mijozga ayting.</td>
+</tr>
+<tr>
+<td><code>problem</code> bor, <code>unknown_reason != null</code></td>
+<td><strong>Natija noma’lum</strong> — hech narsa qilmang: na bering, na bekor qiling, na qayta pul yechishga undang. <code>POST /bills/{bill}</code> yoki keyingi webhookni kuting.</td>
+</tr>
+<tr>
+<td><code>requires_action</code> / <code>processing</code>, <code>problem</code> yo‘q</td>
+<td>Mijoz hali tugatmagan — kuting.</td>
+</tr>
+</tbody>
+</table>
+<p><code>problem.category</code> ochiq ro‘yxat (<code>insufficient_funds</code>, <code>provider_declined</code>, <code>timeout</code>, <code>network</code>, <code>unknown</code> va h.k.) → kodda “qolgan hollar” tarmog‘i bo‘lishi shart. <code>unknown_reason</code> qiymatiga <strong>qarab emas, mavjudligiga qarab</strong> tarmoqlanish kerak.</p>
+<h3 id="18-xato-kodlari-qisqa">1.8. Xato kodlari (qisqa)</h3>
+<table>
+<thead>
+<tr>
+<th>Kod</th>
+<th>HTTP</th>
+<th>Retry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auth.unauthenticated</code>, <code>request.signature_invalid</code>, <code>request.timestamp_out_of_window</code>, <code>request.nonce_replayed</code></td>
+<td>401</td>
+<td>yo‘q</td>
+</tr>
+<tr>
+<td><code>auth.permission_denied</code>, <code>auth.forbidden</code>, <code>merchant.suspended</code></td>
+<td>403</td>
+<td>yo‘q</td>
+</tr>
+<tr>
+<td><code>resource.not_found</code>, <code>resource.state_invalid</code>, <code>request.idempotency_key_reused</code>, <code>resource.conflict</code></td>
+<td>404/409</td>
+<td>yo‘q</td>
+</tr>
+<tr>
+<td><code>request.validation_failed</code>, <code>payment_link.amount_out_of_range</code>, <code>payment.currency_unsupported</code></td>
+<td>422</td>
+<td>yo‘q</td>
+</tr>
+<tr>
+<td><code>request.rate_limited</code></td>
+<td>429</td>
+<td>ha</td>
+</tr>
+<tr>
+<td><code>server.internal_error</code></td>
+<td>500</td>
+<td>ha</td>
+</tr>
+</tbody>
+</table>
+<p>Har bir javobda <code>X-Request-Id</code> bor — qo‘llab-quvvatlashga yozganda shu qiymatni qo‘shish kerak.</p>
+<h3 id="19-cheklovlar">1.9. Cheklovlar</h3>
+<ul>
+<li><strong>300 so‘rov / daqiqa</strong></li>
+<li><code>POST /transactions</code>: standart 25, maksimum 200 yozuv; kursorli sahifalash (<code>meta.next_cursor === null</code> bo‘lguncha)</li>
+<li>Webhook: 1 (yoki yoqilsa 3) urinish; 10 s umumiy vaqt</li>
+<li>Kalit almashuvi: 24 soat</li>
+</ul>
+<h3 id="110-iqtisodiy-va-huquqiy-shartlar">1.10. Iqtisodiy va huquqiy shartlar</h3>
+<p><strong><code>/legal/intermediary_agreement</code> (Vositachilik shartnomasi):</strong></p>
+<table>
+<thead>
+<tr>
+<th>To‘lov turi</th>
+<th>Miqdor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Xizmat komissiyasi</td>
+<td><strong>3% – 5%</strong> (alohida kelishuv bilan belgilanadi)</td>
+</tr>
+<tr>
+<td>Integratsiya to‘lovi</td>
+<td><strong>0 so‘m</strong></td>
+</tr>
+<tr>
+<td>“Rasmiy” belgisi</td>
+<td>9 900 so‘m (bir marta)</td>
+</tr>
+<tr>
+<td>Penalti (kechiktirilgan o‘tkazma)</td>
+<td><strong>0.03% / kun</strong></td>
+</tr>
+<tr>
+<td>Pul o‘tkazish muddati</td>
+<td>topshiriq bajarilgandan keyin <strong>1–5 ish kuni</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Pul yechib olish <strong>qo‘lda so‘rov</strong> bilan amalga oshiriladi: “Muvaffaqiyatli to‘langan to‘lovlarni yechib olish uchun mijoz Vositachini xabardor qilishi shart”.</p>
+<p><strong><code>/legal/public_offer</code>:</strong> platformaga ro‘yxatdan o‘tish orqali oferta qabul qilingan hisoblanadi; shartlarni saytda e’lon qilish orqali bir tomonlama o‘zgartirish mumkin (15 kalendar kungacha); nizo: Termiz tumanlararo sudi yoki javobgar joyi bo‘yicha sud; aloqa: <code>info@tezcheck.uz</code>.</p>
+<p><strong><code>/legal/privacy</code>:</strong> shaxsga doir ma’lumotlar O‘zbekiston qonuni (<code>O‘RQ-547</code>, 02.07.2019) bo‘yicha qayta ishlanadi; ma’lumot so‘rovi 30 kun (zarur bo‘lsa 60 kun) ichida ko‘rib chiqiladi; ma’lumotlar O‘zbekiston ichida va tashqarisida, jumladan vakolatli tashkilotlarga uzatilishi mumkin; karta ma’lumotlari to‘lov tizimida qayta ishlanadi.</p>
+<p><strong>⚠️ Kritik:</strong> <code>/legal/terms</code> va <code>/legal/merchant_terms</code> sahifalarida hali <strong>placeholder</strong> matn turibdi:</p>
+<blockquote>
+<p>“Placeholder text. Publish the approved Foydalanish shartlari as a new version before this platform accepts real money.”
+“Placeholder text. Publish the approved Savdogar shartlari as a new version before this platform accepts real money.”</p>
+</blockquote>
+<p><strong>Haqiqiy pul qabul qilishdan oldin bu ikki hujjatning tasdiqlangan nashri chiqarilishini talab qilish kerak.</strong></p>
+<p><strong>⚠️ Komissiya ziddiyati:</strong> shartnomada 3–5% yozilgan, API hujjatlaridagi namunada <code>fee_minor = 150000</code> / <code>amount_minor = 15000000</code> = <strong>1%</strong>. Aniq stavkani yozma ravishda tasdiqlash va hisoblashda <strong>har doim webhook dagi <code>net_minor</code> dan foydalanish</strong> kerak.</p>
+<hr />
+<h2 id="2-maktabhisobotuz-chuqur-tahlili">2. MAKTABHISOBOT.UZ chuqur tahlili</h2>
+<h3 id="21-arxitektura">2.1. Arxitektura</h3>
+<ul>
+<li><strong>Frontend:</strong> bitta <code>index.html</code> (Tailwind CDN), <code>choraklik.js</code>, vanilla JS. Vercel static + serverless (<code>vercel.json</code>: <code>/api/</code> dan boshqalari <code>index.html</code> ga rewrite).</li>
+<li><strong>Backend:</strong> Node.js serverless funksiyalar: <code>api/_lib.js</code>, <code>me.js</code>, <code>telegram-login.js</code>, <code>logout.js</code>, <code>profile.js</code>, <code>event.js</code>, <code>send.js</code>, <code>admin/users.js</code>, <code>admin/premium.js</code>.</li>
+<li><strong>Ma’lumotlar bazasi:</strong> Supabase/Postgres, bitta jadval <code>mh_users</code>.</li>
+<li><strong>Sessiya:</strong> <code>mh_session</code> cookie (HttpOnly, Secure, SameSite=Lax, 30 kun), JWT HS256 (<code>SESSION_SECRET</code>).</li>
+<li><strong>Kirish:</strong> Telegram Login Widget (<code>data-request-access=write</code>), server hashni <code>TELEGRAM_BOT_TOKEN</code> bilan tekshiradi.</li>
+<li><strong>Bot username:</strong> <code>maktabhisobotuz_bot</code> (<code>/api/me</code> orqali ochiq ma’lumot).</li>
+</ul>
+<h3 id="22-mh_users-jadvali">2.2. <code>mh_users</code> jadvali</h3>
+<pre><code class="language-sql">id uuid primary key default gen_random_uuid(),
+telegram_id bigint unique not null,
+username text,
+first_name text,
+last_name text,
+photo_url text,
+viloyat text,
+tuman text,
+maktab text,
+oqituvchi text,
+is_premium boolean not null default false,
+download_count integer not null default 0
+</code></pre>
+<p>RLS yoqilgan, <code>service_role</code> ga to‘liq huquq. Hisoblagich uchun <code>mh_bump(p_uid uuid, p_kind text)</code> RPC bor.</p>
+<h3 id="23-mavjud-apilar">2.3. Mavjud API’lar</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Vazifa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/me</code></td>
+<td><code>authenticated</code>, <code>user</code>, <code>profile</code>, <code>stats {downloads, premium}</code>, <code>premium</code>, <code>isAdmin</code>, <code>botUsername</code></td>
+</tr>
+<tr>
+<td><code>POST /api/telegram-login</code></td>
+<td>Telegram widget ma’lumotini tekshirib, foydalanuvchi yaratadi/yangilaydi, cookie o‘rnatadi</td>
+</tr>
+<tr>
+<td><code>POST /api/logout</code></td>
+<td>Cookieni o‘chiradi</td>
+</tr>
+<tr>
+<td><code>POST /api/profile</code></td>
+<td><code>viloyat</code>, <code>tuman</code>, <code>maktab</code>, <code>oqituvchi</code> ni bulutga saqlaydi</td>
+</tr>
+<tr>
+<td><code>POST /api/event</code></td>
+<td><code>kind</code>: <code>download_pdf</code>, <code>download_xlsx</code>, <code>import_excel</code> → <code>mh_bump</code></td>
+</tr>
+<tr>
+<td><code>GET /api/admin/users</code></td>
+<td>Faqat admin: foydalanuvchilar va statistikasi</td>
+</tr>
+<tr>
+<td><code>POST /api/admin/premium</code></td>
+<td>Faqat admin: <code>id</code> (UUID) + <code>premium</code> boolean → <code>is_premium</code> ni o‘zgartiradi</td>
+</tr>
+<tr>
+<td><code>POST /api/send</code></td>
+<td>Faylni Telegram bot orqali <code>chat_id</code> ga yuboradi (<strong>avtorizatsiya yo‘q</strong> — xavf)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-modullar-va-foydalanuvchi-oqimi">2.4. Modullar va foydalanuvchi oqimi</h3>
+<p><code>home</code>, <code>bsb</code>, <code>chsb</code>, <code>li</code>, <code>kuratorlik</code>, <code>choraklik</code>, <code>malumotlarim</code>, <code>admin</code>.</p>
+<p>BSB oqimi:
+1. Hisobot ma’lumotlari (sinf, harf, fan, chorak, tartib raqami).
+2. O‘quvchilar ro‘yxati — emaktab.uz dan eksport qilingan <code>.xls/.xlsx</code> yoki qo‘lda qo‘shish; <code>localStorage['bsb1']</code> da saqlanadi.
+3. Ballar: savollar soni (1–16), har savol uchun mezon, “5/4/3” foiz chegaralari (standart 86/66/30).
+4. Hisobot: PDF / Excel eksport, diagrammalar.</p>
+<p>Eksport oldidan <strong>ikki bosqichli tekshiruv</strong>: doimiy profil (<code>viloyat</code>, <code>tuman</code>, <code>maktab</code>, <code>o‘qituvchi</code>) + hisobot maydonlari (<code>sinf</code>, <code>harf</code>, <code>fan</code>, <code>chorak</code>, <code>bsb</code>).</p>
+<h3 id="25-premium-hozir-nima-qiladi">2.5. “Premium” hozir nima qiladi?</h3>
+<p><strong>Faqat ko‘rinishda:</strong> “Hisob holati” kartasida <code>Premium / Oddiy</code>, “Barcha imkoniyatlar yoqilgan / Standart hisob” va ism yonida <code>PRO</code> badge.</p>
+<p>Kodda <code>AUTH.premium</code> hech qayerda funksiyalarni ochib/yopib turmaydi. Ya’ni <strong>hozir Premium uchun pul oladigan narsa aniqlanmagan</strong>. Bu integratsiyadan oldin hal qilinishi shart.</p>
+<h3 id="26-maktabhisobot-tarafdagi-xavflar">2.6. Maktabhisobot tarafdagi xavflar</h3>
+<ol>
+<li><strong><code>POST /api/send</code> ochiq</strong> — istalgan kishi istalgan <code>chat_id</code> ga bot orqali fayl yuborishi mumkin. Pul oqimi qo‘shilishdan oldin sessiya tekshiruvi qo‘yish kerak.</li>
+<li><strong><code>BOT_TOKEN</code> / <code>TELEGRAM_BOT_TOKEN</code> nomlarining mos kelmasligi:</strong> <code>_lib.js</code> ikkalasini qabul qiladi, <code>send.js</code> faqat <code>BOT_TOKEN</code> ni ishlatadi.</li>
+<li><strong><code>ADMIN_TELEGRAM_IDS</code> mahalliy <code>.env.local</code> da yo‘q</strong> — ishlab chiqarishda Vercel tarafida o‘rnatilgan bo‘lishi kerak.</li>
+<li><strong>Foydalanuvchi hisobot ma’lumotlari faqat brauzerda</strong> (<code>localStorage</code>), bulutda faqat profil va hisoblagich bor. To‘lov bilan bog‘lashda shaxsga doir ma’lumotlarni <code>external_reference</code>/<code>description</code> ga yozish mumkin emas — faqat ichki UUID va tarif kodi.</li>
+</ol>
+<hr />
+<h2 id="3-taklif-etiladigan-integratsiya-arxitekturasi">3. Taklif etiladigan integratsiya arxitekturasi</h2>
+<pre><code>[O‘qituvchi] ──(1) “Premium sotib olish”──&gt; [maktabhisobot.uz serveri]
+                                                  │ (2) POST /bills
+                                                  ▼
+                                             [Tezcheck API]
+                                                  │ payment_url
+                                                  ▼
+[O‘qituvchi] ──(3) karta/Click/Payme──&gt; [To‘lov provayderi]
+                                                  │ (4) imzolangan hodisa
+                                                  ▼
+[maktabhisobot.uz /api/billing/webhook/tezcheck]
+        (5) imzo + vaqt + dedup + environment + problem tekshiruvi
+                                                  │ (6) tranzaksiya ichida
+                                                  ▼
+                                     [mh_users.is_premium = true]
+                                                  │
+                                                  ▼
+                              (7) UI: PRO badge yangilanadi, xabar yuboriladi
+</code></pre>
+<h3 id="31-asosiy-printsiplar">3.1. Asosiy printsiplar</h3>
+<ol>
+<li><strong>API kalit hech qachon brauzerga tushmaydi.</strong> Faqat server tomonida <code>process.env.TEZCHECK_API_KEY</code>.</li>
+<li><strong>To‘lov haqiqatining yagona manbai — webhook yoki server tomonidan so‘ralgan <code>POST /bills/{bill}</code>.</strong> Brauzerning <code>return_url</code> ga qaytishi hech qachon huquq bermaydi.</li>
+<li><strong>Idempotency har ikki tomonda:</strong> Tezcheckga <code>Idempotency-Key</code>, bizning webhook handlerimizda hodisa <code>id</code> bo‘yicha dedup.</li>
+<li><strong>Faqat <code>data.environment === "live"</code> bo‘lganda haqiqiy huquq berish.</strong> Test to‘lovda <code>paid: true</code> bo‘ladi, lekin <code>livemode: false</code>.</li>
+<li><strong><code>net_minor</code> bilan ishlash</strong>, <code>amount_minor</code> bilan emas (komissiya shartnomadagi 3–5% yoki API namunasidagi 1% bo‘lishidan qat’i nazar).</li>
+<li><strong><code>unknown_reason</code> bo‘lsa hech qanday harakat qilmaslik</strong> — keyingi hodisa yoki so‘rov hal qiladi.</li>
+</ol>
+<h3 id="32-malumotlar-modeliga-qoshish-taklifi-keyinchi-bosqich">3.2. Ma’lumotlar modeliga qo‘shish taklifi (keyinchi bosqich)</h3>
+<p>Yangi jadval <code>mh_payments</code> (yoki <code>mh_orders</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Ustun</th>
+<th>Ma’nosi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id uuid pk</code></td>
+<td>ichki buyurtma</td>
+</tr>
+<tr>
+<td><code>user_id uuid</code> → <code>mh_users.id</code></td>
+<td>kim sotib oldi</td>
+</tr>
+<tr>
+<td><code>plan_code text</code></td>
+<td>masalan <code>premium_30d</code></td>
+</tr>
+<tr>
+<td><code>amount_minor int</code></td>
+<td>so‘ralgan summa</td>
+</tr>
+<tr>
+<td><code>currency text</code></td>
+<td><code>UZS</code></td>
+</tr>
+<tr>
+<td><code>bill_id text</code></td>
+<td>Tezcheck <code>link_...</code></td>
+</tr>
+<tr>
+<td><code>bill_reference text</code></td>
+<td><code>BILL-...</code></td>
+</tr>
+<tr>
+<td><code>payment_id text</code></td>
+<td><code>pay_...</code> (kelgach)</td>
+</tr>
+<tr>
+<td><code>external_reference text unique</code></td>
+<td><code>mh:&lt;user_uuid&gt;:&lt;plan&gt;:&lt;timestamp&gt;</code></td>
+</tr>
+<tr>
+<td><code>payment_url text</code></td>
+<td>bir marta olingan havola</td>
+</tr>
+<tr>
+<td><code>state text</code></td>
+<td><code>created / paid / failed / canceled / refunded</code></td>
+</tr>
+<tr>
+<td><code>net_minor</code>, <code>fee_minor int</code></td>
+<td>webhookdan</td>
+</tr>
+<tr>
+<td><code>environment text</code></td>
+<td><code>live / test</code></td>
+</tr>
+<tr>
+<td><code>raw_event jsonb</code></td>
+<td>audit uchun xom hodisa</td>
+</tr>
+<tr>
+<td><code>created_at</code>, <code>paid_at</code></td>
+<td>vaqtlar</td>
+</tr>
+</tbody>
+</table>
+<p>Yangi jadval <code>mh_webhook_events</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Ustun</th>
+<th>Ma’nosi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event_id text primary key</code></td>
+<td>tana ichidagi <code>id</code> — dedup kaliti</td>
+</tr>
+<tr>
+<td><code>type text</code>, <code>delivery_id text</code></td>
+<td>ma’lumot</td>
+</tr>
+<tr>
+<td><code>processed_at timestamptz</code></td>
+<td>qachon qayta ishlangan</td>
+</tr>
+</tbody>
+</table>
+<p><code>mh_users</code> ga qo‘shish taklifi: <code>premium_until timestamptz</code> (agar obuna muddatli bo‘lsa). Hozircha <code>is_premium</code> yetarli, lekin muddatli tarif sotish uchun <code>premium_until</code> kerak bo‘ladi.</p>
+<h3 id="33-yangi-server-endpointlari-tavsiya">3.3. Yangi server endpointlari (tavsiya)</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Auth</th>
+<th>Vazifa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /api/billing/create-payment</code></td>
+<td><code>mh_session</code> cookie majburiy</td>
+<td>Foydalanuvchi ichki buyurtmasini yaratadi, Tezcheckga <code>/bills</code> chaqiradi, <code>payment_url</code> qaytaradi.</td>
+</tr>
+<tr>
+<td><code>POST /api/billing/webhook/tezcheck</code></td>
+<td><strong>yo‘q</strong> (faqat HMAC)</td>
+<td>Imzo/vaqt/dedup tekshiradi, <code>mh_payments</code> va <code>mh_users</code> ni atomik yangilaydi.</td>
+</tr>
+<tr>
+<td><code>GET /api/billing/status?ref=...</code></td>
+<td>cookie</td>
+<td>Foydalanuvchi o‘z buyurtmasi holatini ko‘radi (webhook kutmadan).</td>
+</tr>
+<tr>
+<td><code>POST /api/billing/reconcile</code></td>
+<td>faqat admin/cron</td>
+<td><code>POST /transactions</code> orqali kun oxirida solishtirish.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-hisob-yaratish-namunasi-keyin-joriy-qilish-uchun">3.4. Hisob yaratish namunasi (keyin joriy qilish uchun)</h3>
+<pre><code class="language-bash">curl -X POST https://api.tezcheck.uz/api/merchant/v1/bills \
+  -H &quot;Authorization: Bearer $TEZCHECK_API_KEY&quot; \
+  -H &quot;X-Cash-Desk-Code: $TEZCHECK_CASH_DESK_CODE&quot; \
+  -H &quot;Idempotency-Key: order-mh-12345&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+    &quot;amount_minor&quot;: 4900000,
+    &quot;title&quot;: &quot;Maktab Hisobot — Premium 30 kun&quot;,
+    &quot;external_reference&quot;: &quot;mh:9b1f...:premium_30d:1795260000&quot;,
+    &quot;return_url&quot;: &quot;https://maktabhisobot.uz/malumotlarim?payment=returned&quot;
+  }'
+</code></pre>
+<blockquote>
+<p>Eslatma: <code>return_url</code> kassaning ruxsat ro‘yxatiga kiritilgan bo‘lishi shart, aks holda checkout qaytarmaydi.</p>
+</blockquote>
+<h3 id="35-webhook-tekshiruvi-namunasi-nodejs-mavjud-_libjs-uslubida">3.5. Webhook tekshiruvi namunasi (Node.js, mavjud <code>_lib.js</code> uslubida)</h3>
+<pre><code class="language-js">const crypto = require('crypto');
+const SECRET = process.env.TEZCHECK_WEBHOOK_SECRET || '';
+
+function verify(rawBody, headers) {
+  const ts = String(headers['x-checkout-timestamp'] || '');
+  const delivery = String(headers['x-checkout-delivery'] || '');
+  const sig = String(headers['x-checkout-signature'] || '');
+
+  if (!ts || !delivery || !sig) return false;
+  if (Math.abs(Math.floor(Date.now() / 1000) - Number(ts)) &gt; 300) return false;
+
+  const expected = 'v1=' + crypto
+    .createHmac('sha256', SECRET)
+    .update(ts + '.' + delivery + '.' + rawBody)
+    .digest('hex');
+
+  // Kalit almashuvi paytida bir nechta v1 keladi
+  return sig.split(',').some(candidate =&gt;
+    crypto.timingSafeEqual(
+      Buffer.from(expected),
+      Buffer.from(candidate.trim())
+    )
+  );
+}
+
+// Muhim: rawBody ni o'zgartirmang (json parse qilib qayta stringify qilmang).
+// Muhim: dedup — event.id (tanadagi id), headerdagi X-Checkout-Event-Id emas.
+// Muhim: 200 ni faqat bazaga yozgandan keyin qaytaring; xatolik bo'lsa 5xx qaytaring.
+</code></pre>
+<p><code>req.body</code> allaqachon parse qilingan bo‘lsa, xom body <code>.rawBody</code> yoki Vercel <code>req</code> config orqali olinishi kerak — buni joriy qilishda alohida tekshirish kerak.</p>
+<h3 id="36-huquq-berish-qoidasi-pseudokod">3.6. Huquq berish qoidasi (pseudokod)</h3>
+<pre><code class="language-text">hodisa = parse(rawBody)
+
+agar event.id allaqachon mh_webhook_events da -&gt; 200 (hech narsa qilma)
+
+agar verify() == false                       -&gt; 401
+agar hodisa.type &quot;payment.&quot; bilan boshlanmagan -&gt; 200 (e'tiborsiz)
+agar data.environment != &quot;live&quot;               -&gt; 200 (test, huquq yo'q)
+agar data.problem != null                     -&gt; 200 (buyurtmani &quot;failed&quot; qil, huquq yo'q)
+agar data.state != &quot;succeeded&quot;                -&gt; 200 (kutishda)
+agar data.net_minor &lt; buyurtma.amount_minor   -&gt; 200 (ogohlantirish + audit)
+
+tranzaksiya boshlash:
+  mh_payments ni payment_id/bill_id bo'yicha yangilash (state=paid, net, fee)
+  mh_users.is_premium = true (yoki premium_until = now() + 30 kun)
+  mh_webhook_events ga event.id ni kiritish
+tranzaksiya tugash
+
+200 qaytarish + (ixtiyoriy) Telegram orqali xabar
+</code></pre>
+<hr />
+<h2 id="4-bosqichma-bosqich-yol-xaritasi-hali-boshlanmadi">4. Bosqichma-bosqich yo‘l xaritasi (hali boshlanmadi)</h2>
+<h3 id="bosqich-0-qarorlar-siz-bilan-kelishish-kerak">Bosqich 0 — Qarorlar (siz bilan kelishish kerak)</h3>
+<ul>
+<li>[ ] Premium nima ochadi? (PDF/Excel cheksiz yuklab olishmi? CHSB/LI/kuratorlik modullarini ochishmi? Obuna muddati bormi?)</li>
+<li>[ ] Narx(lar): masalan Premium 30 kun = 49 000 so‘m (<code>4 900 000</code> tiyin). Minimum 1 000 so‘m.</li>
+<li>[ ] Sotuvchi kim: O‘qituvchimi, maktabmi, yoki loyiha egasining O‘O‘BQ sifatidami?</li>
+<li>[ ] Qaytarish (refund) siyosati: <code>refunded</code> / <code>charged_back</code> kelganda premium o‘chiriladimi?</li>
+<li>[ ] <code>PREMIUM_UNLOCKS</code> ro‘yxati aniqlandimi?</li>
+</ul>
+<h3 id="bosqich-1-tezcheck-hisobini-tayyorlash-siz-qilyapsiz">Bosqich 1 — Tezcheck hisobini tayyorlash (siz qilyapsiz)</h3>
+<ul>
+<li>[ ] Ro‘yxatdan o‘tish (telefon/email OTP), 2FA yoqish.</li>
+<li>[ ] Shaxsni tasdiqlash (bir necha ish kuni).</li>
+<li>[ ] Savdogar arizasi tasdiqlanishi.</li>
+<li>[ ] <strong>Kassa yaratish</strong> — sinov va jonli to‘lovlar uchun alohida kassalar tavsiya etiladi.</li>
+<li>[ ] Kassada to‘lov usullarini yoqish (Click, Payme va h.k.), <code>payment-methods</code> bilan ro‘yxatni solishtirish.</li>
+<li>[ ] <code>return_url</code> = <code>https://maktabhisobot.uz/malumotlarim</code> ni ruxsat ro‘yxatiga kiritish.</li>
+<li>[ ] Server IP manzillarini IP oq ro‘yxatiga kiritish (Vercel serverless da chiqish IP lari o‘zgaruvchan bo‘lishi mumkin — <strong>bu muhim cheklov</strong>).</li>
+<li>[ ] API kalit yaratish (<code>aps_...</code>) va kassa kodi (<code>cdk_...</code>) ni olish.</li>
+<li>[ ] Webhook endpoint manzilini ro‘yxatdan o‘tkazish (keyin: <code>https://maktabhisobot.uz/api/billing/webhook/tezcheck</code>), <code>whsec_...</code> ni olish.</li>
+<li>[ ] Komissiya stavkasini va pul yechish tartibini yozma tasdiqlash.</li>
+<li>[ ] Placeholder hujjatlar (<code>terms</code>, <code>merchant_terms</code>)ning tasdiqlangan versiyasini so‘rash.</li>
+</ul>
+<p><strong>Menga keyin beradigan ma’lumotlar (maxfiy bo‘lsa ham, faqat server <code>.env</code> ga yoziladi, javobda chiqarilmaydi):</strong></p>
+<pre><code class="language-text">TEZCHECK_API_KEY=aps_...
+TEZCHECK_CASH_DESK_CODE=cdk_...
+TEZCHECK_WEBHOOK_SECRET=whsec_...
+TEZCHECK_ORGANIZATION_ID=...
+TEZCHECK_CASH_DESK_ID=...
+</code></pre>
+<h3 id="bosqich-2-sinov-joriy-qilishdan-oldin">Bosqich 2 — Sinov (joriy qilishdan oldin)</h3>
+<ol>
+<li><code>GET /me</code> — kalit va kassa bir-biriga tegishli ekanini tasdiqlash.</li>
+<li><code>POST /cash-desks</code> — kassa kodini olish, <code>accepts_payments: true</code> ekanini tekshirish.</li>
+<li><code>POST /payment-methods</code> — tanlab bo‘ladigan usullar ro‘yxati.</li>
+<li><code>POST /bills</code> — sinov havolasi yaratish, <code>payment_url</code> ni saqlash.</li>
+<li>«Test provider» orqali to‘lov qilish.</li>
+<li>Webhook kelganini tekshirish: <code>data.environment === "test"</code> → <strong>premium berilmasligi kerak</strong>.</li>
+<li><code>POST /bills/{bill}</code> bilan so‘rab tekshirish.</li>
+<li>Idempotency: bir xil <code>Idempotency-Key</code> bilan ikki marta yuborish → bitta hisob.</li>
+<li>Takroriy webhook: bir xil tana ikki marta kelsa → bitta yozuv.</li>
+<li>Noto‘g‘ri imzo, eski timestamp, <code>v2</code> prefiks → rad etilishi kerak.</li>
+</ol>
+<h3 id="bosqich-3-kod-va-baza-keyinchalik-birga">Bosqich 3 — Kod va baza (keyinchalik, birga)</h3>
+<ul>
+<li><code>mh_payments</code>, <code>mh_webhook_events</code> jadvallari; kerak bo‘lsa <code>premium_until</code>.</li>
+<li><code>api/billing/*.js</code> fayllari.</li>
+<li><code>index.html</code> ga “Tarif sotib olish” tugmasi va holat ko‘rsatkichi.</li>
+<li><code>/api/send</code> ga avtorizatsiya qo‘yish.</li>
+<li>Vercel muhitiga 3 ta yangi secret qo‘yish.</li>
+</ul>
+<h3 id="bosqich-4-jonli-sinov-va-ishga-tushirish">Bosqich 4 — Jonli sinov va ishga tushirish</h3>
+<ul>
+<li>Kichik haqiqiy summa bilan bir to‘lov (masalan 1 000 so‘m).</li>
+<li><code>data.environment === "live"</code> ekanini va premium yoqilganini tekshirish.</li>
+<li>Webhook qayta urinishlarini yoqish (3 urinish).</li>
+<li>Kunlik <code>POST /transactions</code> solishtirish cron jobi.</li>
+<li>Monitoring: <code>GET /health</code>, <code>https://tezcheck.uz/status</code>.</li>
+</ul>
+<hr />
+<h2 id="5-sinov-nazorat-royxati-checklist">5. Sinov nazorat ro‘yxati (checklist)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Tekshiruv</th>
+<th>Kutilgan natija</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>GET /api/merchant/v1/health</code></td>
+<td><code>status: ok</code>, kalitsiz</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>GET /me</code> noto‘g‘ri kalit bilan</td>
+<td><code>401 auth.unauthenticated</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>POST /cash-desks</code> kassa headersiz</td>
+<td>barcha ruxsat etilgan kassalar</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>POST /bills</code> 999 so‘m</td>
+<td><code>422 payment_link.amount_out_of_range</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>POST /bills</code> 1 000 so‘m</td>
+<td>muvaffaqiyat, <code>payment_url</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Ikki marta bir xil <code>Idempotency-Key</code></td>
+<td>bitta hisob, <code>Idempotent-Replayed: true</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>payment_url</code> ni ikkinchi marta olish</td>
+<td>imkon yo‘q; <code>reissue</code> yangi havola beradi, eskisi o‘ladi</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Test provider to‘lovi</td>
+<td><code>paid: true</code>, lekin <code>livemode: false</code> → <strong>premium yo‘q</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Jonli to‘lov webhooki</td>
+<td><code>environment: live</code>, <code>problem: null</code> → premium bor</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Webhook ikki marta kelsa</td>
+<td>bitta yozuv (dedup bo‘yicha <code>id</code>)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Noto‘g‘ri imzo</td>
+<td><code>401</code> va hech qanday o‘zgarish yo‘q</td>
+</tr>
+<tr>
+<td>12</td>
+<td>5 daqiqadan eski timestamp</td>
+<td>rad etiladi</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>unknown_reason</code> to‘ldirilgan hodisa</td>
+<td>hech qanday harakat yo‘q</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>refunded</code> hodisa</td>
+<td>premium qaytarib olinadi (siyosat bo‘yicha)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Kassa asosiy havolasi pauzada</td>
+<td><code>409 cash_desk.default_link_not_active</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Kalit almashtirish</td>
+<td>eski kalit 24 soat ishlaydi, ikki imzo qabul qilinadi</td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>POST /transactions</code> sahifalash</td>
+<td><code>next_cursor === null</code> bo‘lguncha o‘qiladi</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>POST /api/send</code> avtorizatsiyasiz</td>
+<td>keyin <strong>rad etilishi</strong> kerak</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-ochiq-savollar-va-xavflar-birga-hal-qilamiz">6. Ochiq savollar va xavflar (birga hal qilamiz)</h2>
+<ol>
+<li><strong>Huquqiy hujjatlar tayyor emas.</strong> <code>terms</code> va <code>merchant_terms</code> placeholder. Bu haqiqiy pul uchun to‘siq.</li>
+<li><strong>Komissiya 3–5% yoki 1%?</strong> Shartnoma va API namunasi ziddiyatli. <code>net_minor</code> ni ishlatamiz, lekin tijoriy shartni tasdiqlash kerak.</li>
+<li><strong>Pul yechish qo‘lda.</strong> Admin tasdiqlashi va 1–5 ish kuni. Maktablar uchun pul oqimini hisobga olish kerak.</li>
+<li><strong>Funds flow model.</strong> API <code>meta.funds_flow_model: "direct_to_merchant"</code> bo‘lishi mumkin — bunda platformada yechib olinadigan balans yo‘q (<code>available_minor: null</code>). Qaysi model bizga tegishli ekanini Tezcheckdan so‘rash kerak.</li>
+<li><strong>IP oq ro‘yxati va Vercel.</strong> Serverless muhitda statik chiqish IP yo‘q. IP cheklovini yoqmaslik yoki boshqa yechim (proxy) kerak bo‘lishi mumkin.</li>
+<li><strong>Premium nima ochadi?</strong> Hozir hech narsa ochmaydi — bu eng muhim mahsulot qarori.</li>
+<li><strong><code>/api/send</code> ochiq.</strong> To‘lov qo‘shishdan oldin yopish kerak.</li>
+<li><strong>Webhook standart 1 urinish.</strong> Qayta urinishni yoqish + <code>POST /transactions</code> bilan kunlik solishtirish shart.</li>
+<li><strong>Shaxsga doir ma’lumotlar.</strong> <code>external_reference</code>, <code>title</code>, <code>description</code> ga o‘quvchi ismi, telefon raqami yoki maktab ma’lumoti yozilmaydi — faqat ichki identifikator.</li>
+<li><strong>Cheklovlar:</strong> 300 so‘rov/daqiqa, sahifa 200, webhook 10 s. Bularni hisobga olib navbat/kesh dizayni kerak.</li>
+</ol>
+<hr />
+<h2 id="7-keyingi-qadam">7. Keyingi qadam</h2>
+<p>Siz Tezcheckda ro‘yxatdan o‘tib, kassa va API kalitlarini olganingizdan keyin menga xabar bering. Men:</p>
+<ol>
+<li>Olingan ma’lumotlarga qarab ushbu yo‘riqnomani yakunlayman;</li>
+<li><code>mh_payments</code> / <code>mh_webhook_events</code> sxemasini va endpointlarning aniq kodini taklif qilaman;</li>
+<li>Avval sinov muhitida, keyin sizning nazoratingiz bilan joriy qilamiz.</li>
+</ol>
+<p><strong>Hozir hech qanday fayl o‘zgartirilmadi, hech qanday API chaqiruvi yuborilmadi, hech qanday deploy qilinmadi.</strong></p></main></body></html>

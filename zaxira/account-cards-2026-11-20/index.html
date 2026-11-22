@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maktab Hisobot — Elektron hisobotlar tizimi</title>
+    <link rel="icon" type="image/png" href="./maktabhisobot_icon.svg.png">
+    <link rel="apple-touch-icon" href="./maktabhisobot_icon.svg.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: {
+            fontFamily: { sans: ['"Open Sans"','Inter','Segoe UI','sans-serif'] },
+            colors: { emaktab: { blue:'#0072bc', darkBlue:'#005a96', hoverBlue:'#0063a3', lightBlue:'#0088cc', bg:'#f5f7fa', border:'#e1e5eb', text:'#333333', muted:'#7a869a' } }
+        } } };
+    </script>
+    <style>
+    /* ===== Asosiy hisobchi stillari (barcha funksiyalar saqlangan) ===== */
+    
+:root{--bg:#f2f5f9;--card:#fff;--ink:#14213a;--mut:#5b6a82;--line:#cfd8e5;--acc:#1f5fbf;--accT:#fff;--hi:#eaf1fc;--g5:#17794a;--g4:#1f5fbf;--g3:#a8670c;--g2:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1726;--card:#17233a;--ink:#e6edf8;--mut:#98a8c2;--line:#2f3f5c;--acc:#6aa3f5;--accT:#0f1726;--hi:#1d2d4a;--g5:#4cc38a;--g4:#6aa3f5;--g3:#e8a74a;--g2:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0f1726;--card:#17233a;--ink:#e6edf8;--mut:#98a8c2;--line:#2f3f5c;--acc:#6aa3f5;--accT:#0f1726;--hi:#1d2d4a;--g5:#4cc38a;--g4:#6aa3f5;--g3:#e8a74a;--g2:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+
+body{margin:0;background:#f5f7fa;color:var(--ink);font:15px/1.5 system-ui,"Segoe UI",Roboto,Arial,sans-serif;overflow-x:hidden}
+
+h1{font-size:1.6rem;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:1.05rem;margin:0 0 10px}
+.sub{margin:0 0 14px;color:var(--mut)}
+section{background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid color-mix(in srgb,var(--line) 55%,transparent);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 4px 30px rgba(0,0,0,.08)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:.85rem;color:var(--mut);flex:1 1 150px}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-width:0}
+input:focus,select:focus,button:focus-visible,label.btn:focus-within{outline:2px solid var(--acc);outline-offset:1px}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--acc);background:var(--acc);color:var(--accT);border-radius:6px;padding:8px 14px;display:inline-block}
+.btn.o{background:transparent;color:var(--acc)}
+.wrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:6px}
+#cards{display:none}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--line);padding:2px 4px;text-align:center;white-space:nowrap}
+th{background:var(--hi);font-weight:600;font-size:.85rem}
+td.nm,th.nm{text-align:left;position:sticky;left:0;background:var(--card);min-width:210px;z-index:1}
+th.nm,tfoot td.nm{background:var(--hi)}
+td input{width:3.4rem;text-align:center;border-color:transparent;padding:4px 2px}
+td input:hover{border-color:var(--line)}
+td.nm input{width:100%;text-align:left}
+td.iz input{width:9rem;text-align:left}
+td input.bad{border-color:var(--g2);background:color-mix(in srgb,var(--g2) 18%,transparent)}
+tfoot td{background:var(--hi);font-weight:600}
+th input.mh{display:block;width:2.6rem;margin:3px auto 1px;text-align:center;font-size:.85rem;padding:3px 1px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--ink)}
+thead th{padding-top:6px;padding-bottom:6px;vertical-align:top}
+.mzt{font-size:.72rem;font-weight:400;color:var(--mut);margin-top:1px}
+.mzt b{color:var(--ink)}
+table{font-size:.88rem}
+th,td{padding:2px 3px}
+td input{width:2.8rem}
+.g{font-weight:700}.g5{color:var(--g5)}.g4{color:var(--g4)}.g3{color:var(--g3)}.g2{color:var(--g2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:color-mix(in srgb,var(--card) 68%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid color-mix(in srgb,var(--line) 50%,transparent);border-radius:8px;padding:10px 12px;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+.stat b{display:block;font-size:1.7rem;line-height:1.1}
+.stat span{color:var(--mut);font-size:.85rem}
+.x{background:none;border:0;color:var(--mut);cursor:pointer;font-size:1.1rem}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90%}
+#toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.wrap{-webkit-overflow-scrolling:touch}
+#dlrow .btn{flex:1 1 160px;text-align:center}
+@media(max-width:640px){
+ h1{font-size:1.25rem}
+ section{padding:12px;border-radius:8px}
+ label.f{flex:1 1 140px}
+ input,select{font-size:16px;padding:8px 10px}
+ .btn{padding:10px 14px}
+ #dlrow .btn{flex:1 1 100%}
+ table{font-size:.82rem}
+ th,td{padding:3px 4px}
+ td input{width:2.6rem;padding:6px 2px;font-size:16px}
+ td.nm,th.nm{min-width:150px}
+ td.iz input{width:6rem}
+ .stats{grid-template-columns:repeat(2,1fr);gap:8px}
+ .stat b{font-size:1.3rem}
+ #wrap{display:none}
+ #cards{display:block}
+ .card{background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid color-mix(in srgb,var(--line) 55%,transparent);border-radius:10px;padding:10px;margin-bottom:10px;box-shadow:0 4px 30px rgba(0,0,0,.08)}
+ .mezbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:color-mix(in srgb,var(--hi) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid color-mix(in srgb,var(--line) 60%,transparent);border-radius:8px;padding:8px;margin-bottom:10px;font-size:.85rem;font-weight:600}
+ .mezbar label{display:inline-flex;align-items:center;gap:2px;font-weight:600}
+ .mezbar input{width:2.6rem;text-align:center;font-size:16px;padding:6px 2px;border:1px solid var(--line);border-radius:6px}
+ .chead{display:flex;gap:8px;align-items:center;margin-bottom:8px;font-weight:600}
+ .chead .cnum{background:var(--acc);color:var(--accT);border-radius:50%;min-width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex:0 0 auto}
+ .chead input{flex:1;min-width:0;font-size:16px}
+ .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;margin-bottom:8px}
+ .cgrid label{display:flex;flex-direction:column;gap:2px;text-align:center;font-size:.75rem;color:var(--mut);font-weight:600}
+ .cgrid input{text-align:center;font-size:16px;padding:8px 4px;width:100%;border:1px solid var(--line);border-radius:6px}
+ .cres{display:flex;gap:14px;align-items:baseline;font-size:.9rem;color:var(--mut)}
+ .cres b{font-size:1.15rem;color:var(--ink)}
+ input.ciz{width:100%;font-size:16px;margin-top:8px}
+ .hero{gap:10px}
+ .tg{margin-left:auto;padding:8px 12px}
+ .tg-ico{width:34px;height:34px}
+}
+.hero{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.hero-t{flex:1 1 300px;min-width:0}
+.tg{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid color-mix(in srgb,var(--line) 55%,transparent);border-radius:12px;padding:9px 14px;box-shadow:0 4px 30px rgba(0,0,0,.08);transition:transform .15s,box-shadow .15s}
+.tg:hover{transform:translateY(-1px);box-shadow:0 8px 34px rgba(0,0,0,.14)}
+.tg:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tg-ico{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#2AABEE,#229ED9);display:grid;place-items:center;flex:0 0 auto;color:#fff;box-shadow:0 2px 10px rgba(34,158,217,.45)}
+.tg-ico svg{width:22px;height:22px;fill:currentColor}
+.tg-tx{display:flex;flex-direction:column;line-height:1.25;text-align:left}
+.tg-tx b{font-size:.95rem}
+.tg-tx small{color:var(--mut);font-size:.75rem;font-weight:500}
+
+    /* ===== Yangi dizayn uchun qo'shimchalar ===== */
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    .nav-tab{transition:background-color .2s ease,color .2s ease}
+    #workspaceCanvas .module{display:none}
+    #workspaceCanvas .module.active{display:block}
+    #workspaceCanvas section{background:color-mix(in srgb,var(--card) 82%,transparent)}
+    </style>
+</head>
+<body class="bg-[#f5f7fa] text-[#333333] min-h-screen flex flex-col antialiased selection:bg-[#0072bc] selection:text-white">
+
+    <!-- ===== Header ===== -->
+    <header class="bg-white border-b border-gray-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] relative z-30">
+        <div class="max-w-[1140px] mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-[68px] sm:h-[74px]">
+                <div class="flex items-center space-x-4 sm:space-x-6">
+                    <a href="#" onclick="resetToHome(event)" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
+                            <svg viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" aria-hidden="true">
+                                <g stroke="#B6DF1E" stroke-width="8.5" stroke-linecap="butt">
+                                    <line x1="82.97" y1="76" x2="63.91" y2="65"/><line x1="94.57" y1="62.17" x2="80.43" y2="45.31"/><line x1="110.22" y1="53.14" x2="102.69" y2="32.46"/><line x1="128" y1="50" x2="128" y2="28"/><line x1="145.78" y1="53.14" x2="153.31" y2="32.46"/><line x1="161.43" y1="62.17" x2="175.57" y2="45.31"/><line x1="173.03" y1="76" x2="192.09" y2="65"/>
+                                </g>
+                                <path d="M 84 102 A 44 44 0 0 1 172 102 Z" fill="#B6DF1E"/>
+                                <path d="M 56 105 C 56 97 62 92 70 92 C 93 92 115 96 128 109 C 141 96 163 92 186 92 C 194 92 200 97 200 105 V 188 C 200 195 194 200 187 200 C 164 200 142 203 128 216 C 114 203 92 200 69 200 C 62 200 56 195 56 188 Z" fill="#FFFFFF" stroke="#182361" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+                                <g stroke="#182361" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M 90 175 V 128 L 109 150 L 128 128 V 175" fill="none"/><line x1="128" y1="152" x2="166" y2="152"/><line x1="166" y1="128" x2="166" y2="175"/></g>
+                            </svg>
+                        </div>
+                        <div class="flex items-baseline tracking-tight select-none">
+                            <span class="text-[22px] sm:text-[26px] font-bold text-[#182361] group-hover:text-[#0072bc] transition-colors">maktab</span>
+                            <span class="text-[22px] sm:text-[26px] font-normal text-[#182361] ml-1 group-hover:text-[#0072bc] transition-colors">hisobot</span>
+                        </div>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 pl-2">
+                        <button onclick="showToast('Yangi bildirishnomalar yo\'q')" title="Bildirishnomalar" class="p-2 rounded-full text-gray-400 hover:text-[#0072bc] hover:bg-blue-50/60 transition-colors relative">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                        </button>
+                        <button onclick="showToast('O\'zbekiston Respublikasi Maktabgacha va maktab ta\'limi tizimi')" title="Tizim ma'lumoti" class="p-2 rounded-full text-gray-400 hover:text-[#0072bc] hover:bg-blue-50/60 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 sm:space-x-5">
+                    <div class="relative" id="langDropdownContainer">
+                        <button onclick="toggleLangDropdown()" class="flex items-center space-x-1 text-[13px] font-semibold text-[#0088cc] hover:text-[#005a96] py-1.5 px-2 rounded transition-colors">
+                            <span id="currentLang">O'zb</span>
+                            <svg class="w-3.5 h-3.5 opacity-80" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        </button>
+                        <div id="langDropdown" class="hidden absolute right-0 mt-1 w-28 bg-white rounded-md shadow-lg border border-gray-100 py-1 z-50 text-[13px]">
+                            <button onclick="selectLang('O\'zb')" class="w-full text-left px-3 py-1.5 text-[#0072bc] font-semibold bg-blue-50/50 hover:bg-gray-50">O'zbekcha</button>
+                            <button onclick="selectLang('Рус')" class="w-full text-left px-3 py-1.5 text-gray-600 hover:bg-gray-50">Русский</button>
+                            <button onclick="selectLang('Eng')" class="w-full text-left px-3 py-1.5 text-gray-600 hover:bg-gray-50">English</button>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block h-7 w-[1px] bg-gray-200"></div>
+                    <div id="authBox" class="flex items-center space-x-2.5">
+                        <button onclick="openTelegramLogin()" class="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-[#0088cc] text-white text-[13px] font-semibold hover:bg-[#0072bc] transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg>
+                            <span>Kirish</span>
+                        </button>
+                    </div>
+                    <div class="hidden md:flex flex-col items-start justify-center text-[12px] leading-[1.35] pl-2 border-l border-gray-100">
+                        <a href="#" onclick="showToast('Yordam bo\'limi tez orada ishga tushiriladi')" class="text-gray-500 hover:text-[#0072bc] transition-colors">Yordam</a>
+                        <a href="#" onclick="showToast('Tizimdan chiqish tasdiqlandi')" class="text-gray-500 hover:text-red-600 transition-colors mt-0.5">Chiqish</a>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-[#0072bc] hover:bg-gray-100 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ko'k navigatsiya -->
+            <nav aria-label="Asosiy menyu" class="bg-[#0072bc] rounded-t-[4px] shadow-sm overflow-x-auto no-scrollbar">
+                <ul class="flex items-stretch min-w-max">
+                    <li><button id="tab-bsb" onclick="switchTab('bsb')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center border-r border-[#0065a8] focus:outline-none">BSB HISOBOT</button></li>
+                    <li><button id="tab-chsb" onclick="switchTab('chsb')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center border-r border-[#0065a8] focus:outline-none">CHSB HISOBOT</button></li>
+                    <li><button id="tab-li" onclick="switchTab('li')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center border-r border-[#0065a8] focus:outline-none">LI HISOBOT</button></li>
+                    <li><button id="tab-kuratorlik" onclick="switchTab('kuratorlik')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center border-r border-[#0065a8] focus:outline-none">KURATORLIK HISOBOT</button></li>
+                    <li><button id="tab-choraklik" onclick="switchTab('choraklik')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center border-r border-[#0065a8] focus:outline-none">CHORAKLIK HISOBOT</button></li>
+                    <li><button id="tab-malumotlarim" onclick="switchTab('malumotlarim')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center focus:outline-none">MA'LUMOTLARIM</button></li>
+                    <li id="adminNav" class="hidden"><button id="tab-admin" onclick="switchTab('admin')" class="nav-tab text-white/95 hover:bg-[#0063a3] font-semibold text-[13px] tracking-wide uppercase px-5 sm:px-6 h-[42px] flex items-center justify-center border-l border-[#0065a8] focus:outline-none">ADMIN</button></li>
+                </ul>
+            </nav>
+
+            <div class="bg-white h-[38px] flex items-center justify-end px-4 sm:px-5 text-[13px] text-gray-600">
+                <div class="hidden sm:flex items-center space-x-4 text-[12px] text-gray-400"><span>O'quv yili: 2026–2027</span></div>
+            </div>
+        </div>
+        <div id="mobileDrawer" class="hidden lg:hidden bg-white border-t border-gray-200 px-4 py-3 space-y-2 text-sm">
+            <div class="flex items-center justify-between py-1 border-b border-gray-100"><span id="mobileUser" class="font-semibold text-gray-700">Kirilmagan</span><span class="text-xs text-[#0072bc] bg-blue-50 px-2 py-0.5 rounded">46-maktab</span></div>
+            <div class="flex space-x-4 pt-1 text-xs">
+                <button onclick="showToast('Bildirishnomalar')" class="text-gray-600 hover:text-[#0072bc]">Bildirishnomalar</button>
+                <button onclick="showToast('Yordam')" class="text-gray-600 hover:text-[#0072bc]">Yordam</button>
+                <button id="mobileAdmin" onclick="switchTab('admin')" class="hidden text-[#0072bc] font-semibold">Admin</button>
+                <button onclick="doLogout()" class="text-red-500">Chiqish</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== Asosiy kontent ===== -->
+    <main class="flex-1 w-full max-w-[1140px] mx-auto px-4 sm:px-6 py-6">
+        <div id="workspaceCanvas" class="w-full rounded-md transition-all duration-200">
+            <!-- Asosiy sahifa (/): hozircha bo'sh, keyinchalik bu yerga kontent qo'shiladi -->
+            <div id="module-home" class="module active"></div>
+            <!-- BSB hisobchisi bo'limi (hozirgi funksional holati) -->
+            <div id="module-bsb" class="module">
+
+<section><h2>1. Hisobot ma'lumotlari</h2>
+<p class="sub" id="profileHint"></p>
+<div class="row" id="meta"></div></section>
+
+<section><h2>2. O'quvchilar ro'yxati</h2>
+<div class="row">
+<label class="btn">Excel faylni tanlash<input type="file" id="file" accept=".xlsx,.xls,.csv" hidden></label>
+<button class="btn o" id="add">+ O'quvchi qo'shish</button>
+<button class="btn o" id="clr">Hammasini tozalash</button>
+</div>
+<p class="sub" style="margin:8px 0 0">Excel faylni <b>emaktab.uz</b> platformasidan kerakli sinf jurnalini eksport qilib yuklang. Yangi fayl yuklansa, kiritilgan ballar o'chadi.</p></section>
+
+<section><h2>3. Ballarni kiriting</h2>
+<div class="row" style="margin-bottom:10px">
+<label class="f" style="flex:0 0 140px">Savollar soni<select id="nq"></select></label>
+<label class="f" style="flex:0 0 130px">"5" baho (% dan)<input type="number" id="th5" min="1" max="100"></label>
+<label class="f" style="flex:0 0 130px">"4" baho (% dan)<input type="number" id="th4" min="1" max="100"></label>
+<label class="f" style="flex:0 0 130px">"3" baho (% dan)<input type="number" id="th3" min="1" max="100"></label>
+</div>
+<p class="sub">Har bir savol ustuni sarlavhasidagi kichkina katakka shu savolning eng yuqori ballini (mezon) yozing. Faqat son kiriting. Mezondan yuqori ball yozilsa, <b>"Baho noto'g'ri"</b> ogohlantirishi chiqadi va u qabul qilinmaydi. Baho foizi chegaralarini o'z mezoningizga moslang.</p>
+<p class="sub" id="thinfo" style="margin-top:-6px"></p>
+<p class="sub" id="empty">Hozircha o'quvchi yo'q. Excel faylni yuklang yoki qo'lda qo'shing.</p>
+<div class="wrap" id="wrap"><table id="T"></table></div><div id="cards"></div></section>
+
+<section><h2>4. Hisobot</h2>
+<div class="stats" id="stats"></div>
+<div class="row" style="margin-top:14px" id="dlrow"><button class="btn" id="pdf">PDF yuklab olish</button><button class="btn o" id="xls">Excel yuklab olish</button></div>
+<p class="sub" id="dln" hidden style="margin-top:10px">Yuklab olish bu ko'rinishda mavjud emas.</p></section>
+
+            </div>
+            <!-- Qolgan bo'limlar (kelajak uchun) -->
+            <div id="module-chsb" class="module"><div class="bg-white rounded-lg border border-gray-200 p-10 text-center text-gray-500">CHSB hisobot bo'limi tez orada ishga tushiriladi.</div></div>
+            <div id="module-li" class="module"><div class="bg-white rounded-lg border border-gray-200 p-10 text-center text-gray-500">LI hisobot bo'limi tez orada ishga tushiriladi.</div></div>
+            <div id="module-kuratorlik" class="module"><div class="bg-white rounded-lg border border-gray-200 p-10 text-center text-gray-500">Kuratorlik hisobot bo'limi tez orada ishga tushiriladi.</div></div>
+            <div id="module-choraklik" class="module"><div class="bg-white rounded-lg border border-gray-200 p-10 text-center text-gray-500">Choraklik hisobot bo'limi tez orada ishga tushiriladi.</div></div>
+            <div id="module-malumotlarim" class="module">
+                <section>
+                    <h2>O'qituvchi ma'lumotlari</h2>
+                    <p class="sub">Viloyat, tuman, maktab va o'qituvchi ma'lumotlari doimiy saqlanadi va har bir hisobotning boshiga avtomatik qo'yiladi. Sinf, fan, chorak kabi o'zgaruvchi ma'lumotlarni BSB hisoboti ichida kiriting.</p>
+                    <div class="row" id="profileMeta"></div>
+                    <div class="row" style="margin-top:14px">
+                        <button class="btn" id="profileSave">Ma'lumotlarni saqlash</button>
+                        <button class="btn o" id="profileClear">Tozalash</button>
+                    </div>
+                </section>
+            </div>
+            <div id="module-admin" class="module">
+                <section>
+                    <h2>Admin panel</h2>
+                    <p class="sub">Saytga Telegram orqali kirgan foydalanuvchilar va ularning statistikasi. Bu bo'lim faqat administratorga ko'rinadi.</p>
+                    <div id="adminCards" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4"></div>
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-x-auto">
+                        <table class="w-full text-[12px] sm:text-[13px]">
+                            <thead class="bg-gray-50 text-gray-500 uppercase text-[11px]">
+                                <tr>
+                                    <th class="text-left px-3 py-2">#</th>
+                                    <th class="text-left px-3 py-2">F.I.Sh.</th>
+                                    <th class="text-left px-3 py-2">Viloyat / Tuman / Maktab</th>
+                                    <th class="text-center px-3 py-2">Premium</th>
+                                    <th class="text-right px-3 py-2">Kirish</th>
+                                    <th class="text-left px-3 py-2">Oxirgi kirish</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminBody"><tr><td colspan="6" class="px-3 py-6 text-center text-gray-400">Yuklanmoqda...</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3"><button class="btn o" onclick="renderAdmin()">Yangilash</button></div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" role="status"></div>
+    <div id="toastNotification" class="fixed bottom-5 right-5 bg-gray-800 text-white text-xs sm:text-sm px-4 py-2.5 rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-[#0088cc]"></span><span id="toastText">Xabar</span>
+    </div>
+
+    <!-- ===== Kutubxonalar ===== -->
+    <script src="https://telegram.org/js/telegram-web-app.js?64"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- ===== Asosiy hisobchi logikasi (to'liq saqlangan) ===== -->
+    <script>
+const $=s=>document.querySelector(s),T=$('#T'),C=$('#cards');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=v=>{const x=parseFloat(String(v).replace(',','.'));return isFinite(x)&&x>0?x:0};
+const r1=x=>Math.round(x*10)/10;
+const fd=s=>s?s.split('-').reverse().join('.'):'____';
+let S={meta:{},n:5,max:Array(16).fill(1),th:{5:86,4:66,3:30},st:[]};
+let AUTH={user:null,stats:null,bot:'',isAdmin:false,premium:false};
+try{const x=localStorage.getItem('bsb1');if(x)S=Object.assign(S,JSON.parse(x))}catch(e){}
+if(S.th&&+S.th[5]===86&&+S.th[4]===71&&+S.th[3]===56)S.th={5:86,4:66,3:30};
+let tm;const save=()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem('bsb1',JSON.stringify(S))}catch(e){}},300)};
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3200)}
+
+/* ===== Telegram kirish + Supabase bulut ===== */
+async function api(path,opts){try{const r=await fetch(path,Object.assign({credentials:'same-origin',headers:{'Content-Type':'application/json'}},opts||{}));const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.description||('HTTP '+r.status));return j}catch(e){console.warn('api',path,e.message);return null}}
+function renderAuth(){
+ const an=$('#adminNav'),ma=$('#mobileAdmin');
+ if(an)an.classList.toggle('hidden',!AUTH.isAdmin);
+ if(ma)ma.classList.toggle('hidden',!AUTH.isAdmin);
+ if(!AUTH.isAdmin){const adm=$('#module-admin');if(adm&&adm.classList.contains('active')&&typeof switchTab==='function')switchTab('home')}
+ const box=$('#authBox');if(!box)return;
+ const m=$('#mobileUser');
+ if(AUTH.user){
+  const u=AUTH.user;
+  const name=[u.first_name,u.last_name].filter(Boolean).join(' ')||u.username||'Foydalanuvchi';
+  const proBadge=AUTH.premium?'<span class="ml-1 text-[9px] font-bold uppercase px-1 py-0.5 rounded bg-green-100 text-green-700 align-middle">PRO</span>':'';
+  box.innerHTML=`<div class="flex items-center space-x-2.5 cursor-pointer group" onclick="switchTab('malumotlarim')" title="Ma'lumotlarim">
+   <div class="w-9 h-9 rounded-md bg-gradient-to-br from-[#0072bc] to-[#005a96] text-white flex items-center justify-center font-semibold text-sm shadow-sm overflow-hidden border border-gray-200 shrink-0">${u.photo_url?`<img src="${esc(u.photo_url)}" alt="" class="w-full h-full object-cover">`:esc(name.slice(0,1).toUpperCase())}</div>
+   <div class="hidden sm:flex flex-col leading-tight"><span class="text-[13px] font-semibold text-gray-700 group-hover:text-[#0072bc]">${esc(name)}${proBadge}</span></div>
+   <button onclick="event.stopPropagation();doLogout()" title="Chiqish" class="ml-1 p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
+  </div>`;
+  if(m)m.textContent=name+(AUTH.premium?' (Premium)':'')+' (Telegram)';
+ }else{
+  box.innerHTML=`<button onclick="openTelegramLogin()" class="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-[#0088cc] text-white text-[13px] font-semibold hover:bg-[#0072bc] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg><span>Kirish</span></button>`;
+  if(m)m.textContent='Kirilmagan';
+ }
+}
+function closeTelegramLogin(){const h=$('#tgLoginHost');if(h)h.remove()}
+function openTelegramLogin(){
+ if(!AUTH.bot){toast('Telegram bot username hali sozlanmagan');return}
+ let h=$('#tgLoginHost');if(!h){h=document.createElement('div');h.id='tgLoginHost';document.body.appendChild(h)}
+ h.innerHTML=`<div class="fixed inset-0 bg-black/40 z-[60] flex items-center justify-center p-4" onclick="if(event.target===this)closeTelegramLogin()"><div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full"><h3 class="text-lg font-bold text-[#182361] mb-1">Telegram orqali kirish</h3><p class="text-[12px] text-gray-500 mb-4">Ma'lumotlaringiz shifrlanib, hisobingizga bog'lanadi.</p><p class="text-[11px] text-gray-400 mb-3">Telegram'ga kirmagan bo'lsangiz, telefon raqamingiz so'raladi - bu Telegram tasdiqlashidir, sayt raqamni olmaydi.</p><div id="tgWidget" class="min-h-[48px]"></div><button onclick="closeTelegramLogin()" class="mt-4 text-[12px] text-gray-500 hover:text-gray-800">Yopish</button></div></div>`;
+ const w=$('#tgWidget');w.innerHTML='';
+ const s=document.createElement('script');s.async=true;s.src='https://telegram.org/js/telegram-widget.js?22';
+ s.setAttribute('data-telegram-login',AUTH.bot);s.setAttribute('data-size','large');s.setAttribute('data-radius','6');
+ s.setAttribute('data-onauth','onTelegramAuth(user)');s.setAttribute('data-request-access','write');
+ w.appendChild(s);
+}
+window.onTelegramAuth=async function(user){
+ try{
+  const j=await api('/api/telegram-login',{method:'POST',body:JSON.stringify(user)});
+  if(!j||!j.ok){toast('Kirish amalga oshmadi: '+((j&&j.description)||'xato'));return}
+  closeTelegramLogin();
+  const me=await api('/api/me');
+  if(me&&me.authenticated){AUTH.user=me.user;AUTH.stats=me.stats;AUTH.bot=me.botUsername||AUTH.bot;AUTH.isAdmin=!!me.isAdmin;AUTH.premium=!!me.premium;if(me.profile)applyProfile(me.profile)}
+  else {AUTH.user=j.user;AUTH.isAdmin=!!j.isAdmin;AUTH.premium=!!j.premium}
+  renderAuth();toast('Telegram orqali kirdingiz');
+ }catch(e){toast('Kirish xatosi: '+e.message)}
+};
+async function doLogout(){await api('/api/logout',{method:'POST',body:'{}'});AUTH.user=null;AUTH.stats=null;AUTH.isAdmin=false;AUTH.premium=false;renderAuth();toast('Chiqdingiz')}
+function fmtAdminDate(s){if(!s)return '-';try{const d=new Date(s);return d.toLocaleString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return '-'}}
+function adminCard(label,val){return `<div class="bg-white border border-gray-200 rounded-lg p-3"><div class="text-[11px] uppercase tracking-wide text-gray-400">${label}</div><div class="text-xl font-bold text-[#182361] mt-1">${val}</div></div>`}
+async function renderAdmin(){
+ const body=$('#adminBody');if(!body)return;
+ body.innerHTML='<tr><td colspan="6" class="px-3 py-6 text-center text-gray-400">Yuklanmoqda...</td></tr>';
+ const j=await api('/api/admin/users');
+ if(!j||!j.ok){body.innerHTML=`<tr><td colspan="6" class="px-3 py-6 text-center text-red-500">${esc((j&&j.description)||"Ruxsat yo'q yoki xato")}</td></tr>`;return}
+ const t=j.totals||{},cards=$('#adminCards');
+ if(cards)cards.innerHTML=adminCard('Foydalanuvchilar',t.users||0)+adminCard('Premium',t.premium||0)+adminCard('Kirishlar',t.logins||0);
+ if(!j.users.length){body.innerHTML='<tr><td colspan="7" class="px-3 py-6 text-center text-gray-400">Hozircha foydalanuvchi yo\'q</td></tr>';return}
+ body.innerHTML=j.users.map((u,i)=>{
+  const name=[u.first_name,u.last_name].filter(Boolean).join(' ')||'-';
+  const place=[u.viloyat,u.tuman,u.maktab?u.maktab+'-maktab':''].filter(Boolean).join(', ')||'-';
+  const badge=u.premium?'bg-green-50 text-green-700 border-green-200':'bg-gray-50 text-gray-500 border-gray-200';
+  return `<tr class="border-t border-gray-100 hover:bg-gray-50">
+   <td class="px-3 py-2 text-gray-400">${i+1}</td>
+   <td class="px-3 py-2"><div class="font-semibold text-gray-700">${esc(name)}</div><div class="text-[11px] text-gray-400">${u.username?'@'+esc(u.username):''}</div></td>
+   <td class="px-3 py-2 text-gray-500">${esc(place)}</td>
+   <td class="px-3 py-2 text-center"><button onclick="togglePremium('${u.id}',${u.premium?'true':'false'})" class="px-2 py-1 rounded border text-[11px] font-semibold ${badge}">${u.premium?'Premium':'Oddiy'}</button></td>
+   <td class="px-3 py-2 text-right">${u.logins}</td>
+   <td class="px-3 py-2 text-gray-500">${esc(fmtAdminDate(u.last_login_at))}</td>
+  </tr>`;
+ }).join('');
+}
+async function togglePremium(id,current){
+ const next=!current;
+ const j=await api('/api/admin/premium',{method:'POST',body:JSON.stringify({id:id,premium:next})});
+ if(!j||!j.ok){toast((j&&j.description)||"O'zgartirilmadi");return}
+ toast(next?'Premium yoqildi':'Premium o\'chirildi');renderAdmin();
+}
+async function saveProfileToCloud(silent){
+ if(!AUTH.user){toast("Profilni bulutga saqlash uchun Telegram orqali kiring");return}
+ const m=S.meta||{};
+ const j=await api('/api/profile',{method:'POST',body:JSON.stringify({viloyat:m.viloyat||'',tuman:m.tuman||'',maktab:m.maktab||'',oqituvchi:m.oqituvchi||''})});
+ if(j&&j.ok){if(!silent)toast("Ma'lumotlar saqlandi")}else toast("Saqlashda xato");
+}
+function applyProfile(p){
+ if(!p)return;
+ ['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{if(p[k])S.meta[k]=p[k]});
+ if(typeof renderProfile==='function')renderProfile();
+ if(typeof renderProfileHint==='function')renderProfileHint();
+ if(typeof render==='function')render();
+}
+async function loadMe(){
+ const j=await api('/api/me');if(!j)return;
+ AUTH.bot=j.botUsername||'';AUTH.isAdmin=!!j.isAdmin;AUTH.premium=!!j.premium;
+ AUTH.user=j.authenticated?j.user:null;AUTH.stats=j.stats||null;
+ if(AUTH.user&&j.profile)applyProfile(j.profile);
+ renderAuth();
+}
+
+/* Baho chegaralari: har bir chegara 1..100 oralig'ida bo'lishi shart.
+   Bo'sh yoki 0 qiymat o'rniga standart chegara olinadi, so'ng ular kamayish
+   tartibida joylashtiriladi — shunda baho har doim foizga qarab to'g'ri qo'yiladi. */
+const TH_DEF={5:86,4:66,3:30};
+const thNum=k=>{const v=parseFloat(String(S.th&&S.th[k]!=null?S.th[k]:'').replace(',','.'));return isFinite(v)&&v>0?Math.min(100,v):NaN};
+function thSafe(){const g=k=>{const v=thNum(k);return isNaN(v)?TH_DEF[k]:v};const a=[g(5),g(4),g(3)].sort((x,y)=>y-x);return{5:a[0],4:a[1],3:a[2]}}
+function thFix(){const t=thSafe(),ch=[5,4,3].some(k=>thNum(k)!==t[k]);S.th={5:t[5],4:t[4],3:t[3]};return ch}
+if(thFix())save();
+
+const VILOYATLAR=["Andijon viloyati","Buxoro viloyati","Farg'ona viloyati","Jizzax viloyati","Namangan viloyati","Navoiy viloyati","Qashqadaryo viloyati","Qoraqalpog'iston Respublikasi","Samarqand viloyati","Sirdaryo viloyati","Surxondaryo viloyati","Toshkent shahri","Toshkent viloyati","Xorazm viloyati"];
+const TUMANLAR={"Andijon viloyati":["Andijon shahri","Xonobod shahri","Andijon tumani","Asaka tumani","Baliqchi tumani","Bo'ston tumani","Buloqboshi tumani","Izboskan tumani","Jalaquduq tumani","Xo'jaobod tumani","Qo'rg'ontepa tumani","Marhamat tumani","Oltinko'l tumani","Paxtaobod tumani","Shahrixon tumani","Ulug'nor tumani"],"Buxoro viloyati":["Buxoro shahri","Kogon shahri","Olot tumani","Buxoro tumani","G'ijduvon tumani","Jondor tumani","Kogon tumani","Qorako'l tumani","Qorovulbozor tumani","Peshku tumani","Romitan tumani","Shofirkon tumani","Vobkent tumani"],"Farg'ona viloyati":["Farg'ona shahri","Qo'qon shahri","Marg'ilon shahri","Quvasoy shahri","Oltiariq tumani","Bag'dod tumani","Beshariq tumani","Buvayda tumani","Dang'ara tumani","Farg'ona tumani","Furqat tumani","Qo'shtepa tumani","Quva tumani","Rishton tumani","So'x tumani","Toshloq tumani","Uchko'prik tumani","O'zbekiston tumani","Yozyovon tumani"],"Jizzax viloyati":["Jizzax shahri","Arnasoy tumani","Baxmal tumani","Do'stlik tumani","Forish tumani","G'allaorol tumani","Sharof Rashidov tumani","Mirzacho'l tumani","Paxtakor tumani","Yangiobod tumani","Zomin tumani","Zafarobod tumani","Zarbdor tumani"],"Namangan viloyati":["Namangan shahri","Chortoq tumani","Chust tumani","Kosonsoy tumani","Mingbuloq tumani","Namangan tumani","Norin tumani","Pop tumani","To'raqo'rg'on tumani","Uchqo'rg'on tumani","Uychi tumani","Yangiqo'rg'on tumani"],"Navoiy viloyati":["Navoiy shahri","Zarafshon shahri","Uchquduq shahri","Konimex tumani","Karmana tumani","Qiziltepa tumani","Xatirchi tumani","Navbahor tumani","Nurota tumani","Tomdi tumani","Uchquduq tumani"],"Qashqadaryo viloyati":["Qarshi shahri","Shahrisabz shahri","Chiroqchi tumani","Dehqonobod tumani","G'uzor tumani","Qamashi tumani","Qarshi tumani","Koson tumani","Kasbi tumani","Kitob tumani","Mirishkor tumani","Muborak tumani","Nishon tumani","Shahrisabz tumani","Yakkabog' tumani","Ko'kdala tumani"],"Qoraqalpog'iston Respublikasi":["Nukus shahri","Taxiatosh shahri","Amudaryo tumani","Beruniy tumani","Chimboy tumani","Ellikqal'a tumani","Kegeyli tumani","Mo'ynoq tumani","Nukus tumani","Qanliko'l tumani","Qo'ng'irot tumani","Qorao'zak tumani","Shumanay tumani","Taxtako'pir tumani","To'rtko'l tumani","Xo'jayli tumani","Taxiatosh tumani","Bo'zatov tumani"],"Samarqand viloyati":["Samarqand shahri","Kattaqo'rg'on shahri","Bulung'ur tumani","Ishtixon tumani","Jomboy tumani","Kattaqo'rg'on tumani","Qo'shrabot tumani","Narpay tumani","Nurobod tumani","Oqdaryo tumani","Paxtachi tumani","Payariq tumani","Pastdarg'om tumani","Samarqand tumani","Toyloq tumani","Urgut tumani"],"Sirdaryo viloyati":["Guliston shahri","Yangiyer shahri","Shirin shahri","Oqoltin tumani","Boyovut tumani","Guliston tumani","Xovos tumani","Mirzaobod tumani","Sayxunobod tumani","Sardoba tumani","Sirdaryo tumani"],"Surxondaryo viloyati":["Termiz shahri","Angor tumani","Boysun tumani","Denov tumani","Jarqo'rg'on tumani","Qiziriq tumani","Qumqo'rg'on tumani","Muzrabot tumani","Oltinsoy tumani","Sariosiyo tumani","Sherobod tumani","Sho'rchi tumani","Termiz tumani","Uzun tumani","Bandixon tumani"],"Toshkent shahri":["Bektemir tumani","Chilonzor tumani","Yashnobod tumani","Mirobod tumani","Mirzo Ulug'bek tumani","Sergeli tumani","Shayxontohur tumani","Olmazor tumani","Uchtepa tumani","Yakkasaroy tumani","Yunusobod tumani","Yangihayot tumani"],"Toshkent viloyati":["Nurafshon shahri","Olmaliq shahri","Angren shahri","Bekobod shahri","Chirchiq shahri","Ohangaron shahri","Yangiyo'l shahri","Bekobod tumani","Bo'stonliq tumani","Bo'ka tumani","Chinoz tumani","Qibray tumani","Ohangaron tumani","Oqqo'rg'on tumani","Parkent tumani","Piskent tumani","Toshkent tumani","Quyi Chirchiq tumani","O'rta Chirchiq tumani","Yangiyo'l tumani","Yuqori Chirchiq tumani","Zangiota tumani"],"Xorazm viloyati":["Urganch shahri","Xiva shahri","Bog'ot tumani","Gurlan tumani","Xonqa tumani","Hazorasp tumani","Xiva tumani","Qo'shko'pir tumani","Shovot tumani","Urganch tumani","Yangiariq tumani","Yangibozor tumani","Tuproqqal'a tumani"]};
+const FANLAR=["Ona tili","O'zbek tili","Rus tili","Ingliz tili","Nemis tili","Fransuz tili","Adabiyot","Matematika","Algebra","Geometriya","Informatika va AT","Fizika","Kimyo","Biologiya","Geografiya","Tarix","O'zbekiston tarixi","Jahon tarixi","Huquq","Iqtisodiy bilim asoslari","Tarbiya","Musiqa","Tasviriy san'at","Texnologiya","Jismoniy tarbiya","Chaqiriqqa qadar harbiy ta'lim"];
+const SINFLAR=["1","2","3","4","5","6","7","8","9","10","11"];
+const HARFLAR=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+const CHORAKLAR=["1-chorak","2-chorak","3-chorak","4-chorak"];
+const TURLAR=["BSB","CHSB"];
+const BSBLAR=["1","2","3","4","5","6","7","8"];
+const sel=(k,label,opts,ph)=>{const cur=S.meta[k]||'';const has=opts.includes(cur);const extra=(cur&&!has)?`<option selected value="${esc(cur)}">${esc(cur)}</option>`:'';return `<label class="f">${label}<select data-k="${k}"><option value="">${ph||'Tanlang...'}</option>${opts.map(o=>`<option${o===cur?' selected':''}>${esc(o)}</option>`).join('')}${extra}</select></label>`};
+function renderMeta(){const box=$('#meta');if(!box)return;
+ box.innerHTML=sel('sinf','Sinf (raqami)',SINFLAR,'Tanlang...')+sel('harf','Sinf harfi (A, B, D...)',HARFLAR,'Harf...')
+ +sel('fan','Fan',FANLAR,'Fanni tanlang...')+sel('chorak','Chorak',CHORAKLAR,'Tanlang...')+sel('tur','Baholash turi',TURLAR,'Tanlang...')+sel('bsb','Tartib raqami',BSBLAR,'Tanlang...')
+ +`<label class="f">Sana<input type="date" data-k="sana" value="${esc(S.meta.sana)}"></label>`}
+// Ma'lumotlarim bo'limi — faqat doimiy ma'lumotlar; ular S.meta ga yoziladi
+function renderProfile(){const v=S.meta.viloyat||'',tl=v?(TUMANLAR[v]||[]):[];
+ const box=$('#profileMeta');if(!box)return;
+ box.innerHTML=sel('viloyat','Viloyat / Hudud',VILOYATLAR,'Hududni tanlang...')
+  +`<label class="f">Tuman / Shahar<select data-k="tuman"${v?'':' disabled'}><option value="">${v?'Tanlang...':'Avval viloyatni tanlang'}</option>${tl.map(o=>`<option${o===(S.meta.tuman||'')?' selected':''}>${esc(o)}</option>`).join('')}${(S.meta.tuman&&v&&!tl.includes(S.meta.tuman))?`<option selected>${esc(S.meta.tuman)}</option>`:''}</select></label>`
+  +`<label class="f">Maktab raqami<input type="text" inputmode="numeric" data-k="maktab" placeholder="masalan: 12" value="${esc(S.meta.maktab)}"></label>`
+  +`<label class="f">O'qituvchi F.I.Sh.<input type="text" data-k="oqituvchi" placeholder="masalan: Nuraliyev A.N." value="${esc(S.meta.oqituvchi)}"></label>`;
+}
+function renderProfileHint(){const el=$('#profileHint');if(!el)return;
+ const m=S.meta;
+ const parts=[m.viloyat,m.tuman,m.maktab?`${m.maktab}-maktab`:'',m.oqituvchi].filter(Boolean);
+ el.innerHTML=parts.length?`Doimiy ma'lumotlar: <b>${esc(parts.join(', '))}</b> — «Ma'lumotlarim» bo'limida o'zgartiring.`:`Viloyat, tuman, maktab va o'qituvchi «Ma'lumotlarim» bo'limida kiritiladi.`;
+}
+// Sana bo'sh bo'lsa bugungi kun bilan to'ldirish (faqat bir marta)
+if(!S.meta.sana){const d=new Date();S.meta.sana=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');save()}
+if(S.meta.sinf&&!/^\d{1,2}$/.test(String(S.meta.sinf))){const m=String(S.meta.sinf).match(/(\d{1,2})\s*[-–]?\s*([A-Za-zА-Яа-яЁёҒғҚқҲҳЎў']?)/);if(m){S.meta.sinf=m[1];if(m[2]&&!S.meta.harf)S.meta.harf=m[2].toUpperCase()}}
+if(S.meta.harf)S.meta.harf=String(S.meta.harf).trim().toUpperCase();
+if(S.meta.bsb&&!/^\d{1,2}$/.test(String(S.meta.bsb))){const mb=String(S.meta.bsb).match(/(\d{1,2})\s*[-–]?\s*(BSB|CHSB)?/i);if(mb){S.meta.bsb=mb[1];if(mb[2]&&!S.meta.tur)S.meta.tur=mb[2].toUpperCase()}}
+if(!S.meta.tur)S.meta.tur='BSB';
+if(!S.meta.viloyat&&S.meta.tuman){for(const k in TUMANLAR){if((TUMANLAR[k]||[]).some(t=>t.toLowerCase()===String(S.meta.tuman).toLowerCase())){S.meta.viloyat=k;S.meta.tuman=TUMANLAR[k].find(t=>t.toLowerCase()===String(S.meta.tuman).toLowerCase());break}}}
+renderMeta(); renderProfile(); renderProfileHint();
+function onMetaInput(e){
+ const k=e.target.dataset.k;if(!k)return;let val=e.target.value;
+ if(k==='harf'){val=String(val).trim().toUpperCase();e.target.value=val}
+ S.meta[k]=val;
+ if(k==='viloyat'){S.meta.tuman='';renderProfile();renderProfileHint()}
+ else if(['viloyat','tuman','maktab','oqituvchi'].includes(k)){renderProfileHint()}
+ else if(k!=='sana'){ // bir xil maydonlar bo'lsa sinxronlash
+  document.querySelectorAll(`[data-k="${k}"]`).forEach(x=>{if(x!==e.target)x.value=val});
+ }
+ save();
+}
+$('#meta').addEventListener('input',onMetaInput);
+const pb=$('#profileMeta'); if(pb)pb.addEventListener('input',onMetaInput);
+$('#profileSave').onclick=()=>{save();saveProfileToCloud()};
+// Ulash nuqtasi: BSB hisobchisi (iframe yoki boshqa sahifa) shu orqali ma'lumot oladi
+window.getTeacherProfile=()=>Object.assign({},S.meta);
+window.MH_PROFILE=window.getTeacherProfile();
+// Ma'lumotlar o'zgarganda ulash nuqtasini ham yangilaymiz
+const _origOnMeta=onMetaInput;
+function onMetaInputSynced(e){_origOnMeta(e);window.MH_PROFILE=Object.assign({},S.meta)}
+$('#meta').removeEventListener('input',_origOnMeta);$('#meta').addEventListener('input',onMetaInputSynced);
+if(pb)pb.addEventListener('input',()=>{window.MH_PROFILE=Object.assign({},S.meta)});
+// Yuklab olishdan oldin ikki bosqichli tekshirish: doimiy profil + hisobot maydonlari
+const PROF_REQ=[['viloyat','Viloyat'],['tuman','Tuman / Shahar'],['maktab','Maktab raqami'],['oqituvchi',"O'qituvchi F.I.Sh."]];
+const REPORT_REQ=[['sinf','Sinf'],['harf','Sinf harfi'],['fan','Fan'],['chorak','Chorak'],['bsb','Tartib raqami']];
+function profOk(){
+ const miss=PROF_REQ.filter(([k])=>!String(S.meta[k]||'').trim());
+ if(miss.length){toast("Avval «Ma'lumotlarim» bo'limini to'ldiring: "+miss.map(x=>x[1]).join(', '));switchTab('malumotlarim');return false}
+ return true;
+}
+function reportOk(){
+ const miss=REPORT_REQ.filter(([k])=>!String(S.meta[k]||'').trim());
+ if(miss.length){toast("BSB hisoboti boshida maydonlarni to'ldiring: "+miss.map(x=>x[1]).join(', '));switchTab('bsb');return false}
+ return true;
+}
+let pck=0;$('#profileClear').onclick=e=>{if(!pck){e.target.textContent='Aniq tozalansinmi? Yana bosing';pck=setTimeout(()=>{pck=0;e.target.textContent='Tozalash'},3000);return}clearTimeout(pck);pck=0;e.target.textContent='Tozalash';['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{S.meta[k]=''});renderProfile();renderProfileHint();window.MH_PROFILE=Object.assign({},S.meta);save();saveProfileToCloud(true);toast("Ma'lumotlar tozalandi")};
+$('#nq').innerHTML=Array.from({length:16},(_,i)=>`<option>${i+1}</option>`).join('');
+$('#nq').value=S.n;
+$('#nq').onchange=e=>{S.n=+e.target.value;render();save()};
+[5,4,3].forEach(g=>{const el=$('#th'+g);el.value=S.th[g];
+ el.oninput=()=>{const v=parseFloat(String(el.value).replace(',','.'));if(isFinite(v)&&v>0&&v<=100){S.th[g]=v;upd();save()}};
+ el.onchange=()=>{const changed=thFix();[5,4,3].forEach(k=>$('#th'+k).value=S.th[k]);if(changed)toast(`Baho chegaralari tuzatildi: "5" — ${S.th[5]}%, "4" — ${S.th[4]}%, "3" — ${S.th[3]}%`);upd();save()}});
+
+function calc(){
+ const n=S.n,mx=S.max.slice(0,n).map(num),mt=mx.reduce((a,b)=>a+b,0),TH=thSafe();
+ const rows=S.st.map(s=>{const v=s.sc.slice(0,n),filled=v.some(x=>String(x).trim()!=='');
+  const t=v.reduce((a,x,i)=>a+Math.min(num(x),mx[i]),0),p=mt?t/mt*100:0;
+  const g=!filled?'':p>=TH[5]?5:p>=TH[4]?4:p>=TH[3]?3:2;return{t,p,g,filled}});
+ const fl=rows.filter(r=>r.filled),f=fl.length,cnt={5:0,4:0,3:0,2:0};fl.forEach(r=>cnt[r.g]++);
+ const avg=mx.map((m,j)=>{let a=0;S.st.forEach((s,i)=>{if(rows[i].filled)a+=Math.min(num(s.sc[j]),m)});return f?a/f:0});
+ return{rows,f,cnt,avg,mt,mx,avgP:f?fl.reduce((a,r)=>a+r.p,0)/f:0,ozl:f?(cnt[5]+cnt[4]+cnt[3])/f*100:0,sif:f?(cnt[5]+cnt[4])/f*100:0}
+}
+
+function render(){
+ const q=[...Array(S.n).keys()];
+ $('#empty').hidden=S.st.length>0;$('#wrap').hidden=!S.st.length;
+ T.innerHTML=`<thead><tr><th>T/R</th><th class="nm">O'quvchilar F.I.SH</th>${q.map(j=>`<th>${j+1}-savol<input class="mh" inputmode="decimal" data-m="${j}" value="${esc(S.max[j])}" title="Mezon ball"></th>`).join('')}<th>To'plagan ball<div class="mzt">Jami: <b id="mt"></b></div></th><th>Foiz</th><th>Baho</th><th>Izoh</th><th></th></tr></thead>
+<tbody>${S.st.map((s,i)=>`<tr><td>${i+1}</td><td class="nm">${s.name?`<span>${esc(s.name)}</span>`:`<input data-nm="${i}" value="" placeholder="F.I.SH">`}</td>${q.map(j=>`<td><input inputmode="decimal" data-r="${i}" data-q="${j}" value="${esc(s.sc[j])}"></td>`).join('')}<td id="t${i}"></td><td id="p${i}"></td><td id="g${i}" class="g"></td><td class="iz"><input data-iz="${i}" value="${esc(s.izoh)}"></td><td><button class="x" data-del="${i}" title="O'chirish">×</button></td></tr>`).join('')}</tbody>
+<tfoot><tr class="avg"><td></td><td class="nm" style="text-align:left">O'quvchilar to'plagan o'rtacha ballar</td>${q.map(j=>`<td id="a${j}"></td>`).join('')}<td id="at"></td><td id="ap"></td><td></td><td></td><td></td></tr></tfoot>`;
+ C.innerHTML=`<div class="mezbar"><span>Mezon:</span>${q.map(j=>`<label>${j+1}-savol<input inputmode="decimal" data-m="${j}" value="${esc(S.max[j])}"></label>`).join('')}<span>Jami: <b id="cmt"></b></span></div>`
+ +S.st.map((s,i)=>`<div class="card"><div class="chead"><span class="cnum">${i+1}</span>${s.name?`<span style="flex:1;min-width:0;text-align:left">${esc(s.name)}</span>`:`<input data-nm="${i}" value="" placeholder="F.I.SH">`}<button class="x" data-del="${i}" title="O'chirish">×</button></div><div class="cgrid">${q.map(j=>`<label>${j+1}-savol<input inputmode="decimal" data-r="${i}" data-q="${j}" value="${esc(s.sc[j])}"></label>`).join('')}</div><div class="cres"><span>Ball: <b id="ct${i}"></b></span><span><b id="cp${i}"></b></span><span class="g" id="cg${i}"></span></div><input class="ciz" data-iz="${i}" placeholder="Izoh" value="${esc(s.izoh)}"></div>`).join('');
+ upd();
+}
+
+function upd(){
+ const c=calc(),TH=thSafe(),ti=$('#thinfo');
+ if(ti)ti.textContent=`Amaldagi chegaralar: "5" — ${TH[5]}% va yuqori, "4" — ${TH[4]}% dan, "3" — ${TH[3]}% dan, undan past — "2".`;
+ c.rows.forEach((r,i)=>{$('#t'+i).textContent=r.filled?r1(r.t):'';$('#p'+i).textContent=r.filled?r1(r.p)+'%':'';const g=$('#g'+i);g.textContent=r.g;g.className='g g'+r.g;
+  const ct=$('#ct'+i);if(ct){ct.textContent=r.filled?r1(r.t):'';$('#cp'+i).textContent=r.filled?r1(r.p)+'%':'';const cg=$('#cg'+i);cg.textContent=r.g;cg.className='g g'+r.g}});
+ c.avg.forEach((a,j)=>$('#a'+j).textContent=c.f?r1(a):'');
+ $('#at').textContent=c.f?r1(c.avg.reduce((a,b)=>a+b,0)):'';$('#ap').textContent=c.f?r1(c.avgP)+'%':'';$('#mt').textContent=r1(c.mt);
+ const cmt=$('#cmt');if(cmt)cmt.textContent=r1(c.mt);
+ document.querySelectorAll('input[data-q]').forEach(el=>{const mx=c.mx[el.dataset.q];if(mx>0)el.max=mx;el.classList.toggle('bad',num(el.value)>mx)});
+ const s=(k,l,cl='')=>`<div class="stat"><b class="${cl}">${k}</b><span>${l}</span></div>`;
+ $('#stats').innerHTML=[5,4,3,2].map(g=>s(c.cnt[g]+' ta',`"${g}" baho`,'g'+g)).join('')
+  +s(r1(c.ozl)+'%',"O'zlashtirish ko'rsatkichi (3, 4, 5 olganlar)")+s(r1(c.sif)+'%',"Sifat ko'rsatkichi (4 va 5 olganlar)")
+  +s(r1(c.avgP)+'%',"O'rtacha foiz")+s(c.f+' / '+S.st.length,"Ball kiritilgan o'quvchilar");
+}
+
+function bindGrid(el){
+const cleanNum=v=>{v=String(v).replace(/[^0-9.,]/g,'');let out='',sep=false;for(const ch of v){if(ch==='.'||ch===','){if(sep)continue;sep=true;out+=ch}else out+=ch}return out};
+el.addEventListener('input',e=>{const d=e.target.dataset;
+ if(d.q!=null){let v=String(e.target.value);const cv=cleanNum(v);if(cv!==v){e.target.value=cv;v=cv}
+  const mx=num(S.max[+d.q]);
+  if(v.trim()!==''&&mx>0&&num(v)>mx){toast(`Baho noto'g'ri! ${+d.q+1}-savol mezoni: ${mx}`);e.target.value=S.st[+d.r].sc[+d.q];upd();save();return}
+  S.st[+d.r].sc[+d.q]=v}
+ else if(d.m!=null){let v=String(e.target.value);const cv=cleanNum(v);if(cv!==v){e.target.value=cv;v=cv}
+  S.max[+d.m]=v;document.querySelectorAll('input[data-m]').forEach(x=>{if(x!==e.target&&+x.dataset.m===+d.m)x.value=v});
+  const mx=num(v);
+  if(mx>0){let bad=0;S.st.forEach(s=>{if(String(s.sc[+d.m]).trim()!==''&&num(s.sc[+d.m])>mx)bad++});if(bad)toast(`Diqqat: ${bad} ta baho mezondan yuqori!`)}}
+ else if(d.nm!=null)S.st[+d.nm].name=e.target.value;else if(d.iz!=null)S.st[+d.iz].izoh=e.target.value;
+ upd();save()});
+el.addEventListener('click',e=>{const i=e.target.dataset.del;if(i!=null){S.st.splice(+i,1);render();save()}});
+el.addEventListener('focusout',e=>{const d=e.target.dataset;if(d.nm!=null){const v=String(e.target.value||'').trim().replace(/\s+/g,' ');if(v){S.st[+d.nm].name=v;render();save()}}});
+el.addEventListener('keydown',e=>{const t=e.target,d=t.dataset;
+  if(d.nm!=null&&e.key==='Enter'){e.preventDefault();const ri=d.nm;t.blur();setTimeout(()=>{const nx=el.querySelector(`[data-r="${ri}"][data-q="0"]`);if(nx){nx.focus();nx.select()}},60);return}
+  if(d.q==null)return;const r=+d.r,q=+d.q;let nr=r,nq=q,ok=true;
+  if(e.key==='Enter'||e.key==='ArrowDown'){nr=r+1}
+  else if(e.key==='ArrowUp'){nr=r-1}
+  else if(e.key==='ArrowRight'){if(q+1<S.n){nq=q+1}else{nr=r+1;nq=0}}
+  else if(e.key==='ArrowLeft'){if(q-1>=0){nq=q-1}else{nr=r-1;nq=S.n-1}}
+  else ok=false;if(!ok)return;e.preventDefault();
+  const nx=el.querySelector(`[data-r="${nr}"][data-q="${nq}"]`);if(nx){nx.focus();nx.select()}})}
+bindGrid(T);bindGrid(C);
+
+const mk=name=>({name,sc:Array(16).fill(''),izoh:''});
+$('#add').onclick=()=>{S.st.push(mk(''));render();save();const vis=getComputedStyle(C).display!=='none'?C:T;const l=vis.querySelector(`[data-nm="${S.st.length-1}"]`);l&&l.focus()};
+let ck=0;$('#clr').onclick=e=>{if(!ck){e.target.textContent='Aniq tozalansinmi? Yana bosing';ck=setTimeout(()=>{ck=0;e.target.textContent='Hammasini tozalash'},3000);return}
+ clearTimeout(ck);ck=0;e.target.textContent='Hammasini tozalash';S.st=[];render();save()};
+
+const HDR=/^(?:t\/?r|№|n|f\.?i\.?o?\.?sh?\.?|ism|familiya|o.?quvchi\w*|ф\.?и\.?о\.?|имя|фамилия)(?:[\s.,:]|$)/i;
+$('#file').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+ if(!window.XLSX){toast("Excel kutubxonasi yuklanmadi. Internetni tekshiring.");return}
+ try{const wb=XLSX.read(await f.arrayBuffer(),{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''}),names=[];
+  rows.slice(10).forEach(r=>{const c=String(r[1]??'').trim();if(!c)return;if(!/\p{L}{2}/u.test(c))return;if(HDR.test(c))return;names.push(c.replace(/\s+/g,' '))});
+  if(!names.length){toast("B ustunda 11-qatordan boshlab ismlar topilmadi. Fayl shaklini tekshiring.");return}
+  S.st=names.map(mk);render();save();toast(names.length+" ta o'quvchi yuklandi (B ustun, 11-qatordan)")}
+ catch(err){toast("Faylni o'qib bo'lmadi: "+(err.message||err))}};
+
+const head=()=>{const m=S.meta,b=(k,d)=>m[k]||d;const vil=m.viloyat?m.viloyat+', ':'';
+let tp='________';if(m.tuman){tp=/tuman|shahar/i.test(m.tuman)?m.tuman:m.tuman+' tumani'}
+let sfnum=String(b('sinf','___')).replace(/[^0-9]/g,'')||'___';let hr=m.harf?String(m.harf).trim().toUpperCase():'';
+let sf=hr?sfnum+'-'+hr+' sinf':(/sinf/i.test(String(b('sinf','')))?b('sinf','___'):sfnum+'-sinf');
+let ch=b('chorak','__');ch=String(ch).replace(/-?chorak.*$/i,'');if(!ch||ch==='__')ch='__';
+let bs=String(b('bsb','___')).replace(/[^0-9]/g,'')||'___';let tur=String(m.tur||'BSB').toUpperCase();if(tur!=='BSB'&&tur!=='CHSB')tur='BSB';
+return `${vil}${tp} Maktabgacha va maktab ta'limi bo'limi tasarrufidagi ${b('maktab','__')}-sonli umumiy o'rta ta'lim maktabi ${sf} o'quvchilarining ${b('fan','________')} fanidan ${ch}-chorakda olingan ${bs}-${tur} natijalari`};
+function data(){
+ const c=calc(),n=S.n,m=S.meta,TH=thSafe();
+ const hdr=['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol`),`To'plagan ball (${r1(c.mt)})`,'Foiz (%)','Baho','Izoh'];
+ const rows=S.st.map((s,i)=>{const r=c.rows[i];return[i+1,s.name,...s.sc.slice(0,n).map(x=>String(x).trim()===''?'':num(x)),r.filled?r1(r.t):'',r.filled?r1(r.p):'',r.g,s.izoh||'']});
+ rows.push(['',"O'quvchilar to'plagan o'rtacha ballar",...c.avg.map(a=>c.f?r1(a):''),c.f?r1(c.avg.reduce((a,b)=>a+b,0)):'',c.f?r1(c.avgP):'','','']);
+ const lines=[5,4,3,2].map(g=>`${c.cnt[g]} ta ${g} baho`);
+ lines.push(`O'zlashtirish ko'rsatkichi: ${r1(c.ozl)}%`,`Sifat ko'rsatkichi: ${r1(c.sif)}%`,`Baho chegaralari: "5" — ${TH[5]}% va yuqori, "4" — ${TH[4]}% dan, "3" — ${TH[3]}% dan`, `${m.fan||'______'} fan o'qituvchisi: ${m.oqituvchi||'____________'}`);
+ return{hdr,rows,lines};
+}
+const clean=s=>String(s||'').replace(/[\\/:*?"<>|\n\r]+/g,'-').replace(/\s+/g,' ').trim();
+const fname=ext=>{const m=S.meta;const sn=clean((m.sinf||'')+((m.harf||'').toUpperCase()))||'sinf';const fn=clean(m.fan)||'fan';let t=String(m.tur||'BSB').toUpperCase();if(t!=='BSB'&&t!=='CHSB')t='BSB';const n=String(m.bsb||'').replace(/[^0-9]/g,'')||'1';return `${sn}-${fn}-${t}-${n}.${ext}`};
+let DL=null;
+function saveBlob(name,d,type){const blob=d instanceof Blob?d:new Blob([d],{type:type||'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href)}catch(e){}a.remove()},2000)}
+const isTG=()=>!!(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initData);
+try{if(isTG()){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand()}}catch(e){}
+async function dlTelegram(name,blob,type){const WA=window.Telegram.WebApp;
+ try{const file=new File([blob],name,{type:type});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return true}}
+ catch(e){if(e&&e.name==='AbortError'){toast('Bekor qilindi');return false}}
+ const uid=WA.initDataUnsafe&&WA.initDataUnsafe.user&&WA.initDataUnsafe.user.id;
+ if(!uid){toast("Telegram ma'lumotini olib bo'lmadi");return false}
+ try{toast('Botga yuborlanmoqda...');
+  const b64=await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{try{res(String(fr.result).split(',')[1])}catch(x){rej(x)}};fr.onerror=()=>rej(new Error('read'));fr.readAsDataURL(blob)});
+  const r=await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:uid,filename:name,caption:name,data:b64})});
+  const j=await r.json();
+  if(j&&j.ok){toast("Fayl bot orqali 'Saqlangan xabarlar'ga yuborildi");try{WA.HapticFeedback&&WA.HapticFeedback.notificationOccurred('success')}catch(e){}return true}
+  toast('Yuborilmadi: '+((j&&(j.description||j.error_code))||'xato'));return false}
+ catch(e){toast("Yuborilmadi: internetni tekshiring");return false}}
+async function dl(name,d){const isPdf=/\.pdf$/i.test(name),type=isPdf?'application/pdf':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+ if(DL){try{await DL.save({filename:name,data:d});return}catch(e){if(e&&e.code==='declined')return}}
+ const blob=d instanceof Blob?d:new Blob([d],{type:type});
+ if(isTG()){if(await dlTelegram(name,blob,type))return}
+ try{saveBlob(name,blob,type);toast(name+" yuklab olindi")}catch(e){toast("Yuklab bo'lmadi: "+((e&&(e.message||e.code))||'xato'))}}
+
+let _EJ=null;
+function loadExcelJS(){
+ if(window.ExcelJS)return Promise.resolve(window.ExcelJS);
+ if(_EJ)return _EJ;
+ const srcs=['https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js','https://unpkg.com/exceljs@4.4.0/dist/exceljs.min.js'];
+ const one=u=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=u;s.onload=()=>window.ExcelJS?res(window.ExcelJS):rej(new Error('ExcelJS'));s.onerror=()=>rej(new Error('yuklanmadi'));document.head.appendChild(s)});
+ _EJ=(async()=>{let last;for(const u of srcs){try{return await one(u)}catch(e){last=e}}_EJ=null;throw last||new Error('yuklanmadi')})();
+ return _EJ}
+
+function chartCanvas(w,h){
+ const dpr=2,cv=document.createElement('canvas');cv.width=w*dpr;cv.height=h*dpr;
+ const x=cv.getContext('2d');x.scale(dpr,dpr);x.fillStyle='#fff';x.fillRect(0,0,w,h);
+ return {cv,x}}
+function chartsPNG(c,n){
+ const F='system-ui,"Segoe UI",Roboto,Arial,sans-serif',W=560,H=205;
+ const out=[];
+ const a=chartCanvas(W,H),x=a.x;
+ x.fillStyle='#14213a';x.font='bold 14px '+F;x.textAlign='center';
+ x.fillText(`Baholar taqsimoti (${c.f} nafar)`,W/2,24);
+ const G=[[5,c.cnt[5],'#17794A'],[4,c.cnt[4],'#1F5FBF'],[3,c.cnt[3],'#A8670C'],[2,c.cnt[2],'#B3261E']];
+ const gmax=Math.max(1,...G.map(g=>g[1]));
+ const bx=78,bw=W-78-84,bh=16,gap=18,y0=48;
+ G.forEach(([g,cnt,col],i)=>{
+  const y=y0+i*(bh+gap);
+  x.fillStyle=col;x.font='bold 13px '+F;x.textAlign='right';
+  x.fillText('"'+g+'" baho',bx-10,y+13);
+  x.fillStyle='#EDF1F8';x.fillRect(bx,y,bw,bh);
+  if(cnt>0){x.fillStyle=col;x.fillRect(bx,y,Math.max(2,bw*cnt/gmax),bh)}
+  x.fillStyle='#14213a';x.font='12px '+F;x.textAlign='left';
+  x.fillText(`${cnt} ta (${c.f?Math.round(cnt/c.f*100):0}%)`,bx+bw+10,y+13);
+ });
+ out.push(a.cv.toDataURL('image/png'));
+
+ const b=chartCanvas(W,H),y=b.x;
+ y.fillStyle='#14213a';y.font='bold 14px '+F;y.textAlign='center';
+ y.fillText("Savollar bo'yicha o'rtacha",W/2,24);
+ const L=34,R=12,T=44,base=H-28,maxH=base-T,plotW=W-L-R;
+ const vmax=Math.max(1,...c.mx),slot=plotW/n,bw2=Math.min(26,slot*0.46);
+ y.strokeStyle='#9AA8BD';y.lineWidth=1;
+ y.beginPath();y.moveTo(L,base);y.lineTo(L+plotW,base);y.moveTo(L,base);y.lineTo(L,T-4);y.stroke();
+ for(let j=0;j<n;j++){
+  const cx=L+j*slot+(slot-bw2)/2;
+  const mh=c.mx[j]/vmax*maxH,ah=c.avg[j]/vmax*maxH;
+  y.fillStyle='#E1E8F2';y.fillRect(cx,base-mh,bw2,Math.max(mh,.5));
+  if(ah>0){y.fillStyle='#1F5FBF';y.fillRect(cx,base-ah,bw2,Math.max(ah,.5))}
+  y.fillStyle='#5B6A82';y.font='9px '+F;y.textAlign='center';
+  y.fillText(String(j+1),cx+bw2/2,base+12);
+  if(ah>0&&c.avg[j]>0){
+   const val=String(r1(c.avg[j]));
+   if(ah>16){y.fillStyle='#fff';y.fillText(val,cx+bw2/2,base-ah+12)}
+   else{y.fillStyle='#1F5FBF';y.fillText(val,cx+bw2/2,base-ah-4)}
+  }
+ }
+ y.fillStyle='#7A879B';y.font='9px '+F;y.textAlign='right';
+ y.fillText("Och rang - mezon, ko'k - o'rtacha",W-R,base+20);
+ out.push(b.cv.toDataURL('image/png'));
+ return {imgs:out,W,H}}
+
+$('#xls').onclick=async()=>{
+ if(!profOk()||!reportOk())return;
+ let EJ=window.ExcelJS;
+ if(!EJ){toast('Excel tayyorlanmoqda...');try{EJ=await loadExcelJS()}catch(e){toast('Excel kutubxonasi yuklanmadi. Internetni tekshiring.');return}}
+ try{
+  const c=calc(),n=S.n,m=S.meta,COLS=n+6;
+  const wb=new EJ.Workbook();wb.creator='BSB natijalari hisobchisi';
+  const ws=wb.addWorksheet('BSB',{pageSetup:{orientation:'landscape',paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0,horizontalCentered:true,margins:{left:.4,right:.4,top:.5,bottom:.5,header:.3,footer:.3}}});
+  const line={style:'thin',color:{argb:'FF404040'}};
+  const bd={top:line,left:line,bottom:line,right:line};
+  const ctr={horizontal:'center',vertical:'middle',wrapText:true};
+  const lft={horizontal:'left',vertical:'middle',wrapText:true,indent:1};
+  const fill=argb=>({type:'pattern',pattern:'solid',fgColor:{argb}});
+  const HDR='FFEBF0FA',AVG='FFFFF3CD';
+  const GC={5:'FF17794A',4:'FF1F5FBF',3:'FFA8670C',2:'FFB3261E'};
+  const box=(row,c1,c2)=>{for(let c=c1;c<=c2;c++)row.getCell(c).border=bd};
+
+  ws.mergeCells(1,1,1,COLS);
+  const tc=ws.getCell(1,1);tc.value=head();tc.font={name:'Calibri',size:11,bold:true};tc.alignment={horizontal:'center',vertical:'middle',wrapText:true};
+  ws.getRow(1).height=52;
+
+  const heads=['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\nMezon: ${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh'];
+  const hr2=ws.getRow(2);
+  heads.forEach((v,i)=>{const cell=hr2.getCell(i+1);cell.value=v;cell.font={name:'Calibri',size:9,bold:true};cell.alignment=ctr;cell.fill=fill(HDR);cell.border=bd});
+  hr2.height=34;
+
+  S.st.forEach((s,i)=>{
+   const r=c.rows[i],row=ws.getRow(3+i);
+   row.getCell(1).value=i+1;
+   row.getCell(2).value=s.name||'';
+   s.sc.slice(0,n).forEach((x,j)=>{row.getCell(3+j).value=String(x).trim()===''?'':num(x)});
+   row.getCell(3+n).value=r.filled?r1(r.t):'';
+   row.getCell(4+n).value=r.filled?r1(r.p):'';
+   const gc=row.getCell(5+n);gc.value=r.g===''?'':r.g;
+   if(GC[r.g]){gc.font={name:'Calibri',size:10,bold:true,color:{argb:GC[r.g]}}}
+   row.getCell(6+n).value=s.izoh||'';
+   for(let q=1;q<=COLS;q++){const cell=row.getCell(q);cell.border=bd;cell.font=cell.font||{name:'Calibri',size:10};cell.alignment=(q===2||q===COLS)?lft:ctr}
+  });
+
+  const arNum=3+S.st.length,ar=ws.getRow(arNum);
+  ws.mergeCells(arNum,1,arNum,2);
+  const al=ar.getCell(1);al.value="O'quvchilar to'plagan o'rtacha ballar";
+  c.avg.forEach((a,j)=>{ar.getCell(3+j).value=c.f?r1(a):''});
+  ar.getCell(3+n).value=c.f?r1(c.avg.reduce((a,b)=>a+b,0)):'';
+  ar.getCell(4+n).value=c.f?r1(c.avgP):'';
+  for(let q=1;q<=COLS;q++){const cell=ar.getCell(q);cell.fill=fill(AVG);cell.border=bd;cell.font={name:'Calibri',size:10,bold:true};cell.alignment=(q===1)?lft:ctr}
+  ar.height=20;
+
+  const sr=arNum+2;ws.mergeCells(sr,1,sr,COLS);
+  const st=ws.getCell(sr,1);st.value='Hisobot';st.font={name:'Calibri',size:13,bold:true};st.alignment={horizontal:'center',vertical:'middle'};
+  ws.getRow(sr).height=22;
+
+  const sHeads=['5 baho','4 baho','3 baho','2 baho',"O'zlashtirish","Sifat ko'rsatkichi","O'rtacha foiz"];
+  const colW=[8,38,...Array(n).fill(10),12,9,7,26];
+  const sgroups=(()=>{const g=[];let s=1;
+   for(let k=0;k<7;k++){
+    const minW=k<4?8:15,maxEnd=k===6?COLS:COLS-(6-k);
+    let w=0,e=s;
+    while(e<=maxEnd&&(k===6||w<minW||e===s)){w+=colW[e-1]||10;e++}
+    if(e<=s)e=Math.min(s+1,maxEnd+1);
+    g.push([s,e-1]);s=e;
+   }
+   return g})();
+  const shr=ws.getRow(sr+1);
+  sHeads.forEach((v,i)=>{
+   const [c1,c2]=sgroups[i];
+   if(c2>c1)ws.mergeCells(sr+1,c1,sr+1,c2);
+   const cell=shr.getCell(c1);cell.value=v;cell.font={name:'Calibri',size:10,bold:true};cell.alignment=ctr;cell.fill=fill(HDR);
+   for(let q=c1;q<=c2;q++)shr.getCell(q).border=bd;
+  });
+  const sval=ws.getRow(sr+2);
+  const gOrder=[5,4,3,2];
+  const svalues=[...gOrder.map(g=>`${c.cnt[g]} ta`),c.ozl,c.sif,c.avgP];
+  svalues.forEach((v,i)=>{
+   const [c1,c2]=sgroups[i];
+   if(c2>c1)ws.mergeCells(sr+2,c1,sr+2,c2);
+   const cell=sval.getCell(c1);
+   cell.value=v;cell.font={name:'Calibri',size:10,bold:true,color:{argb:i<4?GC[gOrder[i]]:'FF14213A'}};
+   if(i>=4)cell.numFmt='General"%"';
+   cell.alignment=ctr;
+   for(let q=c1;q<=c2;q++)sval.getCell(q).border=bd;
+  });
+  shr.height=30;sval.height=20;
+
+  const fr=sr+4;
+  ws.mergeCells(fr,1,fr,Math.max(2,Math.min(4,COLS-3)));
+  const fc=ws.getCell(fr,1);fc.value=`${m.fan||'______'} fan o'qituvchisi: ${m.oqituvchi||'____________'}`;fc.font={name:'Calibri',size:10};fc.alignment={horizontal:'left',vertical:'middle',wrapText:true};
+  ws.mergeCells(fr,COLS-1,fr,COLS);
+  const dc=ws.getCell(fr,COLS-1);dc.value='Sana: '+fd(m.sana);dc.font={name:'Calibri',size:10};dc.alignment={horizontal:'right',vertical:'middle'};
+
+  ws.columns=[{width:8},{width:38},...Array(n).fill({width:10}),{width:12},{width:9},{width:7},{width:26}];
+
+  const ch=chartsPNG(c,n);let ir=fr+1;
+  ch.imgs.forEach(d=>{
+   ws.getRow(ir).height=14;ir++;
+   ws.getRow(ir).height=240;
+   const id=wb.addImage({base64:d,extension:'png'});
+   ws.addImage(id,{tl:{col:0,row:ir-1},ext:{width:ch.W,height:ch.H}});
+   ir++;
+  });
+  ws.getRow(ir).height=14;
+
+  const buf=await wb.xlsx.writeBuffer();
+  await dl(fname('xlsx'),buf);
+ }catch(e){toast('Excel tayyorlashda xato: '+((e&&(e.message||e))||'xato'))}};
+
+const CYR={'А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'g','Д':'D','д':'d','Е':'E','е':'e','Ё':'Yo','ё':'yo','Ж':'J','ж':'j','З':'Z','з':'z','И':'I','и':'i','Й':'Y','й':'y','К':'K','к':'k','Л':'L','л':'l','М':'M','м':'m','Н':'N','н':'n','О':'O','о':'o','П':'P','п':'p','Р':'R','р':'r','С':'S','с':'s','Т':'T','т':'t','У':'U','у':'u','Ф':'F','ф':'f','Х':'X','х':'x','Ц':'S','ц':'s','Ч':'Ch','ч':'ch','Ш':'Sh','ш':'sh','Щ':'Sh','щ':'sh','Ъ':"'",'ъ':"'",'Ы':'I','ы':'i','Ь':"'",'ь':"'",'Э':'E','э':'e','Ю':'Yu','ю':'yu','Я':'Ya','я':'ya','Ғ':"G'",'ғ':"g'",'Қ':'Q','қ':'q','Ҳ':'H','ҳ':'h','Ў':"O'",'ў':"o'"};
+const trCyrl=s=>String(s).replace(/[Ѐ-ӿ]/g,c=>CYR[c]||c);
+let _FB64=null;
+function b64(buf){const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
+async function pdfFontB64(){if(_FB64)return _FB64;const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
+ _FB64=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf')]);
+ try{return await _FB64}catch(e){_FB64=null;throw e}}
+
+function summary(){const c=calc();return{
+ gHead:['5 baho','4 baho','3 baho','2 baho'],
+ gBody:[[5,4,3,2].map(g=>c.cnt[g]+' ta')],
+ iHead:["O'zlashtirish","Sifat ko'rsatkichi","O'rtacha foiz"],
+ iBody:[[r1(c.ozl)+'%',r1(c.sif)+'%',r1(c.avgP)+'%']],
+ teacher:`${S.meta.fan||'______'} fan o'qituvchisi: ${S.meta.oqituvchi||'____________'}`}}
+
+function drawCharts(d,A,FF){
+ const c=calc(),n=S.n,f=c.f||1;
+ const G5=[23,121,74],G4=[31,95,191],G3=[168,103,12],G2=[179,38,30];
+ d.setFont(FF,'bold');d.setFontSize(11);d.setTextColor(20);d.text(A(`Baholar taqsimoti (${f} nafar)`),75,50,{align:'center'});
+ const grades=[[5,c.cnt[5],G5],[4,c.cnt[4],G4],[3,c.cnt[3],G3],[2,c.cnt[2],G2]];
+ const mx=Math.max(1,...grades.map(g=>g[1]));
+ const bx=38,bw=70,bh=11,gap=13,yT=58;
+ grades.forEach((g,i)=>{const y=yT+i*(bh+gap);
+  d.setFont(FF,'bold');d.setFontSize(10);d.setTextColor(g[2][0],g[2][1],g[2][2]);d.text(A(`"${g[0]}" baho`),36,y+8,{align:'right'});
+  if(g[1]>0){d.setFillColor(g[2][0],g[2][1],g[2][2]);d.rect(bx,y,bw*(g[1]/mx),bh,'F')}
+  d.setFont(FF,'normal');d.setFontSize(9);d.setTextColor(20);
+  d.text(A(`${g[1]} ta (${Math.round(g[1]/f*100)}%)`),bx+bw+3,y+8)});
+ d.setFont(FF,'bold');d.setFontSize(11);d.setTextColor(20);d.text(A("Savollar bo'yicha o'rtacha"),222,50,{align:'center'});
+ const qx=160,qw=127,base=168,maxH=85;
+ const maxV=Math.max(1,...c.mx);
+ const slot=qw/n,bw2=Math.min(11,slot*0.45);
+ d.setDrawColor(120);d.setLineWidth(.3);d.line(qx,base,qx+qw,base);d.line(qx,base-maxH-5,qx,base);
+ for(let j=0;j<n;j++){const cx=qx+j*slot+(slot-bw2)/2;
+  const mh=c.mx[j]/maxV*maxH,ah=c.avg[j]/maxV*maxH;
+  d.setFillColor(225,232,242);d.rect(cx,base-mh,bw2,Math.max(mh,.5),'F');
+  if(ah>0){d.setFillColor(G4[0],G4[1],G4[2]);d.rect(cx,base-ah,bw2,Math.max(ah,.5),'F')}
+  d.setFont(FF,'normal');d.setFontSize(7.5);d.setTextColor(60);
+  d.text(A(String(j+1)),cx+bw2/2,base+5,{align:'center'});
+  if(ah>9){d.setFontSize(7);d.setTextColor(255,255,255);d.text(A(String(r1(c.avg[j]))),cx+bw2/2,base-ah+4,{align:'center'})}}
+ d.setFont(FF,'normal');d.setFontSize(8);d.setTextColor(90);
+ d.text(A("Och rang - mezon, ko'k - o'rtacha"),qx+qw,base+11,{align:'right'});
+}
+function pdfHead(){const c=calc(),n=S.n;
+ return[['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\n\n${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh']]}
+
+$('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!window.jspdf){toast('PDF kutubxonasi yuklanmadi.');return}
+ const{rows}=data(),n=S.n;let FF='helvetica';
+ const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
+ try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
+ const A=s=>{s=String(s).replace(/[ʻʼ’‘`´]/g,"'");return FF==='DejaVu'?s:trCyrl(s)};
+ d.setFont(FF,'bold');d.setFontSize(10);d.text(d.splitTextToSize(A(head()),270),148.5,10,{align:'center'});
+ const rn=rows.length,tfs=rn<=12?8:rn<=20?7.5:rn<=30?7:6,tpd=rn<=12?.9:rn<=20?.8:rn<=30?.7:.5;
+ const qw=n<=10?14:n<=12?13:11.5, fw=n<=10?48:42, qbw=n<=12?16:14;
+ const cw={0:{cellWidth:n>12?8:9},1:{halign:'left',cellWidth:fw}};
+ for(let j=0;j<n;j++)cw[2+j]={cellWidth:qw};
+ cw[2+n]={cellWidth:qbw};cw[3+n]={cellWidth:12};cw[4+n]={cellWidth:10};cw[5+n]={halign:'left'};
+ const qfs=qw>=13?Math.min(tfs,7):6.5;
+ const hh=pdfHead();
+ d.setFont(FF,'bold');d.setFontSize(qfs);
+ const thH=d.getTextDimensions('1-savol',{fontSize:qfs}).h,boxH=thH+2;
+ d.autoTable({startY:24,head:hh.map(r=>r.map(A)),body:rows.map(r=>r.map(A)),theme:'grid',margin:{left:8,right:8},
+  styles:{font:FF,fontSize:tfs,cellPadding:tpd,halign:'center',valign:'middle',lineColor:[60,60,60],lineWidth:.1,textColor:20},
+  headStyles:{fillColor:[235,240,250],textColor:20,minCellHeight:13},columnStyles:cw,
+  didParseCell:x=>{if(x.section==='head'&&x.row.index===0&&x.column.index>=2&&x.column.index<2+n){x.cell.styles.fontSize=qfs}if(x.section==='body'&&x.row.index===rows.length-1){x.cell.styles.fillColor=[255,243,205];x.cell.styles.textColor=[20,20,20];x.cell.styles.fontStyle='bold'}},
+  didDrawCell:x=>{if(x.section==='head'&&x.row.index===0&&x.column.index>=2&&x.column.index<2+n){
+   const tW=d.getTextDimensions(String(S.max[x.column.index-2]).trim()||'–',{fontSize:qfs}).w;
+   const bw=tW+5,bx=x.cell.x+(x.cell.width-bw)/2,by=x.cell.y+x.cell.height/2+thH-(thH+2)/2;
+   x.doc.setDrawColor(140);x.doc.setLineWidth(.2);x.doc.rect(bx,by,bw,boxH,'S')}}});
+ const sm=summary();
+ d.addPage();
+ d.setFont(FF,'bold');d.setFontSize(13);d.setTextColor(20);d.text(A('Hisobot'),148.5,14,{align:'center'});
+ const sH=[...sm.gHead,...sm.iHead].map(A),sB=[[...sm.gBody[0],...sm.iBody[0]].map(A)];
+ d.autoTable({startY:20,head:[sH],body:sB,theme:'grid',margin:{left:8,right:8},
+  styles:{font:FF,fontSize:8.5,cellPadding:1.8,halign:'center',lineColor:[60,60,60],lineWidth:.1,textColor:20},
+  headStyles:{fillColor:[235,240,250],textColor:20},
+  columnStyles:{0:{textColor:[23,121,74]},1:{textColor:[31,95,191]},2:{textColor:[168,103,12]},3:{textColor:[179,38,30]}}});
+ drawCharts(d,A,FF);
+ d.setFont(FF,'normal');d.setFontSize(10);d.setTextColor(20);
+ d.text(A(sm.teacher),10,195);d.text(A('Sana: '+fd(S.meta.sana)),287,195,{align:'right'});
+ await dl(fname('pdf'),d.output('arraybuffer'))};
+
+(async()=>{try{DL=window.claude&&await window.claude.use('downloads')}catch(e){DL=null}})();
+const tgEl=$('#tg'); if(tgEl)tgEl.addEventListener('click',e=>{if(isTG()){try{e.preventDefault();window.Telegram.WebApp.openTelegramLink('https://t.me/AHLIDDIN_NURALIYEV')}catch(x){}}});
+render();
+loadMe();
+    </script>
+
+    <!-- ===== Dizayn navigatsiyasi ===== -->
+    <script>
+    // Har bir bo'limning URL manzili (emaktab.uz uslubida)
+    const sections = {
+        home:{title:'Bosh sahifa',tabId:'',path:'/'},
+        bsb:{title:'BSB hisobot',tabId:'tab-bsb',path:'/bsb'},
+        chsb:{title:'CHSB hisobot',tabId:'tab-chsb',path:'/chsb'},
+        li:{title:'LI hisobot',tabId:'tab-li',path:'/li'},
+        kuratorlik:{title:'Kuratorlik hisobot',tabId:'tab-kuratorlik',path:'/kuratorlik'},
+        choraklik:{title:'Choraklik hisobot',tabId:'tab-choraklik',path:'/choraklik'},
+        malumotlarim:{title:"Ma'lumotlarim",tabId:'tab-malumotlarim',path:'/malumotlarim'},
+        admin:{title:'Admin panel',tabId:'tab-admin',path:'/admin'}
+    };
+    const pathToKey = p => {
+        if(p === '/' || p === '/index.html') return 'home';
+        return Object.keys(sections).find(k => sections[k].path === p) || 'home';
+    };
+    // Faqat haqiqiy HTML fayli manzilidan (masalan mahalliy ko'rish paneli) papkani oladi.
+    // Toza yo'llarda (/bsb, /choraklik ...) BASE bo'sh bo'lishi shart — aks holda /choraklik/bsb bo'lib ketadi.
+    const BASE = /\/index\.html?$/i.test(location.pathname)
+        ? location.pathname.replace(/\/index\.html?$/i,'').replace(/\/$/,'')
+        : '';
+    const fullPath = p => (BASE||'') + (p==='/' ? '/' : p);
+    function switchTab(key, push = true){
+        if(key === 'admin' && !(typeof AUTH !== 'undefined' && AUTH.isAdmin)){
+            if(typeof toast === 'function') toast("Bu bo'lim faqat administrator uchun");
+            key = 'home';
+        }
+        const t=sections[key]; if(!t)return;
+        document.querySelectorAll('.nav-tab').forEach(b=>{
+            b.classList.remove('bg-[#005a96]');
+            b.classList.add('text-white/95','hover:bg-[#0063a3]');
+        });
+        const a=document.getElementById(t.tabId);
+        if(a){a.classList.add('bg-[#005a96]');a.classList.remove('hover:bg-[#0063a3]')}
+        document.querySelectorAll('#workspaceCanvas .module').forEach(m=>m.classList.remove('active'));
+        const mod=document.getElementById('module-'+key); if(mod)mod.classList.add('active');
+        if(key === 'admin' && typeof renderAdmin === 'function') renderAdmin();
+        document.getElementById('mobileDrawer').classList.add('hidden');
+        const targetPath = fullPath(t.path);
+        if(push && location.pathname !== targetPath) history.pushState({section:key},'',targetPath);
+        window.scrollTo({top:0,behavior:'smooth'});
+    }
+    // Brauzerning orqaga/oldinga tugmalari ishlashi uchun
+    window.addEventListener('popstate', () => switchTab(pathToKey(location.pathname.slice(BASE.length)||'/'), false));
+    // Sahifa to'g'ridan-to'g'ri /li, /kuratorlik kabi manzildan ochilsa kerakli bo'limni yoqish
+    (function initRoute(){
+        const rel = location.pathname.slice(BASE.length) || '/';
+        switchTab(pathToKey(rel), false);
+    })();
+    function resetToHome(e){e.preventDefault();switchTab('home')}
+    function toggleLangDropdown(){document.getElementById('langDropdown').classList.toggle('hidden')}
+    function selectLang(lang){document.getElementById('currentLang').textContent=lang;document.getElementById('langDropdown').classList.add('hidden');showToast(`Til o'zgartirildi: ${lang}`)}
+    function toggleMobileMenu(){document.getElementById('mobileDrawer').classList.toggle('hidden')}
+    window.addEventListener('click',function(e){
+        const c=document.getElementById('langDropdownContainer');
+        if(c&&!c.contains(e.target))document.getElementById('langDropdown').classList.add('hidden');
+    });
+    let toastTimeout;
+    function showToast(message){
+        const toast=document.getElementById('toastNotification'),text=document.getElementById('toastText');
+        text.textContent=message;
+        toast.classList.remove('opacity-0','pointer-events-none');toast.classList.add('opacity-100');
+        clearTimeout(toastTimeout);
+        toastTimeout=setTimeout(()=>{toast.classList.remove('opacity-100');toast.classList.add('opacity-0','pointer-events-none')},2500);
+    }
+    </script>
+</body>
+</html>

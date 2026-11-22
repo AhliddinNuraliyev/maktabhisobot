@@ -1,0 +1,150 @@
+$('#xls').onclick=async()=>{
+ if(!profOk())return;
+ let EJ=window.ExcelJS;
+ if(!EJ){toast('Excel tayyorlanmoqda...');try{EJ=await loadExcelJS()}catch(e){toast('Excel kutubxonasi yuklanmadi. Internetni tekshiring.');return}}
+ try{
+  const c=calc(),n=S.n,m=S.meta,COLS=n+6;
+  const wb=new EJ.Workbook();wb.creator='BSB natijalari hisobchisi';
+  const ws=wb.addWorksheet('BSB',{pageSetup:{orientation:'landscape',paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0,horizontalCentered:true,margins:{left:.4,right:.4,top:.5,bottom:.5,header:.3,footer:.3}}});
+  const line={style:'thin',color:{argb:'FF404040'}};
+  const bd={top:line,left:line,bottom:line,right:line};
+  const ctr={horizontal:'center',vertical:'middle',wrapText:true};
+  const lft={horizontal:'left',vertical:'middle',wrapText:true,indent:1};
+  const fill=argb=>({type:'pattern',pattern:'solid',fgColor:{argb}});
+  const HDR='FFEBF0FA',AVG='FFFFF3CD';
+  const GC={5:'FF17794A',4:'FF1F5FBF',3:'FFA8670C',2:'FFB3261E'};
+  const box=(row,c1,c2)=>{for(let c=c1;c<=c2;c++)row.getCell(c).border=bd};
+
+  ws.mergeCells(1,1,1,COLS);
+  const tc=ws.getCell(1,1);tc.value=head();tc.font={name:'Calibri',size:11,bold:true};tc.alignment={horizontal:'center',vertical:'middle',wrapText:true};
+  ws.getRow(1).height=52;
+
+  const heads=['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\nMezon: ${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh'];
+  const hr2=ws.getRow(2);
+  heads.forEach((v,i)=>{const cell=hr2.getCell(i+1);cell.value=v;cell.font={name:'Calibri',size:9,bold:true};cell.alignment=ctr;cell.fill=fill(HDR);cell.border=bd});
+  hr2.height=34;
+
+  S.st.forEach((s,i)=>{
+   const r=c.rows[i],row=ws.getRow(3+i);
+   row.getCell(1).value=i+1;
+   row.getCell(2).value=s.name||'';
+   s.sc.slice(0,n).forEach((x,j)=>{row.getCell(3+j).value=String(x).trim()===''?'':num(x)});
+   row.getCell(3+n).value=r.filled?r1(r.t):'';
+   row.getCell(4+n).value=r.filled?r1(r.p):'';
+   const gc=row.getCell(5+n);gc.value=r.g===''?'':r.g;
+   if(GC[r.g]){gc.font={name:'Calibri',size:10,bold:true,color:{argb:GC[r.g]}}}
+   row.getCell(6+n).value=s.izoh||'';
+   for(let q=1;q<=COLS;q++){const cell=row.getCell(q);cell.border=bd;cell.font=cell.font||{name:'Calibri',size:10};cell.alignment=(q===2||q===COLS)?lft:ctr}
+  });
+
+  const arNum=3+S.st.length,ar=ws.getRow(arNum);
+  ws.mergeCells(arNum,1,arNum,2);
+  const al=ar.getCell(1);al.value="O'quvchilar to'plagan o'rtacha ballar";
+  c.avg.forEach((a,j)=>{ar.getCell(3+j).value=c.f?r1(a):''});
+  ar.getCell(3+n).value=c.f?r1(c.avg.reduce((a,b)=>a+b,0)):'';
+  ar.getCell(4+n).value=c.f?r1(c.avgP):'';
+  for(let q=1;q<=COLS;q++){const cell=ar.getCell(q);cell.fill=fill(AVG);cell.border=bd;cell.font={name:'Calibri',size:10,bold:true};cell.alignment=(q===1)?lft:ctr}
+  ar.height=20;
+
+  const sr=arNum+2;ws.mergeCells(sr,1,sr,COLS);
+  const st=ws.getCell(sr,1);st.value='Hisobot';st.font={name:'Calibri',size:13,bold:true};st.alignment={horizontal:'center',vertical:'middle'};
+  ws.getRow(sr).height=22;
+
+  const sHeads=['5 baho','4 baho','3 baho','2 baho',"O'zlashtirish","Sifat ko'rsatkichi","O'rtacha foiz"];
+  const colW=[8,38,...Array(n).fill(10),12,9,7,26];
+  const sgroups=(()=>{const g=[];let s=1;
+   for(let k=0;k<7;k++){
+    const minW=k<4?8:15,maxEnd=k===6?COLS:COLS-(6-k);
+    let w=0,e=s;
+    while(e<=maxEnd&&(k===6||w<minW||e===s)){w+=colW[e-1]||10;e++}
+    if(e<=s)e=Math.min(s+1,maxEnd+1);
+    g.push([s,e-1]);s=e;
+   }
+   return g})();
+  const shr=ws.getRow(sr+1);
+  sHeads.forEach((v,i)=>{
+   const [c1,c2]=sgroups[i];
+   if(c2>c1)ws.mergeCells(sr+1,c1,sr+1,c2);
+   const cell=shr.getCell(c1);cell.value=v;cell.font={name:'Calibri',size:10,bold:true};cell.alignment=ctr;cell.fill=fill(HDR);
+   for(let q=c1;q<=c2;q++)shr.getCell(q).border=bd;
+  });
+  const sval=ws.getRow(sr+2);
+  const gOrder=[5,4,3,2];
+  const svalues=[...gOrder.map(g=>`${c.cnt[g]} ta`),c.ozl,c.sif,c.avgP];
+  svalues.forEach((v,i)=>{
+   const [c1,c2]=sgroups[i];
+   if(c2>c1)ws.mergeCells(sr+2,c1,sr+2,c2);
+   const cell=sval.getCell(c1);
+   cell.value=v;cell.font={name:'Calibri',size:10,bold:true,color:{argb:i<4?GC[gOrder[i]]:'FF14213A'}};
+   if(i>=4)cell.numFmt='General"%"';
+   cell.alignment=ctr;
+   for(let q=c1;q<=c2;q++)sval.getCell(q).border=bd;
+  });
+  shr.height=30;sval.height=20;
+
+  const fr=sr+4;
+  ws.mergeCells(fr,1,fr,Math.max(2,Math.min(4,COLS-3)));
+  const fc=ws.getCell(fr,1);fc.value=`${m.fan||'______'} fan o'qituvchisi: ${m.oqituvchi||'____________'}`;fc.font={name:'Calibri',size:10};fc.alignment={horizontal:'left',vertical:'middle',wrapText:true};
+  ws.mergeCells(fr,COLS-1,fr,COLS);
+  const dc=ws.getCell(fr,COLS-1);dc.value='Sana: '+fd(m.sana);dc.font={name:'Calibri',size:10};dc.alignment={horizontal:'right',vertical:'middle'};
+
+  ws.columns=[{width:8},{width:38},...Array(n).fill({width:10}),{width:12},{width:9},{width:7},{width:26}];
+
+  const ch=chartsPNG(c,n);let ir=fr+1;
+  ch.imgs.forEach(d=>{
+   ws.getRow(ir).height=14;ir++;
+   ws.getRow(ir).height=240;
+   const id=wb.addImage({base64:d,extension:'png'});
+   ws.addImage(id,{tl:{col:0,row:ir-1},ext:{width:ch.W,height:ch.H}});
+   ir++;
+  });
+  ws.getRow(ir).height=14;
+
+  const buf=await wb.xlsx.writeBuffer();
+  await dl(fname('xlsx'),buf);
+ }catch(e){toast('Excel tayyorlashda xato: '+((e&&(e.message||e))||'xato'))}};
+
+const CYR={'А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'g','Д':'D','д':'d','Е':'E','е':'e','Ё':'Yo','ё':'yo','Ж':'J','ж':'j','З':'Z','з':'z','И':'I','и':'i','Й':'Y','й':'y','К':'K','к':'k','Л':'L','л':'l','М':'M','м':'m','Н':'N','н':'n','О':'O','о':'o','П':'P','п':'p','Р':'R','р':'r','С':'S','с':'s','Т':'T','т':'t','У':'U','у':'u','Ф':'F','ф':'f','Х':'X','х':'x','Ц':'S','ц':'s','Ч':'Ch','ч':'ch','Ш':'Sh','ш':'sh','Щ':'Sh','щ':'sh','Ъ':"'",'ъ':"'",'Ы':'I','ы':'i','Ь':"'",'ь':"'",'Э':'E','э':'e','Ю':'Yu','ю':'yu','Я':'Ya','я':'ya','Ғ':"G'",'ғ':"g'",'Қ':'Q','қ':'q','Ҳ':'H','ҳ':'h','Ў':"O'",'ў':"o'"};
+const trCyrl=s=>String(s).replace(/[Ѐ-ӿ]/g,c=>CYR[c]||c);
+let _FB64=null;
+function b64(buf){const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
+async function pdfFontB64(){if(_FB64)return _FB64;const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
+ _FB64=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf')]);
+ try{return await _FB64}catch(e){_FB64=null;throw e}}
+
+function summary(){const c=calc();return{
+ gHead:['5 baho','4 baho','3 baho','2 baho'],
+ gBody:[[5,4,3,2].map(g=>c.cnt[g]+' ta')],
+ iHead:["O'zlashtirish","Sifat ko'rsatkichi","O'rtacha foiz"],
+ iBody:[[r1(c.ozl)+'%',r1(c.sif)+'%',r1(c.avgP)+'%']],
+ teacher:`${S.meta.fan||'______'} fan o'qituvchisi: ${S.meta.oqituvchi||'____________'}`}}
+
+function drawCharts(d,A,FF){
+ const c=calc(),n=S.n,f=c.f||1;
+ const G5=[23,121,74],G4=[31,95,191],G3=[168,103,12],G2=[179,38,30];
+ d.setFont(FF,'bold');d.setFontSize(11);d.setTextColor(20);d.text(A(`Baholar taqsimoti (${f} nafar)`),75,50,{align:'center'});
+ const grades=[[5,c.cnt[5],G5],[4,c.cnt[4],G4],[3,c.cnt[3],G3],[2,c.cnt[2],G2]];
+ const mx=Math.max(1,...grades.map(g=>g[1]));
+ const bx=38,bw=70,bh=11,gap=13,yT=58;
+ grades.forEach((g,i)=>{const y=yT+i*(bh+gap);
+  d.setFont(FF,'bold');d.setFontSize(10);d.setTextColor(g[2][0],g[2][1],g[2][2]);d.text(A(`"${g[0]}" baho`),36,y+8,{align:'right'});
+  if(g[1]>0){d.setFillColor(g[2][0],g[2][1],g[2][2]);d.rect(bx,y,bw*(g[1]/mx),bh,'F')}
+  d.setFont(FF,'normal');d.setFontSize(9);d.setTextColor(20);
+  d.text(A(`${g[1]} ta (${Math.round(g[1]/f*100)}%)`),bx+bw+3,y+8)});
+ d.setFont(FF,'bold');d.setFontSize(11);d.setTextColor(20);d.text(A("Savollar bo'yicha o'rtacha"),222,50,{align:'center'});
+ const qx=160,qw=127,base=168,maxH=85;
+ const maxV=Math.max(1,...c.mx);
+ const slot=qw/n,bw2=Math.min(11,slot*0.45);
+ d.setDrawColor(120);d.setLineWidth(.3);d.line(qx,base,qx+qw,base);d.line(qx,base-maxH-5,qx,base);
+ for(let j=0;j<n;j++){const cx=qx+j*slot+(slot-bw2)/2;
+  const mh=c.mx[j]/maxV*maxH,ah=c.avg[j]/maxV*maxH;
+  d.setFillColor(225,232,242);d.rect(cx,base-mh,bw2,Math.max(mh,.5),'F');
+  if(ah>0){d.setFillColor(G4[0],G4[1],G4[2]);d.rect(cx,base-ah,bw2,Math.max(ah,.5),'F')}
+  d.setFont(FF,'normal');d.setFontSize(7.5);d.setTextColor(60);
+  d.text(A(String(j+1)),cx+bw2/2,base+5,{align:'center'});
+  if(ah>9){d.setFontSize(7);d.setTextColor(255,255,255);d.text(A(String(r1(c.avg[j]))),cx+bw2/2,base-ah+4,{align:'center'})}}
+ d.setFont(FF,'normal');d.setFontSize(8);d.setTextColor(90);
+ d.text(A("Och rang - mezon, ko'k - o'rtacha"),qx+qw,base+11,{align:'right'});
+}
+function pdfHead(){const c=calc(),n=S.n;
+ return[['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\n\n${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh']]}
