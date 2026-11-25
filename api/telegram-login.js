@@ -71,7 +71,8 @@ async function pollBotLogin(req, res) {
 
   let row;
   try {
-    const rows = await L.sb('/rest/v1/mh_bot_logins?nonce=eq.' + encodeURIComponent(state) + '&select=*&limit=1');
+    const rows = await L.sb('/rest/v1/mh_bot_logins?nonce=eq.' + encodeURIComponent(state) +
+      '&select=nonce,telegram_id,first_name,last_name,username,photo_url,confirmed_at,used_at,expires_at&limit=1');
     row = rows && rows[0];
   } catch (e) {
     console.error('[auth] bot login o‘qilmadi:', e && e.message);

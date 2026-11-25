@@ -93,6 +93,7 @@ as $$
 declare
   n integer := 0;
   m integer := 0;
+  k integer := 0;
 begin
   delete from public.mh_bot_logins where expires_at < now() - interval '1 day';
   get diagnostics n = row_count;
@@ -100,7 +101,11 @@ begin
   delete from public.mh_auth_nonces where created_at < now() - interval '7 days';
   get diagnostics m = row_count;
 
-  return n + m;
+  -- Webhook dedup yozuvlari 30 kundan keyin kerak emas (jadval o'smasin).
+  delete from public.mh_webhook_events where received_at < now() - interval '30 days';
+  get diagnostics k = row_count;
+
+  return n + m + k;
 end;
 $$;
 

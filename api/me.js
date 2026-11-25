@@ -7,7 +7,9 @@ module.exports = async (req, res) => {
   if (!payload) return L.send(res, 200, Object.assign({}, base, { authenticated: false }));
 
   try {
-    const rows = await L.sb('/rest/v1/mh_users?telegram_id=eq.' + encodeURIComponent(String(payload.sub)) + '&select=*&limit=1');
+    // Faqat kerakli ustunlar: select=* ortiqcha ma'lumot (va egress) qaytaradi.
+    const rows = await L.sb('/rest/v1/mh_users?telegram_id=eq.' + encodeURIComponent(String(payload.sub)) +
+      '&select=id,telegram_id,first_name,last_name,username,photo_url,is_premium,download_credits,download_count,viloyat,tuman,maktab,oqituvchi&limit=1');
     if (!rows || !rows.length) return L.send(res, 200, Object.assign({}, base, { authenticated: false }));
     const user = rows[0];
     // Kredit faqat kirish paytida atomik RPC bilan beriladi (mh_grant_signup_bonus).
