@@ -8,6 +8,29 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'GET') return L.send(res, 405, { ok: false });
 
+  // Kunlik tozalash (Vercel Cron yoki qo'lda). Muddati o'tgan bot-login va
+  // auth-nonce qatorlari to'planib ketmasin. Bu endpoint boshqa so'rovlarni
+  // ko'paytirmaydi: baza tomonida pg_cron ham sozlanishi mumkin.
+  const isCron = !!req.headers['x-vercel-cron'] || String(q.get('cron') || '') === '1';
+  if (isCron) {
+    const secret = String(process.env.CRON_SECRET || '');
+    const auth = String(req.headers.authorization || '');
+    if (!secret || auth !== 'Bearer ' + secret) {
+      return L.send(res, 401, { ok: false, description: 'cron ruxsati yo\'q' });
+    }
+    try {
+      const purged = await L.rpc('mh_purge_expired', {});
+      return L.send(res, 200, { ok: true, purged: purged });
+    } catch (e) {
+      return L.send(res, 200, { ok: false, description: 'tozalash funksiyasi topilmadi' });
+    }
+  }
+
+  // Diagnostika faqat ADMIN_TELEGRAM_IDS dagi akkauntlar uchun
+  if (!L.isAdmin(L.verifyToken(L.getToken(req)))) {
+    return L.send(res, 403, { ok: false, description: 'Ruxsat yo\'q' });
+  }
+
   const result = {
     ok: true,
     apiKeySet: !!TZ.API_KEY,
@@ -27,19 +50,11 @@ module.exports = async (req, res) => {
       result.credentialValid = r.ok && !!(r.data && r.data.data);
       result.httpStatus = r.status;
       // Faqat kalit turini ko'rsatamiz — to'liq qiymat emas
-      result.apiKeyPrefix = TZ.API_KEY ? TZ.API_KEY.slice(0, 4) : null;
-      result.apiKeyLength = TZ.API_KEY ? TZ.API_KEY.length : 0;
-      result.deskPrefix = TZ.DESK_CODE ? TZ.DESK_CODE.slice(0, 4) : null;
-      if (!r.ok) {
-        const d = r.data && r.data.data;
-        const details = d && Array.isArray(d.details) ? d.details.map(x => x && x.code).filter(Boolean) : [];
-        result.errorCode = (d && (d.code || d.error)) || (r.data && (r.data.code || r.data.error)) || null;
-        result.errorDetails = details.length ? details : null;
-        result.errorKeys = r.data && typeof r.data === 'object' ? Object.keys(r.data).slice(0, 10) : null;
-      }
+      // Kalit prefiksi/uzunligi va xato tafsilotlari chiqarilmaydi
+      if (!r.ok) result.credentialValid = false;
     } catch (e) {
       result.tezcheckReachable = false;
-      result.errorCode = 'network_error';
+      result.credentialValid = false;
     }
   }
 

@@ -4,6 +4,11 @@ zaxira/
 .agents/
 .env*
 research/
+docs/
 *.md
-TEZCHECK_MAKTABHISOBOT_QOLLASH_YORIQNOMASI.html
-MAKTABHISOBOT_GOOGLEDA_CHIQISH_YORIQNOMASI.html
+# Xavfsizlik: sxema va ichki fayllar ommaviy bo'lmasin
+*.sql
+skills-lock.json
+*.lock
+*.zip
+.vercel/

@@ -49,6 +49,7 @@ function verifyInitData(initData) {
 }
 
 module.exports = async (req, res) => {
+  if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, description: 'method not allowed' });
   }
@@ -84,6 +85,26 @@ module.exports = async (req, res) => {
   const buf = Buffer.from(raw, 'base64');
   if (!buf.length || buf.length > MAX_FILE_BYTES) {
     return res.status(413).json({ ok: false, description: 'Fayl juda katta' });
+  }
+
+  // Mini App initData 24 soat yaroqli. Uni qayta ishlatib (replay) bot orqali
+  // begona fayl yuborilmasligi uchun imzo + fayl kombinatsiyasini bir marta
+  // ishlatiladigan kalit sifatida saqlaymiz (boshqa fayllarga ruxsat beriladi).
+  if (initId) {
+    try {
+      const params = new URLSearchParams(String(body.init_data));
+      const initHash = params.get('hash') || '';
+      const authDate = Number(params.get('auth_date') || 0);
+      const fileKey = crypto.createHash('sha256')
+        .update(filename + '|' + raw).digest('hex').slice(0, 32);
+      const used = await L.useAuthHash('send:' + initHash + ':' + fileKey, initId, authDate);
+      if (!used) {
+        return res.status(429).json({ ok: false, description: 'Bu so\'rov allaqachon bajarilgan' });
+      }
+    } catch (e) {
+      console.error('[send] replay check failed:', e && e.message);
+      return res.status(503).json({ ok: false, description: 'Tekshiruv vaqtincha ishlamayapti' });
+    }
   }
 
   const token = botToken();

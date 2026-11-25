@@ -6,6 +6,7 @@
     <meta name="color-scheme" content="light">
     <meta name="description" content="emaktab.uz jurnalini Excelga yuklang — BSB, CHSB va choraklik baholar, o'zlashtirish hamda sifat ko'rsatkichlari avtomatik hisoblanadi. PDF va Excel eksport.">
     <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="fb298df7e444d3ed">
     <link rel="canonical" href="https://maktabhisobot.uz/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Maktab Hisobot — BSB, CHSB va choraklik hisobotlar">
@@ -25,8 +26,8 @@
     <meta name="twitter:image" content="https://maktabhisobot.uz/maktabhisobot-social-preview.png?v=2">
     <meta name="theme-color" content="#0072bc">
     <title>Maktab Hisobot — BSB, CHSB va choraklik hisobotlar | emaktab Excel</title>
-    <link rel="icon" type="image/png" href="./maktabhisobot_icon.svg.png">
-    <link rel="apple-touch-icon" href="./maktabhisobot_icon.svg.png">
+    <link rel="icon" type="image/png" href="/maktabhisobot_icon.svg.png">
+    <link rel="apple-touch-icon" href="/maktabhisobot_icon.svg.png">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -72,6 +73,7 @@
       ]
     }
     </script>
+    <script src="/i18n.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,7 +164,134 @@ td input{width:2.8rem}
 @keyframes pbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
 .premium-buy-btn .pb-spark{animation:pbPulse 2.2s ease-in-out infinite}
 @media(max-width:520px){.premium-buy{padding:13px}.premium-buy-btn{flex-wrap:wrap;gap:7px;font-size:.94rem;min-height:56px}.premium-buy-btn .pb-price{font-size:.8rem}}
-.x{background:none;border:0;color:var(--mut);cursor:pointer;font-size:1.1rem}
+/* Sayt pasti: muallif ma'lumotlari */
+.site-footer{margin-top:26px;border-top:1px solid var(--line);background:linear-gradient(180deg,color-mix(in srgb,var(--card) 72%,transparent),color-mix(in srgb,var(--hi) 80%,transparent))}
+.sf-inner{max-width:1180px;margin:0 auto;padding:20px 18px 26px;display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;justify-content:space-between}
+.sf-brand{display:flex;flex-direction:column;gap:3px;font-weight:700;color:var(--ink);font-size:.92rem}
+.sf-brand small{font-weight:400;color:var(--mut);font-size:.76rem}
+.sf-contact{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:.82rem;color:var(--mut)}
+.sf-contact b{color:var(--ink)}
+.sf-contact a{display:inline-flex;align-items:center;gap:6px;color:var(--acc);text-decoration:none;font-weight:600;border-bottom:1px dashed color-mix(in srgb,var(--acc) 45%,transparent);transition:color .2s,border-color .2s}
+.sf-contact a:hover{color:var(--g5);border-color:var(--g5)}
+.sf-contact svg{width:15px;height:15px;fill:currentColor;opacity:.85}
+@media(max-width:640px){.sf-inner{flex-direction:column;align-items:flex-start;padding-bottom:86px}}
+/* Tepaga qaytish: pastga tushganda chiqadi, yuqoriga tortganda kichrayib emojisi almashadi */
+.mh-scroll-top{position:fixed;right:18px;bottom:78px;z-index:80;width:52px;height:52px;border:0;border-radius:50%;cursor:pointer;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#0088cc,#005a96);box-shadow:0 12px 28px rgba(0,90,150,.35),inset 0 1px 0 rgba(255,255,255,.35);opacity:0;transform:translateY(20px) scale(.55);pointer-events:none;transition:opacity .32s ease,transform .42s cubic-bezier(.2,.9,.3,1.35),background .3s ease,box-shadow .3s ease}
+.mh-scroll-top.on{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.mh-scroll-top .mst-emoji{font-size:1.35rem;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2));transition:transform .25s ease}
+.mh-scroll-top.up{transform:translateY(0) scale(.72) rotate(-12deg);background:linear-gradient(145deg,#16a34a,#047857);box-shadow:0 8px 18px rgba(4,120,87,.32)}
+.mh-scroll-top.up .mst-emoji{transform:scale(1.18) rotate(12deg)}
+.mh-scroll-top.fly{animation:mhFly .55s ease}
+@keyframes mhFly{0%{transform:scale(.72) rotate(-12deg)}45%{transform:scale(1.12) rotate(8deg) translateY(-8px)}100%{transform:scale(.9) rotate(0)}}
+@media(max-width:520px){.mh-scroll-top{right:12px;bottom:70px;width:46px;height:46px}}
+/* Kuratorlik jadvali */
+.kr-wrap{overflow-x:auto;max-width:100%}
+table.krt{border-collapse:collapse;width:100%;min-width:1320px;font-family:"Times New Roman",Georgia,serif;font-size:13px}
+.krt th,.krt td{border:1px solid #64748b;padding:5px 6px;vertical-align:middle}
+.krt thead th{background:#eaf1f9;font-weight:700;text-align:center;position:relative;cursor:pointer;transition:background .15s,color .15s}
+.krt thead th:hover{background:#fee2e2;color:#b91c1c}
+.krt thead th .kr-x{position:absolute;top:2px;right:3px;font-size:12px;font-weight:700;color:#94a3b8;line-height:1}
+.krt thead th:hover .kr-x{color:#dc2626}
+.krt td input{width:100%;border:1px solid transparent;background:transparent;border-radius:4px;padding:4px;font:inherit;color:var(--ink)}
+.krt td input:hover{border-color:#cbd5e1}
+.krt td input:focus{border-color:#0072bc;background:#fff;outline:none}
+.krt tbody tr:nth-child(even){background:rgba(234,241,249,.35)}
+.krt .kr-num{text-align:center;width:52px}
+.krt .kr-title{text-align:center;font-size:14px;font-weight:700;padding:9px}
+.krt .kr-foot{text-align:left;font-weight:700;padding:8px}
+.krt .x{font-family:system-ui,sans-serif}
+.x{background:none;border:0;color:var(--mut);cursor:pointer;font-size:1.1rem;min-width:28px;min-height:28px;display:inline-grid;place-items:center;border-radius:6px}
+.x:hover,.x:focus-visible{color:#dc2626;background:#fee2e2}
+/* O'quvchini o'chirish tasdiq oynasi */
+.dc-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.48);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.dc-overlay.on{display:flex;animation:mhFade .2s ease-out}
+.dc-overlay.on .dc-card,.dc-overlay.on .mh-pop-card{animation:mhPop .34s cubic-bezier(.2,.9,.3,1.18)}
+@keyframes mhFade{from{opacity:0}to{opacity:1}}
+@keyframes mhPop{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+.dc-card{width:100%;max-width:380px;background:#fff;color:#14213a;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 24px 60px rgba(15,23,42,.28);padding:22px;text-align:center}
+.dc-icon{width:46px;height:46px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:#fee2e2;color:#dc2626;font-size:1.7rem;line-height:1}
+.dc-card h3{margin:0 0 6px;font-size:1.05rem}
+.dc-card p{margin:0 0 18px;color:#5b6a82;font-size:.9rem;line-height:1.5;word-break:break-word}
+.dc-actions{display:flex;gap:10px}
+.dc-actions button{flex:1;min-height:42px;border-radius:9px;font:700 .88rem/1 system-ui,"Segoe UI",Roboto,Arial,sans-serif;cursor:pointer}
+#dcNo{background:#f1f5f9;color:#334155;border:1px solid #e2e8f0}
+#dcYes{background:#dc2626;color:#fff;border:1px solid #b91c1c}
+#dcYes:hover{background:#b91c1c}
+
+/* Chiroyli kirish / premium oynalari */
+.mh-pop{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.mh-pop[hidden]{display:none!important}
+.mh-pop-card{width:100%;max-width:440px;max-height:min(92vh,820px);overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:20px;box-shadow:0 30px 80px rgba(15,23,42,.3);color:#14213a}
+.mh-pop-top{padding:22px 24px 18px;background:linear-gradient(135deg,#e8f3ff,#f4f9ff 60%,#eef6ff);border-bottom:1px solid #dbeafe;text-align:center}
+.mh-pop-icon{width:54px;height:54px;margin:0 auto 10px;border-radius:16px;display:grid;place-items:center;background:#0088cc;color:#fff;box-shadow:0 10px 24px rgba(0,136,204,.28)}
+.mh-pop-icon svg{width:28px;height:28px;fill:currentColor}
+.mh-pop-top h3{margin:0 0 5px;font-size:1.2rem;color:#14213a}
+.mh-pop-top p{margin:0;color:#4b5b73;font-size:.88rem;line-height:1.45}
+.mh-pop-body{padding:20px 24px 24px}
+.mh-label{display:block;font-size:.82rem;font-weight:700;color:#334155;margin-bottom:8px}
+.mh-phone{position:relative}
+.mh-phone input{width:100%;font-size:1.05rem;letter-spacing:.02em;padding:12px 14px 12px 48px;border:2px solid #dbeafe;border-radius:11px;background:#f8fbff;color:#14213a;transition:border-color .2s,box-shadow .2s}
+.mh-phone input:focus{outline:none;border-color:#0088cc;box-shadow:0 0 0 4px rgba(0,136,204,.12);background:#fff}
+.mh-phone span.mh-code{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-weight:700;color:#0088cc;font-size:1rem;pointer-events:none}
+.mh-hint{min-height:20px;margin:8px 2px 14px;font-size:.8rem;color:#0072bc;opacity:0;transform:translateY(-3px);transition:opacity .25s,transform .25s}
+.mh-hint.show{opacity:1;transform:translateY(0)}
+.mh-steps{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:8px}
+.mh-steps li{display:flex;gap:9px;align-items:flex-start;font-size:.82rem;color:#4b5b73;line-height:1.4}
+.mh-steps b{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#e3f0fc;color:#0063a3;font-size:.72rem}
+.mh-tgbtn{width:100%;min-height:48px;border:0;border-radius:11px;background:#0088cc;color:#fff;font:700 .95rem/1 system-ui,"Segoe UI",Roboto,Arial,sans-serif;cursor:pointer;box-shadow:0 10px 22px rgba(0,136,204,.24);transition:transform .18s,box-shadow .18s}
+.mh-tgbtn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(0,136,204,.32)}
+.mh-tgbtn[disabled]{opacity:.62;cursor:progress;transform:none;box-shadow:none}
+.mh-tgstat{margin-top:10px;padding:9px 12px;border-radius:10px;background:#eff6ff;color:#1d4ed8;font-size:.8rem;line-height:1.4;text-align:center}
+.mh-tgstat.err{background:#fef2f2;color:#b91c1c}
+.mh-tgstat.ok{background:#ecfdf5;color:#047857}
+/* ===== Mobil menyu ===== */
+.mob-row{display:flex;align-items:center;width:100%;min-height:46px;padding:10px 8px;border:0;background:none;border-radius:8px;font:600 .95rem/1.2 system-ui,"Segoe UI",Roboto,Arial,sans-serif;color:#334155;text-align:left;cursor:pointer}
+.mob-row:hover{background:#f1f5f9}
+.mob-row:active{background:#e2e8f0}
+.lang-chip{flex:1 1 auto;min-height:40px;padding:8px 10px;border:1px solid #e2e8f0;background:#f8fafc;border-radius:9px;font:600 .8rem/1 system-ui,"Segoe UI",Roboto,Arial,sans-serif;color:#334155;cursor:pointer}
+.lang-chip:hover{border-color:#0088cc;color:#0072bc}
+/* Mobil uchun umumiy yaxshilanishlar */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,label,summary{-webkit-tap-highlight-color:rgba(0,114,188,.12)}
+button,a,input,select,textarea,label{touch-action:manipulation}
+nav[aria-label="Asosiy menyu"]{scroll-snap-type:x proximity}
+nav[aria-label="Asosiy menyu"] .nav-tab{scroll-snap-align:start}
+/* Modalning o'ng yuqorisidagi yopish tugmasi (mobilda qulay) */
+.mh-pop-card{position:relative}
+.mh-x{position:absolute;top:8px;right:8px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.85);color:#475569;font-size:19px;line-height:1;display:grid;place-items:center;cursor:pointer;z-index:2;box-shadow:0 2px 8px rgba(15,23,42,.12)}
+.mh-x:hover{background:#fff;color:#0f172a}
+/* Mobil: modal pastdan chiqadigan panel ko'rinishida */
+@media(max-width:520px){
+ .mh-pop{padding:0;align-items:flex-end}
+ .mh-pop-card{max-width:none;max-height:94vh;border-radius:18px 18px 0 0;animation:mhSheet .26s ease-out}
+ .mh-pop-top{padding:18px 18px 14px}
+ .mh-pop-icon{width:46px;height:46px;border-radius:14px;margin-bottom:8px}
+ .mh-pop-icon svg{width:24px;height:24px}
+ .mh-pop-top h3{font-size:1.08rem}
+ .mh-pop-top p{font-size:.84rem}
+ .mh-pop-body{padding:16px 18px calc(20px + env(safe-area-inset-bottom,0px))}
+ .mh-tgbtn{min-height:52px;font-size:1rem}
+ .mh-pop-actions button{min-height:48px}
+ .mh-link{min-height:44px;font-size:.86rem}
+}
+@keyframes mhSheet{from{transform:translateY(26px);opacity:.65}to{transform:translateY(0);opacity:1}}
+.mh-widget{margin-top:14px;min-height:46px;text-align:center;opacity:.95}
+.mh-fine{margin:12px 0 0;text-align:center;color:#6b7a90;font-size:.74rem;line-height:1.4}
+.mh-link{background:none;border:0;color:#6b7a90;font-size:.8rem;cursor:pointer;width:100%;margin-top:14px}
+.mh-link:hover{color:#14213a;text-decoration:underline}
+.mh-gift{display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;border-radius:999px;background:#ecfdf5;color:#047857;font-size:.78rem;font-weight:700}
+.mh-gift:before{content:"";width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.16)}
+.mh-pop-actions{display:flex;gap:10px;margin-top:16px;position:sticky;bottom:0;background:#fff;padding-bottom:4px}
+.mh-pop-actions button{flex:1;min-height:42px;border-radius:9px;cursor:pointer;font:700 .88rem/1 system-ui,"Segoe UI",Roboto,Arial,sans-serif}
+#ppSave{background:#0088cc;color:#fff;border:1px solid #0088cc}
+#ppSave:hover{background:#0072bc}
+#ppLater{background:#f1f5f9;color:#334155;border:1px solid #e2e8f0}
+#ppLater:hover{background:#e2e8f0}
+.mh-premium-icon{background:linear-gradient(135deg,#f7b731,#ff7a00)}
+.mh-price{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:13px 15px;border:1px solid #bbf7d0;border-radius:12px;background:#f0fdf4}
+.mh-price strong{color:#065f46;font-size:1rem}
+.mh-price small{display:block;color:#047857;font-size:.75rem;margin-top:2px}
+.mh-price span{color:#065f46;font-weight:800;font-size:1.05rem;white-space:nowrap}
 #toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90%}
 #toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -300,8 +429,8 @@ td input{width:2.8rem}
     <!-- ===== Header ===== -->
     <header class="bg-white border-b border-gray-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] relative z-30">
         <div class="max-w-[1140px] mx-auto px-4 sm:px-6">
-            <div class="flex items-center justify-between h-[68px] sm:h-[74px]">
-                <div class="flex items-center space-x-4 sm:space-x-6">
+            <div class="flex items-center justify-between h-[62px] sm:h-[74px]">
+                <div class="flex items-center space-x-3 sm:space-x-6">
                     <a href="#" onclick="resetToHome(event)" class="flex items-center gap-2.5 group focus:outline-none">
                         <div class="relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
                             <svg viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" aria-hidden="true">
@@ -328,15 +457,15 @@ td input{width:2.8rem}
                     </div>
                 </div>
                 <div class="flex items-center space-x-3 sm:space-x-5">
-                    <div class="relative" id="langDropdownContainer">
+                    <div class="relative hidden sm:block" id="langDropdownContainer">
                         <button onclick="toggleLangDropdown()" class="flex items-center space-x-1 text-[13px] font-semibold text-[#0088cc] hover:text-[#005a96] py-1.5 px-2 rounded transition-colors">
                             <span id="currentLang">O'zb</span>
                             <svg class="w-3.5 h-3.5 opacity-80" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </button>
-                        <div id="langDropdown" class="hidden absolute right-0 mt-1 w-28 bg-white rounded-md shadow-lg border border-gray-100 py-1 z-50 text-[13px]">
-                            <button onclick="selectLang('O\'zb')" class="w-full text-left px-3 py-1.5 text-[#0072bc] font-semibold bg-blue-50/50 hover:bg-gray-50">O'zbekcha</button>
-                            <button onclick="selectLang('Рус')" class="w-full text-left px-3 py-1.5 text-gray-600 hover:bg-gray-50">Русский</button>
-                            <button onclick="selectLang('Eng')" class="w-full text-left px-3 py-1.5 text-gray-600 hover:bg-gray-50">English</button>
+                        <div id="langDropdown" class="hidden absolute right-0 mt-1 w-36 bg-white rounded-md shadow-lg border border-gray-100 py-1 z-50 text-[13px]">
+                            <button data-lang-code="uz" onclick="selectLang('uz')" class="w-full text-left px-3 py-1.5 text-[#0072bc] font-semibold bg-blue-50/50 hover:bg-gray-50">O'zbekcha</button>
+                            <button data-lang-code="ru" onclick="selectLang('ru')" class="w-full text-left px-3 py-1.5 text-gray-600 hover:bg-gray-50">Русский</button>
+                            <button data-lang-code="kk" onclick="selectLang('kk')" class="w-full text-left px-3 py-1.5 text-gray-600 hover:bg-gray-50">Қарақалпақша</button>
                         </div>
                     </div>
                     <div class="hidden sm:block h-7 w-[1px] bg-gray-200"></div>
@@ -348,9 +477,9 @@ td input{width:2.8rem}
                     </div>
                     <div class="hidden md:flex flex-col items-start justify-center text-[12px] leading-[1.35] pl-2 border-l border-gray-100">
                         <a href="#" onclick="showToast('Yordam bo\'limi tez orada ishga tushiriladi')" class="text-gray-500 hover:text-[#0072bc] transition-colors">Yordam</a>
-                        <a href="#" onclick="showToast('Tizimdan chiqish tasdiqlandi')" class="text-gray-500 hover:text-red-600 transition-colors mt-0.5">Chiqish</a>
+                        <a href="#" onclick="event.preventDefault();doLogout()" class="text-gray-500 hover:text-red-600 transition-colors mt-0.5">Chiqish</a>
                     </div>
-                    <button onclick="toggleMobileMenu()" aria-label="Menyuni ochish" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-[#0072bc] hover:bg-gray-100 focus:outline-none">
+                    <button onclick="toggleMobileMenu()" id="mobileMenuBtn" aria-label="Menyuni ochish" aria-expanded="false" class="lg:hidden w-11 h-11 -mr-1.5 grid place-items-center rounded-lg text-gray-600 hover:text-[#0072bc] hover:bg-gray-100 active:bg-gray-200 focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                 </div>
@@ -369,23 +498,36 @@ td input{width:2.8rem}
                 </ul>
             </nav>
 
-            <div class="bg-white h-[38px] flex items-center justify-end px-4 sm:px-5 text-[13px] text-gray-600">
-                <div class="hidden sm:flex items-center space-x-4 text-[12px] text-gray-400"><span>O'quv yili: 2026–2027</span></div>
+            <div class="hidden sm:flex bg-white h-[38px] items-center justify-end px-5 text-[13px] text-gray-600">
+                <div class="flex items-center space-x-4 text-[12px] text-gray-400"><span>O'quv yili: 2026–2027</span></div>
             </div>
         </div>
-        <div id="mobileDrawer" class="hidden lg:hidden bg-white border-t border-gray-200 px-4 py-3 space-y-2 text-sm">
-            <div class="flex items-center justify-between py-1 border-b border-gray-100"><span id="mobileUser" class="font-semibold text-gray-700">Kirilmagan</span><span class="text-xs text-[#0072bc] bg-blue-50 px-2 py-0.5 rounded">46-maktab</span></div>
-            <div class="flex space-x-4 pt-1 text-xs">
-                <button onclick="showToast('Bildirishnomalar')" class="text-gray-600 hover:text-[#0072bc]">Bildirishnomalar</button>
-                <button onclick="showToast('Yordam')" class="text-gray-600 hover:text-[#0072bc]">Yordam</button>
-                <button id="mobileAdmin" onclick="switchTab('admin')" class="hidden text-[#0072bc] font-semibold">Admin</button>
-                <button onclick="doLogout()" class="text-red-500">Chiqish</button>
+        <div id="mobileDrawer" class="hidden lg:hidden border-t border-gray-200 bg-white shadow-lg">
+            <div class="px-3 py-2" style="padding-bottom:max(10px,env(safe-area-inset-bottom,0px))">
+                <div class="flex items-center gap-2.5 px-2 py-2.5 border-b border-gray-100">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0" aria-hidden="true"></span>
+                    <span id="mobileUser" class="font-semibold text-gray-800 text-[15px] truncate">Kirilmagan</span>
+                </div>
+                <button type="button" onclick="switchTab('malumotlarim');closeMobileMenu()" class="mob-row">Ma'lumotlarim</button>
+                <button type="button" onclick="openTelegramLogin();closeMobileMenu()" id="mobileLogin" class="mob-row font-semibold text-[#0088cc]">Telegram orqali kirish</button>
+                <button type="button" onclick="switchTab('admin');closeMobileMenu()" id="mobileAdmin" class="mob-row hidden font-semibold text-[#0072bc]">Admin panel</button>
+                <button type="button" onclick="showToast('Yangi bildirishnomalar yo&#39;q')" class="mob-row">Bildirishnomalar</button>
+                <button type="button" onclick="showToast('Yordam bo&#39;limi tez orada ishga tushiriladi')" class="mob-row">Yordam</button>
+                <div class="mt-1 pt-2 border-t border-gray-100">
+                    <div class="px-2 pb-1.5 text-[11px] font-semibold uppercase tracking-wide text-gray-400">Til</div>
+                    <div class="flex flex-wrap gap-2 px-1">
+                        <button type="button" onclick="selectLang('uz');closeMobileMenu()" class="lang-chip">O'zbekcha</button>
+                        <button type="button" onclick="selectLang('ru');closeMobileMenu()" class="lang-chip">Русский</button>
+                        <button type="button" onclick="selectLang('kk');closeMobileMenu()" class="lang-chip">Қарақалпақша</button>
+                    </div>
+                </div>
+                <button type="button" onclick="doLogout();closeMobileMenu()" id="mobileLogout" class="mob-row mt-1 hidden text-red-600">Chiqish</button>
             </div>
         </div>
     </header>
 
     <!-- ===== Asosiy kontent ===== -->
-    <main class="flex-1 w-full max-w-[1140px] mx-auto px-4 sm:px-6 py-6">
+    <main class="flex-1 w-full max-w-[1140px] mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div id="workspaceCanvas" class="w-full rounded-md transition-all duration-200">
             <!-- Asosiy sahifa (/) — ommaviy landing -->
             <div id="module-home" class="module active">
@@ -440,7 +582,7 @@ td input{width:2.8rem}
                     </details>
                     <details>
                         <summary>Telegram orqali kirish shartmi?</summary>
-                        <p>Yo'q. Sayt brauzerda ham ishlaydi. Telegram orqali kirish hisobni saqlash va tayyor faylni botga yuborish uchun qulay.</p>
+                        <p>Hisobotlarni hisoblash brauzerda ishlaydi, lekin tayyor faylni yuklab olish va hisobingizni saqlash uchun Telegram orqali kirish kerak. Kirish bilan 3 ta bepul kredit beriladi.</p>
                     </details>
                     <details>
                         <summary>Hisobot ma'lumotlarim qayerda saqlanadi?</summary>
@@ -534,7 +676,38 @@ td input{width:2.8rem}
  </section>
 
 <div id="liToast" role="status"></div></div>
-            <div id="module-kuratorlik" class="module"><div class="bg-white rounded-lg border border-gray-200 p-10 text-center text-gray-500">Kuratorlik hisobot bo'limi tez orada ishga tushiriladi.</div></div>
+            <div id="module-kuratorlik" class="module">
+ <div class="hero"><div><h1>Kuratorlik hisoboti</h1><p>Sinf o'quvchilarining to'liq ro'yxatini tayyorlang: F.I.SH, tug'ilgan sana, manzil, ota-onasi, telefon va guvohnoma seriyasi.</p></div></div>
+
+ <section>
+  <h2>1. Sinf ma'lumotlari</h2>
+  <p class="sub" id="kr-hint"></p>
+  <div class="row" id="kr-meta"></div>
+ </section>
+
+ <section>
+  <h2>2. O'quvchilar ro'yxati</h2>
+  <div class="row">
+   <label class="btn">Excel faylni tanlash<input type="file" id="kr-file" accept=".xlsx,.xls,.csv" hidden></label>
+   <button class="btn o" id="kr-add" type="button">+ O'quvchi qo'shish</button>
+   <button class="btn o" id="kr-restore" type="button">Ustunlarni tiklash</button>
+   <button class="btn o" id="kr-clear" type="button">Hammasini tozalash</button>
+  </div>
+  <p class="sub" style="margin:8px 0 0">Excel faylni <b>emaktab.uz</b> jurnalidan (B ustun, 11-qatordan) yuklang yoki tayyor guvohnoma ro'yxatini yuklang — barcha ustunlar avtomatik to'ldiriladi. Istalgan ustun sarlavhasiga bosing va tasdiqlang: ustun o'chiriladi.</p>
+  <p class="sub" id="kr-empty">Hozircha o'quvchi yo'q. Excel faylni yuklang yoki qo'lda qo'shing.</p>
+  <div class="wrap kr-wrap"><table id="kr-T" class="krt"></table></div>
+ </section>
+
+ <section>
+  <h2>3. Hisobot</h2>
+  <div class="stats" id="kr-stats"></div>
+  <div class="row" style="margin-top:14px">
+   <button class="btn" id="kr-pdf" type="button">PDF yuklab olish</button>
+   <button class="btn o" id="kr-xls" type="button">Excel yuklab olish</button>
+  </div>
+  <p class="sub" style="margin-top:8px">Yuklab olganda fayl kompyuteringizga saqlanadi va bot orqali Telegram'ga ham yuboriladi; qolgan kredit 1 ga kamayadi.</p>
+ </section>
+</div>
             <div id="module-choraklik" class="module">
                 <section>
                     <h2>Choraklik hisobot</h2>
@@ -543,6 +716,7 @@ td input{width:2.8rem}
                         <label class="q-btn primary" for="q_f">📂 <span id="q_fn">Jurnal tanlash (.xls / .xlsx)</span></label>
                         <input type="file" id="q_f" accept=".xls,.xlsx" hidden>
                         <button type="button" class="q-btn green" id="q_xl">📊 Excel yuklab olish</button>
+                        <button type="button" class="q-btn green" id="q_pdf">📄 PDF yuklab olish</button>
                         <button type="button" class="q-btn gray" onclick="qPrint()">🖨 Chop etish</button>
                     </div>
                     <div id="q_warn"></div>
@@ -624,30 +798,182 @@ td input{width:2.8rem}
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="sf-inner">
+            <div class="sf-brand">Maktab Hisobot<small>BSB · CHSB · LI · Kuratorlik · Choraklik hisobotlari</small></div>
+            <div class="sf-contact">
+                <span class="sf-item">Muallif: <b>Ahliddin Nuraliyev</b></span>
+                <a href="https://t.me/AHLIDDIN_NURALIYEV" target="_blank" rel="noopener noreferrer" aria-label="Telegram profilim"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg>Telegram profilim</a>
+                <a href="mailto:ahliddinnuraliyev2003@gmail.com" aria-label="Email: ahliddinnuraliyev2003@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>ahliddinnuraliyev2003@gmail.com</a>
+            </div>
+        </div>
+    </footer>
+    <button id="mhScrollTop" class="mh-scroll-top" type="button" aria-label="Tepaga qaytish"><span class="mst-emoji" aria-hidden="true">⬆️</span></button>
+    <script>
+    (function(){
+        var btn=document.getElementById('mhScrollTop');if(!btn)return;
+        var emoji=btn.querySelector('.mst-emoji'),last=window.scrollY||0,timer;
+        function setEmoji(v){if(emoji)emoji.textContent=v}
+        function onScroll(){
+            var y=window.scrollY||window.pageYOffset||0;
+            if(y>180){
+                btn.classList.add('on');
+                if(y<last-2){btn.classList.add('up');setEmoji('🚀')}
+                else if(y>last+2){btn.classList.remove('up');setEmoji('⬆️')}
+            }else{
+                btn.classList.remove('on','up','fly');setEmoji('⬆️');
+            }
+            last=y;
+        }
+        window.addEventListener('scroll',onScroll,{passive:true});
+        onScroll();
+        btn.addEventListener('click',function(){
+            btn.classList.add('fly');setEmoji('🚀');
+            try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
+            clearTimeout(timer);
+            timer=setTimeout(function(){btn.classList.remove('fly','up');setEmoji('⬆️')},800);
+        });
+    })();
+    </script>
+
     <div id="toast" role="status" aria-live="polite"></div>
     <div id="toastNotification" class="fixed bottom-5 right-5 bg-gray-800 text-white text-xs sm:text-sm px-4 py-2.5 rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center space-x-2">
         <span class="w-2 h-2 rounded-full bg-[#0088cc]"></span><span id="toastText">Xabar</span>
     </div>
 
+    <!-- O'quvchini o'chirishni tasdiqlash oynasi -->
+    <div id="dcOverlay" class="dc-overlay" role="dialog" aria-modal="true" aria-labelledby="dcTitle">
+        <div class="dc-card">
+            <div class="dc-icon" aria-hidden="true">×</div>
+            <h3 id="dcTitle">O'quvchini o'chirish</h3>
+            <p id="dcMsg">Ushbu o'quvchi ro'yxatdan o'chirilsinmi?</p>
+            <div class="dc-actions">
+                <button type="button" id="dcNo">Yo'q, qoldirish</button>
+                <button type="button" id="dcYes">Ha, o'chirish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kredit tugaganda premium oynasi -->
+    <div id="premiumOverlay" class="mh-pop" hidden>
+        <div class="mh-pop-card" role="dialog" aria-modal="true" aria-labelledby="mhPremiumTitle">
+            <button type="button" class="mh-x" id="mhXPremium" aria-label="Yopish">✕</button>
+            <div class="mh-pop-top">
+                <div class="mh-pop-icon mh-premium-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16l-5.4 2.9 1-6.1L3.2 8.5l6.1-.9L12 2z"/></svg>
+                </div>
+                <div class="mh-gift">3 ta bepul hisobot ishlatib bo‘lingan</div>
+                <h3 id="mhPremiumTitle">Premium sotib oling</h3>
+                <p>Yana hisobot yuklab olish uchun premium kreditlari kerak. Barcha hisobot turlari — BSB, CHSB, LI, Kuratorlik va Choraklik.</p>
+            </div>
+            <div class="mh-pop-body">
+                <div class="mh-price">
+                    <div><strong>Premium — 40 ta hisobot</strong><small>Click, Payme, Uzcard yoki Humo orqali to‘lash</small></div>
+                    <span>40 000 so‘m</span>
+                </div>
+                <button type="button" class="mh-tgbtn" id="mhGoPremium">To‘lov sahifasiga o‘tish</button>
+                <button type="button" class="mh-link" id="mhClosePremium">Keyinroq</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== Kutubxonalar ===== -->
     <script src="https://telegram.org/js/telegram-web-app.js?64"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- SheetJS 0.20.3 — 0.18.5 dagi ma'lum CVE'lar (prototip ifloslanishi, ReDoS) tuzatilgan.
+         Asosiy CDN ishlamasa, eski manbadan zaxira yuklanadi (maktab tarmoqlari uchun). -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script>window.XLSX||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"><\/script>');</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
     <!-- ===== Asosiy hisobchi logikasi (to'liq saqlangan) ===== -->
     <script>
 const $=s=>document.querySelector(s),T=$('#T'),C=$('#cards');
-const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>{const x=parseFloat(String(v).replace(',','.'));return isFinite(x)&&x>0?x:0};
 const r1=x=>Math.round(x*10)/10;
 const fd=s=>s?s.split('-').reverse().join('.'):'____';
 let S={meta:{},n:5,max:Array(16).fill(1),th:{5:86,4:66,3:30},st:[]};
 let AUTH={user:null,stats:null,bot:'',isAdmin:false,premium:false};
+// Har bir tab o'z Telegram akkaunti bilan ishlaydi: B tabda akkaunt almashtirilsa,
+// A tabdagi o'qituvchi ma'lumotlari boshqa akkauntga qo'shilib ketmaydi.
+let meSeq=0,lastMeTgId='';
+const PROFILE_FIELDS=['viloyat','tuman','maktab','oqituvchi'];
+function activeTgId(){try{const s=sessionStorage.getItem('mh_tg_id');if(s)return s}catch(e){}try{return localStorage.getItem('mh_tg_id')||''}catch(e){return ''}}
+function setActiveTgId(tid){try{sessionStorage.setItem('mh_tg_id',tid)}catch(e){}try{localStorage.setItem('mh_tg_id',tid)}catch(e){}}
+function saveAccountProfile(tid){if(!tid)return;try{const p={};PROFILE_FIELDS.forEach(k=>p[k]=S.meta[k]||'');localStorage.setItem('mh_profile_'+tid,JSON.stringify(p))}catch(e){}}
+function loadAccountProfile(tid){if(!tid)return null;try{return JSON.parse(localStorage.getItem('mh_profile_'+tid)||'null')}catch(e){return null}}
 try{const x=localStorage.getItem('bsb1');if(x)S=Object.assign(S,JSON.parse(x))}catch(e){}
 if(S.th&&+S.th[5]===86&&+S.th[4]===71&&+S.th[3]===56)S.th={5:86,4:66,3:30};
 let tm;const save=()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem('bsb1',JSON.stringify(S))}catch(e){}},300)};
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3200)}
+function toast(t){const e=$('#toast');e.textContent=(window.MH_T?window.MH_T(t):t);e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3200)}
+// jsPDF va autoTable plagi ikkisi ham yuklangan bo'lishi shart
+function pdfReady(){
+ if(!window.jspdf||!window.jspdf.jsPDF||typeof window.jspdf.jsPDF.prototype.autoTable!=='function'){
+  toast('PDF kutubxonasi yuklanmadi. Internetni tekshiring.');return false;
+ }
+ return true;
+}
+
+/* Tasdiq oynasi (o'quvchi/ustun o'chirish va boshqa harakatlar uchun umumiy) */
+window.mhAskConfirm=function(title,message,onConfirm){
+ const ov=$('#dcOverlay'),msg=$('#dcMsg'),yes=$('#dcYes'),no=$('#dcNo'),ttl=$('#dcTitle');
+ if(!ov||!yes||!no){if(window.confirm(message))onConfirm();return}
+ if(ttl)ttl.textContent=title||'Tasdiqlash';
+ msg.textContent=message;
+ ov.classList.add('on');
+ const cleanup=()=>{ov.classList.remove('on');yes.onclick=null;no.onclick=null;ov.onclick=null;document.removeEventListener('keydown',onKey)};
+ const onKey=e=>{if(e.key==='Escape')cleanup()};
+ yes.onclick=()=>{cleanup();onConfirm()};
+ no.onclick=cleanup;
+ ov.onclick=e=>{if(e.target===ov)cleanup()};
+ document.addEventListener('keydown',onKey);
+ setTimeout(()=>{try{yes.focus()}catch(e){}},30);
+};
+window.mhAskDelete=function(name,onConfirm){
+ const text=(name&&String(name).trim())?`«${name}» o'quvchisini ro'yxatdan o'chirishni tasdiqlaysizmi?`:"Bu o'quvchini ro'yxatdan o'chirishni tasdiqlaysizmi?";
+ window.mhAskConfirm("O'quvchini o'chirish",text,onConfirm);
+};
+
+/* Premium oynasi: kredit tugaganda yuklab olish o'rniga ochiladi */
+window.mhOpenPremium=function(){
+ const ov=$('#premiumOverlay');if(ov)ov.hidden=false;
+};
+window.mhClosePremium=function(){
+ const ov=$('#premiumOverlay');if(ov)ov.hidden=true;
+};
+window.mhCanDownload=function(){
+ if(!AUTH.user){window.mhOpenLogin('Yuklab olish uchun Telegram orqali kiring');return false}
+ const credits=+((AUTH.stats&&AUTH.stats.credits)||0);
+ if(credits<=0){window.mhOpenPremium();return false}
+ return true;
+};
+/* Kreditni faylni yaratishdan OLDIN serverda atomik rezerv qiladi.
+   Ilgari teskari edi: fayl saqlanib, keyin /api/event chaqirilardi — so'rovni
+   bloklab yoki AUTH.stats.credits ni o'zgartirib bepul yuklab olish mumkin edi.
+   Endi kredit bo'lmasa fayl umuman yaratilmaydi. */
+window.mhReserveCredit=async function(kind){
+ if(!AUTH.user){window.mhOpenLogin('Yuklab olish uchun Telegram orqali kiring');return false}
+ const k=kind==='pdf'?'download_pdf':'download_xlsx';
+ let r=null;
+ try{
+  r=await fetch('/api/event',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k})});
+ }catch(e){toast('Server bilan aloqa yo‘q — kredit sarflanmadi');return false}
+ const j=await r.json().catch(()=>({}));
+ if(r.ok&&j&&j.ok){if(j.stats)AUTH.stats=j.stats;renderAccountStats();return true}
+ if(r.status===402){if(j&&j.stats)AUTH.stats=j.stats;renderAccountStats();window.mhOpenPremium();return false}
+ if(r.status===401){AUTH.user=null;AUTH.stats=null;renderAuth();window.mhOpenLogin('Sessiya tugagan — qaytadan kiring');return false}
+ toast((j&&j.description)||'Kredit hisobida xatolik');return false;
+};
+/* Generatsiya muvaffaqiyatsiz bo'lsa — kreditni qaytarish (serverda 2 daqiqalik oyna). */
+window.mhRefundCredit=function(){
+ try{
+  fetch('/api/event',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'refund'})})
+   .then(r=>r.json().catch(()=>({})))
+   .then(j=>{if(j&&j.stats){AUTH.stats=j.stats;renderAccountStats()}})
+   .catch(()=>{});
+ }catch(e){}
+};
 
 /* ===== Telegram kirish + Supabase bulut ===== */
 async function api(path,opts){try{const r=await fetch(path,Object.assign({credentials:'same-origin',headers:{'Content-Type':'application/json'}},opts||{}));const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.description||('HTTP '+r.status));return j}catch(e){console.warn('api',path,e.message);return null}}
@@ -668,7 +994,7 @@ function renderAccountStats(){
  if(tile)tile.classList.toggle('premium',premium);
  d.textContent=+(st.downloads||0);
  if(cr)cr.textContent=credits;
- if(crNote)crNote.textContent=credits>0?'Hisobot yuklaganingizda 1 ta kamayadi':'Premium sotib olinganda 40 ta qo\'shiladi';
+ if(crNote)crNote.textContent=credits>0?'Hisobot yuklaganingizda 1 ta kamayadi (bepul kreditlaringiz bor)':'Premium sotib olinganda 40 ta qo\'shiladi';
  if(buy)buy.style.display='';
  if(hint)hint.style.display='';
  const btn=$('#buyPremiumBtn');if(btn)btn.disabled=false;
@@ -680,45 +1006,187 @@ function renderAuth(){
  if(ma)ma.classList.toggle('hidden',!AUTH.isAdmin);
  if(!AUTH.isAdmin){const adm=$('#module-admin');if(adm&&adm.classList.contains('active')&&typeof switchTab==='function')switchTab('home')}
  const box=$('#authBox');if(!box)return;
- const m=$('#mobileUser');
+ const m=$('#mobileUser'),ml=$('#mobileLogin'),mo=$('#mobileLogout');
  if(AUTH.user){
   const u=AUTH.user;
   const name=[u.first_name,u.last_name].filter(Boolean).join(' ')||u.username||'Foydalanuvchi';
   const proBadge=AUTH.premium?'<span class="ml-1 text-[9px] font-bold uppercase px-1 py-0.5 rounded bg-green-100 text-green-700 align-middle">PRO</span>':'';
-  box.innerHTML=`<div class="flex items-center space-x-2.5 cursor-pointer group" onclick="switchTab('malumotlarim')" title="Ma'lumotlarim">
-   <div class="w-9 h-9 rounded-md bg-gradient-to-br from-[#0072bc] to-[#005a96] text-white flex items-center justify-center font-semibold text-sm shadow-sm overflow-hidden border border-gray-200 shrink-0">${u.photo_url?`<img src="${esc(u.photo_url)}" alt="" class="w-full h-full object-cover">`:esc(name.slice(0,1).toUpperCase())}</div>
-   <div class="hidden sm:flex flex-col leading-tight"><span class="text-[13px] font-semibold text-gray-700 group-hover:text-[#0072bc]">${esc(name)}${proBadge}</span></div>
-   <button onclick="event.stopPropagation();doLogout()" title="Chiqish" class="ml-1 p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
+  // Mobil versiyada faqat avatar qoladi (joy tejaladi): bosilsa — Ma'lumotlarim.
+  // Chiqish mobil menyuda. Akkaunt almashtirish tugmasi olib tashlandi.
+  box.innerHTML=`<div class="flex items-center gap-2">
+   <button type="button" onclick="switchTab('malumotlarim')" title="Ma'lumotlarim" aria-label="Ma'lumotlarim" class="flex items-center gap-2 min-h-[40px] rounded-lg px-0.5 py-0.5 hover:bg-gray-50 active:bg-gray-100 transition-colors">
+    <span class="w-9 h-9 rounded-md bg-gradient-to-br from-[#0072bc] to-[#005a96] text-white flex items-center justify-center font-semibold text-sm shadow-sm overflow-hidden border border-gray-200 shrink-0">${u.photo_url?`<img src="${esc(u.photo_url)}" alt="" class="w-full h-full object-cover">`:esc(name.slice(0,1).toUpperCase())}</span>
+    <span class="hidden sm:flex flex-col leading-tight text-left"><span class="text-[13px] font-semibold text-gray-700">${esc(name)}${proBadge}</span></span>
+   </button>
+   <button type="button" onclick="doLogout()" title="Chiqish" aria-label="Chiqish" class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
   </div>`;
-  if(m)m.textContent=name+(AUTH.premium?' (Premium)':'')+' (Telegram)';
+  if(m)m.textContent=name+(AUTH.premium?' (Premium)':'');
+  if(ml)ml.classList.add('hidden');
+  if(mo)mo.classList.remove('hidden');
  }else{
-  box.innerHTML=`<button onclick="openTelegramLogin()" class="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-[#0088cc] text-white text-[13px] font-semibold hover:bg-[#0072bc] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg><span>Kirish</span></button>`;
+  box.innerHTML=`<button onclick="openTelegramLogin()" class="flex items-center space-x-2 px-3.5 min-h-[40px] rounded-md bg-[#0088cc] text-white text-[13px] font-semibold hover:bg-[#0072bc] active:bg-[#005a96] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg><span>Kirish</span></button>`;
   if(m)m.textContent='Kirilmagan';
+  if(ml)ml.classList.remove('hidden');
+  if(mo)mo.classList.add('hidden');
  }
 }
-function closeTelegramLogin(){const h=$('#tgLoginHost');if(h)h.remove()}
-function openTelegramLogin(){
- if(!AUTH.bot){toast('Telegram bot username hali sozlanmagan');return}
- let h=$('#tgLoginHost');if(!h){h=document.createElement('div');h.id='tgLoginHost';document.body.appendChild(h)}
- h.innerHTML=`<div class="fixed inset-0 bg-black/40 z-[60] flex items-center justify-center p-4" onclick="if(event.target===this)closeTelegramLogin()"><div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full"><h3 class="text-lg font-bold text-[#182361] mb-1">Telegram orqali kirish</h3><p class="text-[12px] text-gray-500 mb-4">Ma'lumotlaringiz shifrlanib, hisobingizga bog'lanadi.</p><p class="text-[11px] text-gray-400 mb-3">Telegram'ga kirmagan bo'lsangiz, telefon raqamingiz so'raladi - bu Telegram tasdiqlashidir, sayt raqamni olmaydi.</p><div id="tgWidget" class="min-h-[48px]"></div><button onclick="closeTelegramLogin()" class="mt-4 text-[12px] text-gray-500 hover:text-gray-800">Yopish</button></div></div>`;
- const w=$('#tgWidget');w.innerHTML='';
+function tgEscKey(e){if(e.key==='Escape')closeTelegramLogin()}
+// ===== Telegram orqali kirish =====
+// Asosiy usul: bot deep-link. Sayt bir martalik havola yaratadi, foydalanuvchi
+// botda «Start» bosadi, tasdiq xabari AYNAN BIZNING botdan keladi, brauzer esa
+// holatni so'rab turadi va tayyor bo'lishi bilan sessiya oladi.
+// Zaxira usul: Telegram Login Widget (unda xabar Telegram xizmat akkauntidan keladi).
+let tgPollTimer=null,tgPollTick=null,tgNonce='',tgWidgetLoaded=false,tgPollGen=0,tgPollBusy=false;
+// tgPollGen: har to'xtatishda oshadi — kechikib kelgan javob eski holatga ta'sir qilmaydi.
+function stopTgPoll(){tgPollGen++;if(tgPollTimer){clearInterval(tgPollTimer);tgPollTimer=null}tgPollTick=null}
+function tgStatus(text,kind){
+ const el=$('#tgBotStatus');if(!el)return;
+ if(!text){el.hidden=true;el.textContent='';return}
+ el.hidden=false;el.textContent=text;el.className='mh-tgstat'+(kind?' '+kind:'');
+}
+function tgBotBtnEnable(){const b=$('#tgBotBtn');if(b)b.disabled=false}
+function closeTelegramLogin(){
+ stopTgPoll();tgNonce='';
+ // Oyna yopilganda widget ham o'chiriladi: keyingi ochilishda qayta yuklanishi shart,
+ // aks holda loadTgWidget() eski flag tufayli bo'sh konteynerni qaytaradi.
+ const w=$('#tgWidget');if(w)w.innerHTML='';
+ tgWidgetLoaded=false;
+ const h=$('#tgLoginHost');if(h)h.remove();document.removeEventListener('keydown',tgEscKey)
+}
+function loadTgWidget(){
+ if(tgWidgetLoaded)return;
+ const w=$('#tgWidget');if(!w)return;
+ if(!AUTH.bot){w.innerHTML='<p class="mh-fine">Bot username hali sozlanmagan. Keyinroq urinib ko‘ring.</p>';return}
+ tgWidgetLoaded=true;
  const s=document.createElement('script');s.async=true;s.src='https://telegram.org/js/telegram-widget.js?22';
- s.setAttribute('data-telegram-login',AUTH.bot);s.setAttribute('data-size','large');s.setAttribute('data-radius','6');
+ s.setAttribute('data-telegram-login',AUTH.bot);s.setAttribute('data-size','large');s.setAttribute('data-radius','8');
  s.setAttribute('data-onauth','onTelegramAuth(user)');s.setAttribute('data-request-access','write');
  w.appendChild(s);
 }
+function openTelegramLogin(reason){
+ if($('#tgLoginHost'))return;
+ if($('#profilePromptHost'))closeProfilePrompt(); // ikki oyna bir vaqtda ochilmasin
+ const h=document.createElement('div');h.id='tgLoginHost';h.className='mh-pop';document.body.appendChild(h);
+ h.innerHTML=`<div class="mh-pop-card" role="dialog" aria-modal="true" aria-labelledby="tgTitle">
+  <button type="button" class="mh-x" id="tgX" aria-label="Yopish">✕</button>
+  <div class="mh-pop-top">
+   <div class="mh-pop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg></div>
+   <div class="mh-gift">Kirish bilan 3 ta bepul hisobot</div>
+   <h3 id="tgTitle">Telegram orqali kiring</h3>
+   <p>${esc(reason||'Hisobotlarni yuklab olish va saqlash uchun Telegram akkauntingiz bilan kiring.')}</p>
+  </div>
+  <div class="mh-pop-body">
+   <button type="button" class="mh-tgbtn" id="tgBotBtn">Telegram botda tasdiqlash</button>
+   <p class="mh-fine" style="text-align:left">Tugmani bosing — Telegramda ${AUTH.bot?'<b>@'+esc(AUTH.bot)+'</b>':'botimiz'} ochiladi. Unda «Start» tugmasini bosing va shu sahifaga qayting. Tasdiq xabari shu botdan keladi.</p>
+   <div class="mh-tgstat" id="tgBotStatus" hidden></div>
+   <div id="tgWidgetWrap" hidden>
+    <div class="mh-widget" id="tgWidget"></div>
+    <p class="mh-fine">Zaxira usul: Telegram Login Widget. Bu usulda tasdiq xabari Telegram xizmat akkauntidan keladi.</p>
+   </div>
+   <button type="button" class="mh-link" id="tgOther">Boshqa usul bilan kirish</button>
+   <button type="button" class="mh-link" id="tgClose">Yopish</button>
+  </div>
+ </div>`;
+ $('#tgClose').onclick=closeTelegramLogin;
+ $('#tgX').onclick=closeTelegramLogin;
+ $('#tgOther').onclick=()=>{const w=$('#tgWidgetWrap');if(w)w.hidden=false;loadTgWidget();$('#tgOther').hidden=true};
+ $('#tgBotBtn').onclick=startBotLogin;
+ h.addEventListener('click',e=>{if(e.target===h)closeTelegramLogin()});
+ document.addEventListener('keydown',tgEscKey);
+}
+window.mhOpenLogin=openTelegramLogin;
+async function startBotLogin(){
+ const btn=$('#tgBotBtn');if(btn)btn.disabled=true;
+ // Popup bloklanmasligi uchun oynani so'rovdan OLDIN ochamiz (foydalanuvchi bosishi bilan).
+ const WA=window.Telegram&&window.Telegram.WebApp;
+ const inTg=!!(WA&&WA.openTelegramLink&&WA.initData);
+ let win=null;
+ if(!inTg){try{win=window.open('about:blank','_blank');if(win)win.opener=null}catch(e){win=null}}
+ tgStatus('Havola tayyorlanmoqda...');
+ const j=await api('/api/telegram-login',{method:'POST',body:JSON.stringify({action:'bot_start'})});
+ if(!j||!j.ok){
+  if(win){try{win.close()}catch(e){}}
+  tgStatus((j&&j.description)||'Havola yaratilmadi. Keyinroq urinib ko‘ring.','err');
+  tgBotBtnEnable();return;
+ }
+ tgNonce=String(j.state||'');
+ // Telegram ilovasida ochamiz; ochilmasa — yangi oynada, u ham bo'lmasa shu oynada.
+ let opened=false;
+ if(inTg){try{WA.openTelegramLink(j.url);opened=true}catch(e){}}
+ if(!opened&&win){try{win.location.href=j.url;opened=true}catch(e){}}
+ if(!opened)location.href=j.url;
+ tgStatus('Telegramda «Start» tugmasini bosing. Tasdiqlangach bu sahifa o‘zi yangilanadi.');
+ pollBotLogin();
+}
+function pollBotLogin(){
+ stopTgPoll();
+ if(!tgNonce)return;
+ const gen=tgPollGen;
+ let tries=0;
+ tgPollTick=async()=>{
+  if(!tgNonce||gen!==tgPollGen)return;
+  // Bitta oynada bir vaqtda ikkita so'rov ketmasin: interval, focus va
+  // visibilitychange bir-biriga qo'shilib, bir martalik nonce ni ikki marta
+  // ishlatib yuborardi (ikkinchi javob «used» bo'lib xato chiqardi).
+  if(tgPollBusy)return;
+  tgPollBusy=true;
+  tries++;
+  let j=null;
+  try{j=await api('/api/telegram-login?state='+encodeURIComponent(tgNonce))}
+  finally{tgPollBusy=false}
+  if(gen!==tgPollGen)return; // bu javob eskirgan — holat allaqachon o'zgargan
+  if(!j){
+   if(tries>=150){stopTgPoll();tgStatus('Server bilan aloqa yo‘q. Qaytadan urinib ko‘ring.','err');tgBotBtnEnable()}
+   return;
+  }
+  if(j.status==='ok'){stopTgPoll();tgNonce='';await applyLogin(j);return}
+  if(j.status==='used'){
+   // Havola bir martalik: uni orqa oynadagi poll allaqachon ishlatib, sessiya
+   // ochgan bo'lishi mumkin. Sessiya bor bo'lsa — bu xato emas, kirish muvaffaqiyatli.
+   stopTgPoll();tgNonce='';
+   const me=await api('/api/me');
+   if(me&&me.authenticated){await applyLogin({});return}
+   tgStatus('Bu havola allaqachon ishlatilgan — ehtimol siz boshqa oynada kirdingiz. «Telegram botda tasdiqlash» tugmasini qaytadan bosing.','err');
+   tgBotBtnEnable();return;
+  }
+  if(j.status==='expired'){
+   stopTgPoll();tgNonce='';tgStatus('Havola eskirgan. «Telegram botda tasdiqlash» tugmasini qaytadan bosing.','err');tgBotBtnEnable();return;
+  }
+  if(tries>=150){stopTgPoll();tgStatus('Vaqt tugadi. Qaytadan urinib ko‘ring.','err');tgBotBtnEnable()}
+ };
+ tgPollTimer=setInterval(tgPollTick,4000);
+ tgPollTick();
+}
+// Telegram'ga o'tilganda tab yashirinadi — poll to'xtatiladi (Supabase'ga
+// behuda so'rov ketmaydi), saytga qaytilganda darhol bir marta tekshiriladi.
+function tgPollResume(){if(!tgNonce||!tgPollTick)return;if(!tgPollTimer)tgPollTimer=setInterval(tgPollTick,4000);tgPollTick()}
+function tgPollPause(){if(tgPollTimer){clearInterval(tgPollTimer);tgPollTimer=null}}
+window.addEventListener('focus',tgPollResume);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)tgPollPause();else tgPollResume()});
+async function applyLogin(j){
+ closeTelegramLogin();
+ const me=await api('/api/me');
+ if(me)meLastOk=Date.now(); // keyingi fokusda /api/me qayta chaqirilmasin
+ if(me&&me.authenticated){
+  AUTH.user=me.user;AUTH.stats=me.stats;AUTH.bot=me.botUsername||AUTH.bot;AUTH.isAdmin=!!me.isAdmin;AUTH.premium=!!me.premium;
+  afterAuthProfile(me,true);lastMeTgId=String(me.user.telegram_id||'');
+ }else if(j&&j.user){
+  AUTH.user=j.user;AUTH.isAdmin=!!j.isAdmin;AUTH.premium=!!j.premium;lastMeTgId=String(j.user.telegram_id||'');
+ }
+ renderAuth();
+ toast(j&&j.bonus?'Telegram orqali kirdingiz — 3 ta bepul kredit qo‘shildi':'Telegram orqali kirdingiz');
+}
+// Akkaunt almashtirish tugmasi olib tashlandi (sarlavha tor bo'lib qolgan edi).
+// Kerak bo'lsa: Chiqish -> qaytadan Kirish. Bot qaysi akkaunt faol bo'lsa, o'shaning
+// ID sini yuboradi.
 window.onTelegramAuth=async function(user){
  try{
   const j=await api('/api/telegram-login',{method:'POST',body:JSON.stringify(user)});
   if(!j||!j.ok){toast('Kirish amalga oshmadi: '+((j&&j.description)||'xato'));return}
-  closeTelegramLogin();
-  const me=await api('/api/me');
-  if(me&&me.authenticated){AUTH.user=me.user;AUTH.stats=me.stats;AUTH.bot=me.botUsername||AUTH.bot;AUTH.isAdmin=!!me.isAdmin;AUTH.premium=!!me.premium;if(me.profile)applyProfile(me.profile)}
-  else {AUTH.user=j.user;AUTH.isAdmin=!!j.isAdmin;AUTH.premium=!!j.premium}
-  renderAuth();toast('Telegram orqali kirdingiz');
+  await applyLogin(j);
  }catch(e){toast('Kirish xatosi: '+e.message)}
 };
-async function doLogout(){await api('/api/logout',{method:'POST',body:'{}'});AUTH.user=null;AUTH.stats=null;AUTH.isAdmin=false;AUTH.premium=false;renderAuth();toast('Chiqdingiz')}
+async function doLogout(){await api('/api/logout',{method:'POST',body:'{}'});AUTH.user=null;AUTH.stats=null;AUTH.isAdmin=false;AUTH.premium=false;meLastOk=0;renderAuth();toast('Chiqdingiz')}
 function adminCard(label,val){return `<div class="bg-white border border-gray-200 rounded-lg p-3"><div class="text-[11px] uppercase tracking-wide text-gray-400">${label}</div><div class="text-xl font-bold text-[#182361] mt-1">${val}</div></div>`}
 async function renderAdmin(){
  const body=$('#adminBody');if(!body)return;
@@ -748,26 +1216,113 @@ async function togglePremium(id,current){
  toast(next?'Premium yoqildi':'Premium o\'chirildi');renderAdmin();
 }
 async function saveProfileToCloud(silent){
- if(!AUTH.user){toast("Profilni bulutga saqlash uchun Telegram orqali kiring");return}
+ if(!AUTH.user){toast("Profilni bulutga saqlash uchun Telegram orqali kiring");return false}
  const m=S.meta||{};
+ if(String(m.maktab||'').trim()&&!/^\d{1,4}$/.test(String(m.maktab).trim())){toast("Maktab raqami faqat raqamlardan iborat bo'lishi kerak");return false}
  const j=await api('/api/profile',{method:'POST',body:JSON.stringify({viloyat:m.viloyat||'',tuman:m.tuman||'',maktab:m.maktab||'',oqituvchi:m.oqituvchi||''})});
- if(j&&j.ok){if(!silent)toast("Ma'lumotlar saqlandi")}else toast("Saqlashda xato");
+ if(j&&j.ok){saveAccountProfile(String(AUTH.user.telegram_id||''));if(!silent)toast("Ma'lumotlar saqlandi");return true}
+ toast("Saqlashda xato");return false;
 }
-function applyProfile(p){
- if(!p)return;
- ['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{if(p[k])S.meta[k]=p[k]});
- if(typeof renderProfile==='function')renderProfile();
- if(typeof renderProfileHint==='function')renderProfileHint();
- if(typeof render==='function')render();
+// Ma'lumotlar har bir Telegram akkauntiga alohida saqlanadi. Akkaunt almashganda
+// localStorage dagi eski ma'lumotlar qolmasligi uchun ularni serverdan oladi.
+function afterAuthProfile(me,ask,always){
+ if(!me||!me.user)return;
+ const p=me.profile||{},tid=String(me.user.telegram_id||'');
+ const prev=activeTgId(),switched=!!tid&&!!prev&&tid!==prev;
+ const modal=$('#profilePromptHost'),dirty=!!(modal&&modal.dataset.dirty==='1');
+ // Oynada hali saqlanmagan ma'lumotlar bo'lsa, ularni hech qanday javob bilan yozib yubormaymiz.
+ if(switched&&!dirty)saveAccountProfile(prev);
+ const store=tid?loadAccountProfile(tid):null;
+ const merged=Object.assign({},p,store||{});
+ if(!switched)PROFILE_FIELDS.forEach(k=>{
+  if(!String(merged[k]||'').trim()&&String(S.meta[k]||'').trim())merged[k]=S.meta[k];
+ });
+ const serverHas=PROFILE_FIELDS.some(k=>String(p[k]||'').trim());
+ const localHas=PROFILE_FIELDS.some(k=>String(S.meta[k]||'').trim());
+ if(!dirty&&(switched||serverHas||!localHas)){
+  PROFILE_FIELDS.forEach(k=>{S.meta[k]=String(merged[k]||'')});
+  save();
+ }
+ if(tid)setActiveTgId(tid);
+ renderProfile();renderProfileHint();
+ window.MH_PROFILE=Object.assign({},S.meta);
+ try{window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},S.meta)}))}catch(e){}
+ const complete=PROFILE_FIELDS.every(k=>String(S.meta[k]||'').trim());
+ if(ask&&(always||!complete))setTimeout(()=>openProfilePrompt(),450);
 }
-async function loadMe(){
- const j=await api('/api/me');if(!j)return;
- AUTH.bot=j.botUsername||'';AUTH.isAdmin=!!j.isAdmin;AUTH.premium=!!j.premium;
- AUTH.user=j.authenticated?j.user:null;AUTH.stats=j.stats||null;
- if(AUTH.user&&j.profile)applyProfile(j.profile);
- renderAuth();
+function ppEscKey(e){if(e.key==='Escape')closeProfilePrompt()}
+function closeProfilePrompt(){const h=$('#profilePromptHost');if(h)h.dataset.dirty='';if(h)h.remove();document.removeEventListener('keydown',ppEscKey)}
+// Telegram tasdiqlagandan so'ng: faqat ma'lumotlar to'ldirilmagan bo'lsa so'raymiz.
+// To'liq saqlangan profil ikkinchi kirishda qayta so'ralmaydi.
+function openProfilePrompt(reason){
+ if($('#profilePromptHost'))return;
+ if($('#tgLoginHost'))closeTelegramLogin(); // ikki oyna bir vaqtda ochilmasin
+ if(!AUTH.user){window.mhOpenLogin('Avval Telegram orqali kiring');return}
+ const h=document.createElement('div');h.id='profilePromptHost';h.className='mh-pop';
+ const name=[AUTH.user.first_name,AUTH.user.last_name].filter(Boolean).join(' ')||AUTH.user.username||'';
+ const complete=['viloyat','tuman','maktab','oqituvchi'].every(k=>String(S.meta[k]||'').trim());
+ const text=reason||(complete
+  ? "Bu akkaunt uchun saqlangan ma'lumotlaringiz quyida keltirilgan. Tekshirib chiqing va kerak bo'lsa o'zgartiring — ular faqat shu akkauntga tegishli."
+  : "Bu Telegram akkaunti uchun ma'lumotlaringiz topilmadi yoki to'liq emas. Viloyat, tuman, maktab raqami va F.I.Sh.ni kiriting — ular faqat shu akkauntga saqlanadi.");
+ h.innerHTML=`<div class="mh-pop-card" role="dialog" aria-modal="true" aria-labelledby="ppTitle">
+  <button type="button" class="mh-x" id="ppX" aria-label="Yopish">✕</button>
+  <div class="mh-pop-top">
+   <div class="mh-pop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg></div>
+   <h3 id="ppTitle">O'qituvchi ma'lumotlari</h3>
+   <p>${esc(text)}</p>
+   ${name?`<p style="margin-top:8px;font-weight:700;color:#0072bc">${esc(name)}</p>`:''}
+  </div>
+  <div class="mh-pop-body">
+   <div class="row" id="profilePromptMeta"></div>
+   <p class="mh-fine" style="text-align:left">Ma'lumotlar doimiy saqlanadi va har bir hisobotning boshiga avtomatik qo'yiladi. Sinf, fan, chorak kabi o'zgaruvchi ma'lumotlarni BSB hisoboti ichida kiriting.</p>
+   <div class="mh-pop-actions"><button type="button" id="ppSave">Ma'lumotlarni saqlash</button><button type="button" id="ppLater">Keyinroq</button></div>
+  </div>
+ </div>`;
+ document.body.appendChild(h);
+ const box=$('#profilePromptMeta');
+ box.innerHTML=profileFieldsHTML();
+ box.addEventListener('input',e=>{h.dataset.dirty='1';onMetaInput(e);window.MH_PROFILE=Object.assign({},S.meta)});
+ $('#ppSave').onclick=async()=>{
+  const miss=['viloyat','tuman','maktab','oqituvchi'].filter(k=>!String(S.meta[k]||'').trim());
+  if(miss.length){toast("Maydonlarni to'ldiring: "+miss.join(', '));return}
+  const btn=$('#ppSave');btn.disabled=true;
+  const ok=await saveProfileToCloud(true);
+  btn.disabled=false;
+  if(!ok)return;
+  saveAccountProfile(String(AUTH.user.telegram_id||''));
+  window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},S.meta)}));
+  closeProfilePrompt();toast("Ma'lumotlar shu akkauntga saqlandi");
+ };
+ $('#ppLater').onclick=closeProfilePrompt;
+ $('#ppX').onclick=closeProfilePrompt;
+ h.addEventListener('click',e=>{if(e.target===h)closeProfilePrompt()});
+ document.addEventListener('keydown',ppEscKey);
+}
+window.mhOpenProfilePrompt=openProfilePrompt;
+let meLastOk=0,meInflight=null;
+async function loadMe(force){
+ // /api/me Supabase'ga so'rov yuboradi. Ilgari har fokus/visibility almashishida
+ // chaqirilardi — 60 soniyalik kesh bilan ortiqcha so'rovlar yo'qoladi.
+ if(!force&&meLastOk&&Date.now()-meLastOk<60000)return;
+ if(meInflight)return meInflight;
+ const seq=++meSeq;
+ meInflight=(async()=>{
+  const j=await api('/api/me');
+  if(!j||seq!==meSeq)return; // eski javob kelsa, yangisini yozib yubormaydi
+  meLastOk=Date.now();
+  AUTH.bot=j.botUsername||'';AUTH.isAdmin=!!j.isAdmin;AUTH.premium=!!j.premium;
+  AUTH.user=j.authenticated?j.user:null;AUTH.stats=j.stats||null;
+  const tid=AUTH.user?String(AUTH.user.telegram_id||''):'';
+  // Profilni faqat birinchi yuklashda yoki akkaunt almashganda yangilaymiz.
+  // Har fokusda qayta yozish oynadagi saqlanmagan ma'lumotlarni yo'q qilardi.
+  if(AUTH.user&&(!lastMeTgId||tid!==lastMeTgId))afterAuthProfile(j,false);
+  lastMeTgId=tid;
+  renderAuth();
+ })();
+ try{return await meInflight}finally{meInflight=null}
 }
 async function buyPremium(){
+ if(!AUTH.user){window.mhOpenLogin('Premium sotib olish uchun avval Telegram orqali kiring');return}
  const btn=$('#buyPremiumBtn');if(btn)btn.disabled=true;
  toast('To\'lov havolasi tayyorlanmoqda...');
  const j=await api('/api/billing/create-payment',{method:'POST',body:'{}'});
@@ -799,13 +1354,16 @@ function renderMeta(){const box=$('#meta');if(!box)return;
  box.innerHTML=sel('sinf','Sinf (raqami)',SINFLAR,'Tanlang...')+sel('harf','Sinf harfi (A, B, D...)',HARFLAR,'Harf...')
  +sel('fan','Fan',FANLAR,'Fanni tanlang...')+sel('chorak','Chorak',CHORAKLAR,'Tanlang...')+sel('tur','Baholash turi',TURLAR,'Tanlang...')+sel('bsb','Tartib raqami',BSBLAR,'Tanlang...')
  +`<label class="f">Sana<input type="date" data-k="sana" value="${esc(S.meta.sana)}"></label>`}
-// Ma'lumotlarim bo'limi — faqat doimiy ma'lumotlar; ular S.meta ga yoziladi
-function renderProfile(){const v=S.meta.viloyat||'',tl=v?(TUMANLAR[v]||[]):[];
- const box=$('#profileMeta');if(!box)return;
- box.innerHTML=sel('viloyat','Viloyat / Hudud',VILOYATLAR,'Hududni tanlang...')
+// Ma'lumotlarim bo'limi va kirishdan keyingi so'rov oynasi bitta maydonlardan foydalanadi
+function profileFieldsHTML(){const v=S.meta.viloyat||'',tl=v?(TUMANLAR[v]||[]):[];
+ return sel('viloyat','Viloyat / Hudud',VILOYATLAR,'Hududni tanlang...')
   +`<label class="f">Tuman / Shahar<select data-k="tuman"${v?'':' disabled'}><option value="">${v?'Tanlang...':'Avval viloyatni tanlang'}</option>${tl.map(o=>`<option${o===(S.meta.tuman||'')?' selected':''}>${esc(o)}</option>`).join('')}${(S.meta.tuman&&v&&!tl.includes(S.meta.tuman))?`<option selected>${esc(S.meta.tuman)}</option>`:''}</select></label>`
-  +`<label class="f">Maktab raqami<input type="text" inputmode="numeric" data-k="maktab" placeholder="masalan: 12" value="${esc(S.meta.maktab)}"></label>`
+  +`<label class="f">Maktab raqami<input type="text" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" title="Faqat raqam kiriting" data-k="maktab" placeholder="masalan: 12" value="${esc(S.meta.maktab)}"></label>`
   +`<label class="f">O'qituvchi F.I.Sh.<input type="text" data-k="oqituvchi" placeholder="masalan: Nuraliyev A.N." value="${esc(S.meta.oqituvchi)}"></label>`;
+}
+function renderProfile(){
+ const box=$('#profileMeta');if(box)box.innerHTML=profileFieldsHTML();
+ const prompt=$('#profilePromptMeta');if(prompt)prompt.innerHTML=profileFieldsHTML();
 }
 function renderProfileHint(){const el=$('#profileHint');if(!el)return;
  const m=S.meta;
@@ -830,11 +1388,20 @@ function onMetaInput(e){
   document.querySelectorAll(`[data-k="${k}"]`).forEach(x=>{if(x!==e.target)x.value=val});
  }
  save();
+ if(PROFILE_FIELDS.includes(k))saveAccountProfile(activeTgId());
+ window.MH_PROFILE=Object.assign({},S.meta);
 }
 $('#meta').addEventListener('input',onMetaInput);
 const pb=$('#profileMeta'); if(pb)pb.addEventListener('input',onMetaInput);
-$('#profileSave').onclick=()=>{save();saveProfileToCloud()};
+$('#profileSave').onclick=async()=>{save();const ok=await saveProfileToCloud();if(ok)try{window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},S.meta)}))}catch(e){}};
 const buyBtn=$('#buyPremiumBtn'); if(buyBtn) buyBtn.onclick=buyPremium;
+const mhGoPremium=$('#mhGoPremium');if(mhGoPremium)mhGoPremium.onclick=()=>{
+ window.mhClosePremium();
+ if(typeof switchTab==='function')switchTab('malumotlarim');
+ const b=$('#buyBlock');if(b){try{b.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}b.style.boxShadow='0 0 0 4px rgba(16,185,129,.22)';setTimeout(()=>{b.style.boxShadow=''},2600)}
+};
+const mhClosePremiumBtn=$('#mhClosePremium');if(mhClosePremiumBtn)mhClosePremiumBtn.onclick=window.mhClosePremium;
+const mhXPremiumBtn=$('#mhXPremium');if(mhXPremiumBtn)mhXPremiumBtn.onclick=window.mhClosePremium;
 // To'lov jarayonida flag qo'yamiz — qaytganda faqat bir marta tekshiramiz
 let verifying=false;
 async function verifyPaymentOnce(){
@@ -858,11 +1425,6 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)onReturn()
 // Ulash nuqtasi: BSB hisobchisi (iframe yoki boshqa sahifa) shu orqali ma'lumot oladi
 window.getTeacherProfile=()=>Object.assign({},S.meta);
 window.MH_PROFILE=window.getTeacherProfile();
-// Ma'lumotlar o'zgarganda ulash nuqtasini ham yangilaymiz
-const _origOnMeta=onMetaInput;
-function onMetaInputSynced(e){_origOnMeta(e);window.MH_PROFILE=Object.assign({},S.meta)}
-$('#meta').removeEventListener('input',_origOnMeta);$('#meta').addEventListener('input',onMetaInputSynced);
-if(pb)pb.addEventListener('input',()=>{window.MH_PROFILE=Object.assign({},S.meta)});
 // Yuklab olishdan oldin ikki bosqichli tekshirish: doimiy profil + hisobot maydonlari
 const PROF_REQ=[['viloyat','Viloyat'],['tuman','Tuman / Shahar'],['maktab','Maktab raqami'],['oqituvchi',"O'qituvchi F.I.Sh."]];
 const REPORT_REQ=[['sinf','Sinf'],['harf','Sinf harfi'],['fan','Fan'],['chorak','Chorak'],['bsb','Tartib raqami']];
@@ -876,7 +1438,7 @@ function reportOk(){
  if(miss.length){toast("BSB hisoboti boshida maydonlarni to'ldiring: "+miss.map(x=>x[1]).join(', '));switchTab('bsb');return false}
  return true;
 }
-let pck=0;$('#profileClear').onclick=e=>{if(!pck){e.target.textContent='Aniq tozalansinmi? Yana bosing';pck=setTimeout(()=>{pck=0;e.target.textContent='Tozalash'},3000);return}clearTimeout(pck);pck=0;e.target.textContent='Tozalash';['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{S.meta[k]=''});renderProfile();renderProfileHint();window.MH_PROFILE=Object.assign({},S.meta);save();saveProfileToCloud(true);toast("Ma'lumotlar tozalandi")};
+let pck=0;$('#profileClear').onclick=e=>{if(!pck){e.target.textContent='Aniq tozalansinmi? Yana bosing';pck=setTimeout(()=>{pck=0;e.target.textContent='Tozalash'},3000);return}clearTimeout(pck);pck=0;e.target.textContent='Tozalash';['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{S.meta[k]=''});renderProfile();renderProfileHint();window.MH_PROFILE=Object.assign({},S.meta);save();saveProfileToCloud(true);try{window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},S.meta)}))}catch(e){}toast("Ma'lumotlar tozalandi")};
 $('#nq').innerHTML=Array.from({length:16},(_,i)=>`<option>${i+1}</option>`).join('');
 $('#nq').value=S.n;
 $('#nq').onchange=e=>{S.n=+e.target.value;render();save()};
@@ -933,7 +1495,7 @@ el.addEventListener('input',e=>{const d=e.target.dataset;
   if(mx>0){let bad=0;S.st.forEach(s=>{if(String(s.sc[+d.m]).trim()!==''&&num(s.sc[+d.m])>mx)bad++});if(bad)toast(`Diqqat: ${bad} ta baho mezondan yuqori!`)}}
  else if(d.nm!=null)S.st[+d.nm].name=e.target.value;else if(d.iz!=null)S.st[+d.iz].izoh=e.target.value;
  upd();save()});
-el.addEventListener('click',e=>{const i=e.target.dataset.del;if(i!=null){S.st.splice(+i,1);render();save()}});
+el.addEventListener('click',e=>{const i=e.target.dataset.del;if(i!=null){const st=S.st[+i];if(!st)return;window.mhAskDelete(st.name,()=>{const idx=S.st.indexOf(st);if(idx>=0)S.st.splice(idx,1);render();save();toast("O'quvchi ro'yxatdan o'chirildi")})}});
 el.addEventListener('focusout',e=>{const d=e.target.dataset;if(d.nm!=null){const v=String(e.target.value||'').trim().replace(/\s+/g,' ');if(v){S.st[+d.nm].name=v;render();save()}}});
 el.addEventListener('keydown',e=>{const t=e.target,d=t.dataset;
   if(d.nm!=null&&e.key==='Enter'){e.preventDefault();const ri=d.nm;t.blur();setTimeout(()=>{const nx=el.querySelector(`[data-r="${ri}"][data-q="0"]`);if(nx){nx.focus();nx.select()}},60);return}
@@ -982,25 +1544,39 @@ let DL=null;
 function saveBlob(name,d,type){const blob=d instanceof Blob?d:new Blob([d],{type:type||'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href)}catch(e){}a.remove()},2000)}
 const isTG=()=>!!(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initData);
 try{if(isTG()){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand()}}catch(e){}
-async function dlTelegram(name,blob,type){const WA=window.Telegram.WebApp;
- try{const file=new File([blob],name,{type:type});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return true}}
- catch(e){if(e&&e.name==='AbortError'){toast('Bekor qilindi');return false}}
- const uid=WA.initDataUnsafe&&WA.initDataUnsafe.user&&WA.initDataUnsafe.user.id;
- if(!uid){toast("Telegram ma'lumotini olib bo'lmadi");return false}
- try{toast('Botga yuborlanmoqda...');
-  const b64=await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{try{res(String(fr.result).split(',')[1])}catch(x){rej(x)}};fr.onerror=()=>rej(new Error('read'));fr.readAsDataURL(blob)});
-  const r=await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:uid,filename:name,caption:name,data:b64,init_data:WA.initData})});
-  const j=await r.json();
-  if(j&&j.ok){toast("Fayl bot orqali 'Saqlangan xabarlar'ga yuborildi");try{WA.HapticFeedback&&WA.HapticFeedback.notificationOccurred('success')}catch(e){}return true}
-  toast('Yuborilmadi: '+((j&&(j.description||j.error_code))||'xato'));return false}
- catch(e){toast("Yuborilmadi: internetni tekshiring");return false}}
+/* PDF/Excel faylni bot orqali foydalanuvchining o'z Telegram chatiga yuboradi.
+   Mini App ichida initData, oddiy brauzerda Telegram login sessiyasi ishlatiladi. */
+function blobToBase64(blob){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{try{res(String(fr.result).split(',')[1]||'')}catch(x){rej(x)}};fr.onerror=()=>rej(new Error('read'));fr.readAsDataURL(blob)})}
+async function mhSendToTelegram(name,d,type){
+ try{
+  const blob=d instanceof Blob?d:new Blob([d],{type:type||'application/octet-stream'});
+  if(!blob.size||blob.size>3*1024*1024)return{ok:false,reason:'large'};
+  const WA=window.Telegram&&window.Telegram.WebApp;
+  const inMini=!!(WA&&WA.initData);
+  const initUid=inMini&&WA.initDataUnsafe&&WA.initDataUnsafe.user&&WA.initDataUnsafe.user.id;
+  const uid=initUid||(AUTH.user&&AUTH.user.telegram_id)||'';
+  if(!uid)return{ok:false,reason:'no-user'};
+  const b64=await blobToBase64(blob);
+  const r=await fetch('/api/send',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:String(uid),filename:name,caption:name,data:b64,init_data:inMini?WA.initData:''})});
+  const j=await r.json().catch(()=>({}));
+  return{ok:!!(r.ok&&j.ok),description:String((j&&(j.description||j.error_code))||''),reason:j&&j.ok?'':'api'};
+ }catch(e){return{ok:false,reason:'error',description:(e&&e.message)||''}}
+}
+window.mhSendToTelegram=mhSendToTelegram;
 async function bumpDownload(kind){if(!AUTH.user)return;const j=await api('/api/event',{method:'POST',body:JSON.stringify({kind:kind==='pdf'?'download_pdf':'download_xlsx'})});if(j&&j.stats){AUTH.stats=j.stats;renderAccountStats()}}
-async function dl(name,d){const isPdf=/\.pdf$/i.test(name),type=isPdf?'application/pdf':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',kind=isPdf?'pdf':'xlsx';
- if(DL){try{await DL.save({filename:name,data:d});bumpDownload(kind);return}catch(e){if(e&&e.code==='declined')return}}
+/* Yuklab olishni sekinlashtirmaslik uchun botga yuborish fonda bajariladi */
+function sendInBackground(name,blob,type){
+ try{mhSendToTelegram(name,blob,type).then(r=>{
+  if(r&&r.ok){toast(name+' · Telegram botga ham yuborildi');try{const WA=window.Telegram&&window.Telegram.WebApp;if(WA&&WA.HapticFeedback)WA.HapticFeedback.notificationOccurred('success')}catch(e){}}
+  else if(isTG()){try{const file=new File([blob],name,{type:type});if(navigator.canShare&&navigator.canShare({files:[file]}))navigator.share({files:[file]}).catch(()=>{})}catch(e){}}
+ }).catch(()=>{})}catch(e){}
+}
+async function dl(name,d){if(!window.mhCanDownload())return;const isPdf=/\.pdf$/i.test(name),type=isPdf?'application/pdf':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',kind=isPdf?'pdf':'xlsx';
  const blob=d instanceof Blob?d:new Blob([d],{type:type});
- if(isTG()){if(await dlTelegram(name,blob,type)){bumpDownload(kind);return}}
- try{saveBlob(name,blob,type);toast(name+" yuklab olindi");bumpDownload(kind)}catch(e){toast("Yuklab bo'lmadi: "+((e&&(e.message||e.code))||'xato'))}}
+ // Kredit AVVAL rezerv qilinadi: bo'lmasa fayl yaratilmaydi ham.
+ if(!(await window.mhReserveCredit(kind)))return;
+ if(DL){try{await DL.save({filename:name,data:d});sendInBackground(name,blob,type);return}catch(e){if(e&&e.code==='declined'){window.mhRefundCredit();return}}}
+ try{saveBlob(name,blob,type);toast(name+" yuklab olindi");sendInBackground(name,blob,type)}catch(e){window.mhRefundCredit();toast("Yuklab bo'lmadi: "+((e&&(e.message||e.code))||'xato'))}}
 
 let _EJ=null;
 function loadExcelJS(){
@@ -1211,7 +1787,7 @@ function drawCharts(d,A,FF){
 function pdfHead(){const c=calc(),n=S.n;
  return[['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\n\n${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh']]}
 
-$('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!window.jspdf){toast('PDF kutubxonasi yuklanmadi.');return}
+$('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!pdfReady())return
  const{rows}=data(),n=S.n;let FF='helvetica';
  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
  try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
@@ -1251,13 +1827,56 @@ $('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!window.jspdf){t
 const tgEl=$('#tg'); if(tgEl)tgEl.addEventListener('click',e=>{if(isTG()){try{e.preventDefault();window.Telegram.WebApp.openTelegramLink('https://t.me/AHLIDDIN_NURALIYEV')}catch(x){}}});
 render();
 loadMe();
+/* Telegram tomonidagi chiqishdan keyin saytga qaytdik — kirish oynasini o'zimiz ochamiz */
+(function(){try{
+ if(!/(?:^|;\s*)mh_switch=1/.test(document.cookie))return;
+ let ret='/';
+ try{const m=document.cookie.match(/(?:^|;\s*)mh_return=([^;]+)/);if(m)ret=decodeURIComponent(m[1])}catch(e){}
+ document.cookie='mh_switch=; Path=/; Max-Age=0; SameSite=Lax';
+ document.cookie='mh_return=; Path=/; Max-Age=0; SameSite=Lax';
+ if(/^\/(?!\/)/.test(ret)&&ret.indexOf('tgswitch')<0&&ret!==location.pathname+location.search)location.href=ret;
+ setTimeout(()=>openTelegramLogin("Telegram'dagi eski akkaunt chiqarildi. Endi kerakli akkaunt bilan kiring: Telegram oynasida boshqa akkauntni tanlashingiz mumkin."),400);
+}catch(e){}})();
+/* Botdagi «Saytga qaytish» tugmasi orqali qaytdik: ?tglogin=<nonce> */
+(function(){try{
+ const q=new URLSearchParams(location.search);
+ const n=(q.get('tglogin')||'').replace(/[^a-f0-9]/gi,'');
+ if(!n)return;
+ q.delete('tglogin');
+ const qs=q.toString();
+ try{history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash)}catch(e){}
+ tgNonce=n;
+ (async()=>{
+  // Bot havolasi bir martalik. Sayt oynasi (orqa fondagi poll) tasdiqni allaqachon
+  // sessiyaga aylantirgan bo'lishi mumkin — u holda bu oynada sessiya bor va
+  // «havola ishlatilgan» xatosini ko'rsatishning hojati yo'q.
+  const me=await api('/api/me');
+  if(me&&me.authenticated){tgNonce='';await applyLogin({});return}
+  openTelegramLogin('Telegram tasdiqlanishi tekshirilmoqda...');
+  tgStatus('Tasdiq tekshirilmoqda...');
+  pollBotLogin();
+ })();
+}catch(e){}})();
+/* Telegram Mini App ichida ochilganda alohida kirish tugmasi talab qilmaymiz */
+(async()=>{try{
+ const WA=window.Telegram&&window.Telegram.WebApp;
+ if(!WA||!WA.initData)return;
+ const j=await api('/api/telegram-login',{method:'POST',body:JSON.stringify({init_data:WA.initData})});
+ if(!j||!j.ok)return;
+ const me=await api('/api/me');
+ if(me&&me.authenticated){
+  AUTH.user=me.user;AUTH.stats=me.stats;AUTH.bot=me.botUsername||AUTH.bot;AUTH.isAdmin=!!me.isAdmin;AUTH.premium=!!me.premium;
+  afterAuthProfile(me,true);lastMeTgId=String(me.user.telegram_id||'');
+  renderAuth();
+ }
+}catch(e){}})();
     </script>
 
     <script>
 /* ===== LI hisobchisi (BSB bilan to'qnashmaslik uchun izolyatsiyalangan) ===== */
 (function(){
 const $=s=>document.querySelector(s),T=$('#li-T'),C=$('#li-cards');
-const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>{const x=parseFloat(String(v).replace(',','.'));return isFinite(x)&&x>0?x:0};
 const r1=x=>Math.round(x*10)/10;
 const fd=s=>s?s.split('-').reverse().join('.'):'____';
@@ -1268,7 +1887,7 @@ if(!Array.isArray(S.max))S.max=Array(20).fill(1);
 if(!S.th)S.th={5:86,4:66,3:30};
 if(!Array.isArray(S.st))S.st=[];
 let tm;const save=()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}},250)};
-function toast(t){const e=$('#liToast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3200)}
+function toast(t){const e=$('#liToast');e.textContent=(window.MH_T?window.MH_T(t):t);e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3200)}
 
 /* Baho chegaralari doimo kamayish tartibida bo'lishi shart */
 const TH_DEF={5:86,4:66,3:30};
@@ -1284,14 +1903,19 @@ const SINFLAR=["1","2","3","4","5","6","7","8","9","10","11"];
 const HARFLAR="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 const CHORAKLAR=["1-chorak","2-chorak","3-chorak","4-chorak"];
 const BSBLAR=["1","2","3","4","5","6","7","8"];
-function applyProfile(p){
+function applyProfile(p,replace){
  if(!p)return;let ch=false;
- ['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{if(p[k]&&!S.meta[k]){S.meta[k]=p[k];ch=true}});
+ ['viloyat','tuman','maktab','oqituvchi'].forEach(k=>{
+  const v=String(p[k]||'');
+  if((replace||!S.meta[k])&&S.meta[k]!==v){S.meta[k]=v;ch=true}
+ });
  if(ch)save();
 }
 try{const b=JSON.parse(localStorage.getItem('bsb1')||'{}');if(b&&b.meta)applyProfile(b.meta)}catch(e){}
 if(!S.meta.sana){const d=new Date();S.meta.sana=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');save()}
 (function(){fetch('/api/me',{credentials:'same-origin'}).then(r=>r.json()).then(j=>{if(j&&j.profile)applyProfile(j.profile)}).catch(()=>{})})();
+// Asosiy sahifada profil o'zgarganda (akkaunt almashish yoki saqlash) LI ham yangilanadi
+window.addEventListener('mh:profile',e=>{if(e&&e.detail)applyProfile(e.detail,true)});
 
 const sel=(k,label,opts,ph)=>{const cur=S.meta[k]||'';return `<label class="f">${label}<select data-k="${k}"><option value="">${ph||'Tanlang...'}</option>${opts.map(o=>`<option${o===cur?' selected':''}>${esc(o)}</option>`).join('')}${cur&&!opts.includes(cur)?`<option selected>${esc(cur)}</option>`:''}</select></label>`};
 const inp=(k,label,ph,type)=>`<label class="f">${label}<input type="${type||'text'}" data-k="${k}" value="${esc(S.meta[k])}" placeholder="${ph||''}"></label>`;
@@ -1315,9 +1939,9 @@ $('#li-meta').addEventListener('input',e=>{
 $('#li-nq').innerHTML=Array.from({length:20},(_,i)=>`<option>${i+1}</option>`).join('');
 $('#li-nq').value=S.n;
 $('#li-nq').onchange=e=>{S.n=+e.target.value;render();save()};
-[5,4,3].forEach(g=>{const el=$('#th'+g);el.value=S.th[g];
+[5,4,3].forEach(g=>{const el=$('#li-th'+g);el.value=S.th[g];
  el.oninput=()=>{const v=parseFloat(String(el.value).replace(',','.'));if(isFinite(v)&&v>0&&v<=100){S.th[g]=v;upd();save()}};
- el.onchange=()=>{const ch=thFix();[5,4,3].forEach(k=>$('#th'+k).value=S.th[k]);if(ch)toast(`Chegaralar tuzatildi: "5" — ${S.th[5]}%, "4" — ${S.th[4]}%, "3" — ${S.th[3]}%`);upd();save()}});
+ el.onchange=()=>{const ch=thFix();[5,4,3].forEach(k=>$('#li-th'+k).value=S.th[k]);if(ch)toast(`Chegaralar tuzatildi: "5" — ${S.th[5]}%, "4" — ${S.th[4]}%, "3" — ${S.th[3]}%`);upd();save()}});
 
 function calc(){
  const n=S.n,mx=S.max.slice(0,n).map(num),mt=mx.reduce((a,b)=>a+b,0),TH=thSafe();
@@ -1331,27 +1955,27 @@ function calc(){
 function render(){
  const q=[...Array(S.n).keys()];
  $('#li-empty').hidden=S.st.length>0;$('#li-wrap').hidden=!S.st.length;
- T.innerHTML=`<thead><tr><th>T/R</th><th class="nm">O'quvchilar F.I.SH</th>${q.map(j=>`<th>${j+1}-savol<input class="mh" inputmode="decimal" data-m="${j}" value="${esc(S.max[j])}" title="Mezon ball"></th>`).join('')}<th>To'plagan ball<div class="mzt">Jami: <b id="mt"></b></div></th><th>Foiz</th><th>Baho</th><th>Izoh</th><th></th></tr></thead>
-<tbody>${S.st.map((s,i)=>`<tr><td>${i+1}</td><td class="nm">${s.name?`<span>${esc(s.name)}</span>`:`<input data-nm="${i}" value="" placeholder="F.I.SH">`}</td>${q.map(j=>`<td><input inputmode="decimal" data-r="${i}" data-q="${j}" value="${esc(s.sc[j])}"></td>`).join('')}<td id="t${i}"></td><td id="p${i}"></td><td id="g${i}" class="g"></td><td class="iz"><input data-iz="${i}" value="${esc(s.izoh)}"></td><td><button class="x" data-del="${i}" title="O'chirish">×</button></td></tr>`).join('')}</tbody>
-<tfoot><tr class="avg"><td></td><td class="nm" style="text-align:left">O'rtacha ballar</td>${q.map(j=>`<td id="a${j}"></td>`).join('')}<td id="at"></td><td id="ap"></td><td></td><td></td><td></td></tr></tfoot>`;
- C.innerHTML=`<div class="mezbar"><span>Mezon:</span>${q.map(j=>`<label>${j+1}-savol<input inputmode="decimal" data-m="${j}" value="${esc(S.max[j])}"></label>`).join('')}<span>Jami: <b id="cmt"></b></span></div>`
- +S.st.map((s,i)=>`<div class="card"><div class="chead"><span class="cnum">${i+1}</span>${s.name?`<span style="flex:1;min-width:0;text-align:left">${esc(s.name)}</span>`:`<input data-nm="${i}" value="" placeholder="F.I.SH">`}<button class="x" data-del="${i}" title="O'chirish">×</button></div><div class="cgrid">${q.map(j=>`<label>${j+1}-savol<input inputmode="decimal" data-r="${i}" data-q="${j}" value="${esc(s.sc[j])}"></label>`).join('')}</div><div class="cres"><span>Ball: <b id="ct${i}"></b></span><span><b id="cp${i}"></b></span><span class="g" id="cg${i}"></span></div><input class="ciz" data-iz="${i}" placeholder="Izoh" value="${esc(s.izoh)}"></div>`).join('');
+ T.innerHTML=`<thead><tr><th>T/R</th><th class="nm">O'quvchilar F.I.SH</th>${q.map(j=>`<th>${j+1}-savol<input class="mh" inputmode="decimal" data-m="${j}" value="${esc(S.max[j])}" title="Mezon ball"></th>`).join('')}<th>To'plagan ball<div class="mzt">Jami: <b id="li-mt"></b></div></th><th>Foiz</th><th>Baho</th><th>Izoh</th><th></th></tr></thead>
+<tbody>${S.st.map((s,i)=>`<tr><td>${i+1}</td><td class="nm">${s.name?`<span>${esc(s.name)}</span>`:`<input data-nm="${i}" value="" placeholder="F.I.SH">`}</td>${q.map(j=>`<td><input inputmode="decimal" data-r="${i}" data-q="${j}" value="${esc(s.sc[j])}"></td>`).join('')}<td id="li-t${i}"></td><td id="li-p${i}"></td><td id="li-g${i}" class="g"></td><td class="iz"><input data-iz="${i}" value="${esc(s.izoh)}"></td><td><button class="x" data-del="${i}" title="O'chirish">×</button></td></tr>`).join('')}</tbody>
+<tfoot><tr class="avg"><td></td><td class="nm" style="text-align:left">O'rtacha ballar</td>${q.map(j=>`<td id="li-a${j}"></td>`).join('')}<td id="li-at"></td><td id="li-ap"></td><td></td><td></td><td></td></tr></tfoot>`;
+ C.innerHTML=`<div class="mezbar"><span>Mezon:</span>${q.map(j=>`<label>${j+1}-savol<input inputmode="decimal" data-m="${j}" value="${esc(S.max[j])}"></label>`).join('')}<span>Jami: <b id="li-cmt"></b></span></div>`
+ +S.st.map((s,i)=>`<div class="card"><div class="chead"><span class="cnum">${i+1}</span>${s.name?`<span style="flex:1;min-width:0;text-align:left">${esc(s.name)}</span>`:`<input data-nm="${i}" value="" placeholder="F.I.SH">`}<button class="x" data-del="${i}" title="O'chirish">×</button></div><div class="cgrid">${q.map(j=>`<label>${j+1}-savol<input inputmode="decimal" data-r="${i}" data-q="${j}" value="${esc(s.sc[j])}"></label>`).join('')}</div><div class="cres"><span>Ball: <b id="li-ct${i}"></b></span><span><b id="li-cp${i}"></b></span><span class="g" id="li-cg${i}"></span></div><input class="ciz" data-iz="${i}" placeholder="Izoh" value="${esc(s.izoh)}"></div>`).join('');
  upd();
 }
 function upd(){
  const c=calc(),TH=thSafe(),ti=$('#li-thinfo');
  if(ti)ti.textContent=`Amaldagi chegaralar: "5" — ${TH[5]}% va yuqori, "4" — ${TH[4]}% dan, "3" — ${TH[3]}% dan, undan past — "2".`;
  c.rows.forEach((r,i)=>{
-  const t=$('#t'+i);if(t)t.textContent=r.filled?r1(r.t):'';
-  const p=$('#p'+i);if(p)p.textContent=r.filled?r1(r.p)+'%':'';
-  const g=$('#g'+i);if(g){g.textContent=r.g;g.className='g g'+r.g}
-  const ct=$('#ct'+i);if(ct){ct.textContent=r.filled?r1(r.t):'';const cp=$('#cp'+i);if(cp)cp.textContent=r.filled?r1(r.p)+'%':'';const cg=$('#cg'+i);if(cg){cg.textContent=r.g;cg.className='g g'+r.g}}
+  const t=$('#li-t'+i);if(t)t.textContent=r.filled?r1(r.t):'';
+  const p=$('#li-p'+i);if(p)p.textContent=r.filled?r1(r.p)+'%':'';
+  const g=$('#li-g'+i);if(g){g.textContent=r.g;g.className='g g'+r.g}
+  const ct=$('#li-ct'+i);if(ct){ct.textContent=r.filled?r1(r.t):'';const cp=$('#li-cp'+i);if(cp)cp.textContent=r.filled?r1(r.p)+'%':'';const cg=$('#li-cg'+i);if(cg){cg.textContent=r.g;cg.className='g g'+r.g}}
  });
- c.avg.forEach((a,j)=>{const e=$('#a'+j);if(e)e.textContent=c.f?r1(a):''});
- const at=$('#at');if(at)at.textContent=c.f?r1(c.avg.reduce((a,b)=>a+b,0)):'';
- const ap=$('#ap');if(ap)ap.textContent=c.f?r1(c.avgP)+'%':'';
- const mt=$('#mt');if(mt)mt.textContent=r1(c.mt);
- const cmt=$('#cmt');if(cmt)cmt.textContent=r1(c.mt);
+ c.avg.forEach((a,j)=>{const e=$('#li-a'+j);if(e)e.textContent=c.f?r1(a):''});
+ const at=$('#li-at');if(at)at.textContent=c.f?r1(c.avg.reduce((a,b)=>a+b,0)):'';
+ const ap=$('#li-ap');if(ap)ap.textContent=c.f?r1(c.avgP)+'%':'';
+ const mt=$('#li-mt');if(mt)mt.textContent=r1(c.mt);
+ const cmt=$('#li-cmt');if(cmt)cmt.textContent=r1(c.mt);
  document.querySelectorAll('#module-li input[data-q]').forEach(el=>{const mx=c.mx[el.dataset.q];if(mx>0)el.max=mx;el.classList.toggle('bad',num(el.value)>mx)});
  const s=(k,l,cl='')=>`<div class="stat"><b class="${cl}">${k}</b><span>${l}</span></div>`;
  $('#li-stats').innerHTML=[5,4,3,2].map(g=>s(c.cnt[g]+' ta',`"${g}" baho`,'g'+g)).join('')
@@ -1373,7 +1997,7 @@ function bindGrid(el){
   else if(d.nm!=null)S.st[+d.nm].name=e.target.value;
   else if(d.iz!=null)S.st[+d.iz].izoh=e.target.value;
   upd();save()});
- el.addEventListener('click',e=>{const i=e.target.dataset.del;if(i!=null){S.st.splice(+i,1);render();save()}});
+ el.addEventListener('click',e=>{const i=e.target.dataset.del;if(i!=null){const st=S.st[+i];if(!st)return;window.mhAskDelete(st.name,()=>{const idx=S.st.indexOf(st);if(idx>=0)S.st.splice(idx,1);render();save();toast("O'quvchi ro'yxatdan o'chirildi")})}});
  el.addEventListener('focusout',e=>{const d=e.target.dataset;if(d.nm!=null){const v=String(e.target.value||'').trim().replace(/\s+/g,' ');if(v){S.st[+d.nm].name=v;render();save()}}});
  el.addEventListener('keydown',e=>{const t=e.target,d=t.dataset;
   if(d.nm!=null&&e.key==='Enter'){e.preventDefault();const ri=d.nm;t.blur();setTimeout(()=>{const nx=el.querySelector(`[data-r="${ri}"][data-q="0"]`);if(nx){nx.focus();nx.select()}},60);return}
@@ -1435,10 +2059,16 @@ const fname=ext=>{const m=S.meta,sn=clean((m.sinf||'')+(m.harf||'').toUpperCase(
 function saveBlob(name,d,type){const blob=d instanceof Blob?d:new Blob([d],{type:type||'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href)}catch(e){}a.remove()},2000)}
 const isTG=()=>!!(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initData);
 try{if(isTG()){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand()}}catch(e){}
-async function dl(name,blob,type){
- if(isTG()&&navigator.canShare&&navigator.share){try{const F=new File([blob],name,{type:type});if(navigator.canShare({files:[F]})){await navigator.share({files:[F]});return}}catch(e){if(e&&e.name==='AbortError')return}}
+async function dl(name,d,type){
+ if(!window.mhCanDownload())return;
+ const blob=d instanceof Blob?d:new Blob([d],{type:type||'application/octet-stream'});
  saveBlob(name,blob,type);toast(name+' yuklab olindi');
- try{fetch('/api/event',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({kind:/\.pdf$/i.test(name)?'download_pdf':'download_xlsx'})})}catch(e){}
+ try{fetch('/api/event',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({kind:/\.pdf$/i.test(name)?'download_pdf':'download_xlsx'})}).then(r=>r.json()).then(j=>{if(j&&j.stats){AUTH.stats=j.stats;renderAccountStats()}}).catch(()=>{})}catch(e){}
+ // Botga yuborish fonada: yuklab olishni kutmaydi
+ try{window.mhSendToTelegram(name,blob,type).then(r=>{
+  if(r&&r.ok)toast(name+' · Telegram botga ham yuborildi');
+  else if(isTG()&&navigator.canShare&&navigator.share){try{const F=new File([blob],name,{type:type});if(navigator.canShare({files:[F]}))navigator.share({files:[F]}).catch(()=>{})}catch(e){}}
+ }).catch(()=>{})}catch(e){}
 }
 
 /* ---- Excel yuklab olish (SheetJS) ---- */
@@ -1471,8 +2101,9 @@ function b64(buf){const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+
 async function pdfFontB64(){if(_FB64)return _FB64;const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
  _FB64=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf')]);
  try{return await _FB64}catch(e){_FB64=null;throw e}}
+window.mhPdfFonts=pdfFontB64; // choraklik moduli ham shu shriftlardan foydalanadi
 $('#li-pdf').onclick=async()=>{
- if(!window.jspdf){toast('PDF kutubxonasi yuklanmadi.');return}
+ if(!pdfReady())return
  const {rows}=data(),n=S.n;let FF='helvetica';
  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
  try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
@@ -1552,8 +2183,270 @@ render();
 })();
     </script>
 
+    <script>
+/* ===== Kuratorlik hisobchisi (8 ustunli sinf ro'yxati) ===== */
+(function(){
+const $=s=>document.querySelector(s),T=$('#kr-T');
+if(!T)return;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s==null?'':s).replace(/\s+/g,' ').trim();
+const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const KEY='kr1',SINFLAR=['1','2','3','4','5','6','7','8','9','10','11'];
+const DEF=[
+ {key:'name',label:'FISH',w:252},
+ {key:'birth',label:"Tug'ilgan kun,oy,yil",w:112},
+ {key:'addr',label:'Manzili',w:238},
+ {key:'father',label:"Otasining FISH",w:238},
+ {key:'mother',label:"Onasining FISH",w:238},
+ {key:'phone',label:'Telefon raqami',w:126},
+ {key:'cert',label:"Tug'ilganligi haqida guvohnoma seriya",w:176}
+];
+function newRow(vals){const r={};DEF.forEach(c=>r[c.key]='');if(vals)Object.keys(vals).forEach(k=>{if(k in r)r[k]=vals[k]});return r}
+let K={meta:{teacher:'',sinf:'',harf:''},cols:DEF.map(c=>Object.assign({},c)),st:[]};
+try{const raw=JSON.parse(localStorage.getItem(KEY)||'null');
+ if(raw){
+  if(raw.meta)K.meta=Object.assign(K.meta,raw.meta);
+  if(Array.isArray(raw.cols)&&raw.cols.length)K.cols=raw.cols.filter(c=>c&&c.key).map(c=>({key:String(c.key),label:String(c.label||''),w:Number(c.w)||160}));
+  if(Array.isArray(raw.st))K.st=raw.st.map(r=>{const o=newRow();Object.keys(o).forEach(k=>{o[k]=String((r&&r[k])||'')});return o});
+ }
+}catch(e){}
+let tm;const save=()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(K))}catch(e){}},250)};
+function profile(){try{return window.getTeacherProfile?window.getTeacherProfile():{}}catch(e){return{}}}
+function docTitle(){
+ const p=profile(),m=K.meta,tuman=norm(p.tuman),school=norm(p.maktab),sn=norm(m.sinf),hr=norm(m.harf).toUpperCase();
+ const schoolTxt=school?(school+"-sonli umumiy o'rta ta'lim maktabi"):"umumiy o'rta ta'lim maktabi";
+ const cls=sn?(sn+(hr?'-\"'+hr+'\" sinf':'-sinf')):'sinf tanlanmagan';
+ return (tuman?tuman+', ':'')+schoolTxt+' '+cls+" o'quvchilar ro'yxati";
+}
+function footerText(){return "Sinf rahbari: "+(norm(K.meta.teacher)||'__________')+"     O'quvchilar soni: "+K.st.length}
+function renderHint(){
+ const el=$('#kr-hint');if(!el)return;const p=profile();
+ const parts=[p.viloyat,p.tuman,p.maktab?p.maktab+'-maktab':''].filter(Boolean);
+ el.innerHTML=parts.length?`Doimiy ma'lumotlar: <b>${esc(parts.join(', '))}</b> — «Ma'lumotlarim» bo'limida o'zgartiring.`:`Viloyat, tuman va maktab raqami «Ma'lumotlarim» bo'limida kiritiladi.`;
+}
+function renderMeta(){
+ const box=$('#kr-meta');if(!box)return;
+ box.innerHTML=`<label class="f">Sinf rahbari F.I.Sh.<input type="text" data-k="teacher" value="${esc(K.meta.teacher)}" placeholder="masalan: Karimova A.B."></label>`
+ +`<label class="f" style="flex:0 0 130px">Sinf<select data-k="sinf"><option value="">Tanlang...</option>${SINFLAR.map(x=>`<option${x===String(K.meta.sinf)?' selected':''}>${x}</option>`).join('')}</select></label>`
+ +`<label class="f" style="flex:0 0 130px">Harf<input type="text" data-k="harf" maxlength="2" value="${esc(K.meta.harf)}" placeholder="B"></label>`;
+}
+function onMeta(e){
+ const k=e.target.dataset.k;if(!k)return;let v=e.target.value;
+ if(k==='harf'){v=String(v).trim().toUpperCase();e.target.value=v}
+ K.meta[k]=v;
+ if(k==='teacher'){const f=$('#kr-foot');if(f)f.textContent=footerText()}
+ if(k==='sinf'||k==='harf'){const t=$('#kr-title-cell');if(t)t.textContent=docTitle()}
+ save();
+}
+function render(){
+ renderHint();
+ const cols=K.cols,total=cols.length+2;
+ T.style.minWidth=Math.max(700,52+cols.reduce((a,c)=>a+Math.max(110,c.w),0)+46)+'px';
+ const heads='<th class="kr-num">T/R</th>'+cols.map((c,i)=>`<th data-col="${i}" title="Ustunni o'chirish uchun bosing"><span class="kr-x">×</span>${esc(c.label)}</th>`).join('')+'<th style="width:46px"></th>';
+ const body=K.st.map((r,i)=>`<tr><td class="kr-num">${i+1}</td>${cols.map(c=>`<td><input data-r="${i}" data-c="${esc(c.key)}" value="${esc(r[c.key]||'')}"></td>`).join('')}<td><button class="x" data-del="${i}" title="O'chirish">×</button></td></tr>`).join('');
+ T.innerHTML=`<colgroup><col style="width:52px">${cols.map(c=>`<col style="width:${Math.max(110,c.w)}px">`).join('')}<col style="width:46px"></colgroup>`
+  +`<thead><tr><th class="kr-title" id="kr-title-cell" colspan="${total}">${esc(docTitle())}</th></tr><tr>${heads}</tr></thead>`
+  +`<tbody>${body}</tbody><tfoot><tr><td class="kr-foot" id="kr-foot" colspan="${total}">${esc(footerText())}</td></tr></tfoot>`;
+ $('#kr-empty').hidden=K.st.length>0;
+ const st=$('#kr-stats');
+ if(st)st.innerHTML=`<div class="stat"><b>${K.st.length}</b><span>O'quvchi soni</span></div>`
+  +`<div class="stat"><b>${cols.length}</b><span>Ustun soni</span></div>`
+  +`<div class="stat"><b>${esc(String(K.meta.sinf||'—')+String(K.meta.harf||''))}</b><span>Sinf</span></div>`;
+}
+
+T.addEventListener('input',e=>{const d=e.target.dataset;if(d.r!=null&&d.c&&K.st[+d.r]){K.st[+d.r][d.c]=e.target.value;save()}});
+T.addEventListener('click',e=>{
+ const b=e.target.closest('button[data-del]');
+ if(b){const i=+b.dataset.del,r=K.st[i];if(!r)return;
+  window.mhAskDelete(norm(r.name)||(i+1)+"-o'quvchi",()=>{K.st.splice(i,1);render();save();toast("O'quvchi ro'yxatdan o'chirildi")});return}
+ const th=e.target.closest('th[data-col]');
+ if(th){const i=+th.dataset.col,c=K.cols[i];if(!c)return;
+  window.mhAskConfirm("Ustunni o'chirish",`«${c.label}» ustunini jadvaldan o'chirishni tasdiqlaysizmi?`,()=>{K.cols.splice(i,1);render();save();toast("Ustun o'chirildi")})}
+});
+const mb=$('#kr-meta');if(mb)['input','change'].forEach(ev=>mb.addEventListener(ev,onMeta));
+
+$('#kr-add').onclick=()=>{K.st.push(newRow());render();save();const inp=T.querySelector(`input[data-r="${K.st.length-1}"]`);if(inp)inp.focus()};
+let ck=0;$('#kr-clear').onclick=e=>{
+ if(!ck){e.target.textContent='Aniq tozalansinmi? Yana bosing';ck=setTimeout(()=>{ck=0;e.target.textContent='Hammasini tozalash'},3000);return}
+ clearTimeout(ck);ck=0;e.target.textContent='Hammasini tozalash';K.st=[];render();save();toast("Ro'yxat tozalandi")};
+$('#kr-restore').onclick=()=>{K.cols=DEF.map(c=>Object.assign({},c));render();save();toast('Ustunlar tiklandi')};
+
+/* Excel import: avval tayyor guvohnoma ro'yxati, topilmasa emaktab jurnali (B ustun, 11-qator) */
+function keyOf(h){
+ h=norm(h);if(!h)return null;
+ if(/guvohnoma|seriya/i.test(h))return'cert';
+ if(/otasining/i.test(h))return'father';
+ if(/onasining/i.test(h))return'mother';
+ if(/telefon|^tel\b/i.test(h))return'phone';
+ if(/manzil/i.test(h))return'addr';
+ if(/tug.?il/i.test(h))return'birth';
+ if(/^fish$/i.test(h))return'name';
+ return null;
+}
+function readFullList(rows){
+ let hi=-1;for(let i=0;i<Math.min(rows.length,12);i++){if(rows[i].some(c=>/^fish$/i.test(norm(c)))){hi=i;break}}
+ if(hi<0)return null;
+ const keys=rows[hi].map(keyOf);
+ if(!keys.includes('name'))return null;
+ const out=[];
+ for(let i=hi+1;i<rows.length;i++){
+  const r=newRow();let any=false;
+  keys.forEach((k,j)=>{if(!k)return;const v=norm(rows[i][j]);if(v){r[k]=v;any=true}});
+  if(any&&r.name&&!/^fish$/i.test(r.name))out.push(r);
+ }
+ return out.length?out:null;
+}
+function readJournalNames(rows){
+ const out=[];
+ for(let i=10;i<rows.length;i++){
+  const c=norm(rows[i][1]);
+  if(!c||!/\p{L}{2}/u.test(c))continue;
+  if(/^(t\/?r|n|f\.?i\.?o?\.?sh?\.?|ism|familiya|o.?quvchi)/i.test(c))continue;
+  out.push(newRow({name:c}));
+ }
+ return out;
+}
+$('#kr-file').onchange=async e=>{
+ const f=e.target.files[0];e.target.value='';if(!f)return;
+ if(!window.XLSX){toast("Excel kutubxonasi yuklanmadi. Internetni tekshiring.");return}
+ try{
+  const wb=XLSX.read(await f.arrayBuffer(),{type:'array'});
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});
+  const full=readFullList(rows),list=full||readJournalNames(rows);
+  if(!list.length){toast('Fayldan o\'quvchilar topilmadi. FISH ustuni yoki B ustun 11-qatorni tekshiring.');return}
+  K.st=list;render();save();
+  toast(list.length+" ta o'quvchi yuklandi"+(full?' (to\'liq ro\'yxat)':' (B ustun, 11-qatordan)'));
+ }catch(err){toast("Faylni o'qib bo'lmadi: "+((err&&err.message)||'xato'))}
+};
+
+function sheetName(){return (norm(K.meta.sinf)+norm(K.meta.harf)).replace(/[\\/?*\[\]:]/g,'')||'Kuratorlik'}
+function outName(ext){const s=(norm(K.meta.sinf)+norm(K.meta.harf)).replace(/[^\p{L}\d]/gu,'')||'sinf';return s+'-Kuratorlik.'+ext}
+async function finalSave(name,blob,kind){
+ if(!window.mhCanDownload())return;
+ // Kredit avval rezerv qilinadi (aks holda faylni olib, so'rovni bloklash mumkin edi).
+ if(!(await window.mhReserveCredit(kind)))return;
+ const mime=kind==='pdf'?'application/pdf':XLSX_MIME;
+ try{saveBlob(name,blob,mime);toast(name+' yuklab olindi')}
+ catch(e){window.mhRefundCredit();toast("Yuklab bo'lmadi: "+((e&&(e.message||e.code))||'xato'));return}
+ sendInBackground(name,blob,mime);
+}
+function tableData(){
+ return{head:['T/R',...K.cols.map(c=>c.label)],body:K.st.map((r,i)=>[i+1,...K.cols.map(c=>String(r[c.key]||''))])};
+}
+
+$('#kr-xls').onclick=async()=>{
+ toast('Excel tayyorlanmoqda...');
+ try{
+  const EJ=await loadExcelJS();
+  const wb=new EJ.Workbook();wb.creator='Maktab Hisobot';
+  const ws=wb.addWorksheet(sheetName(),{pageSetup:{orientation:'landscape',paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0}});
+  const total=K.cols.length+1;
+  if(total>1)ws.mergeCells(1,1,1,total);
+  const tt=ws.getCell(1,1);tt.value=docTitle();tt.font={name:'Times New Roman',size:14,bold:true};tt.alignment={horizontal:'center',vertical:'middle'};
+  ws.getRow(1).height=26;
+  const hr=ws.getRow(2);hr.values=['T/R',...K.cols.map(c=>c.label)];hr.height=44;
+  const thin={style:'thin',color:{argb:'FF000000'}},bd={top:thin,left:thin,bottom:thin,right:thin};
+  hr.eachCell(cell=>{cell.font={name:'Times New Roman',size:12,bold:true};cell.alignment={horizontal:'center',vertical:'middle',wrapText:true};cell.border=bd});
+  K.st.forEach((r,i)=>{
+   const row=ws.addRow([i+1,...K.cols.map(c=>String(r[c.key]||''))]);row.height=24;
+   row.getCell(1).font={name:'Times New Roman',size:12};row.getCell(1).alignment={horizontal:'center',vertical:'middle'};row.getCell(1).border=bd;
+   K.cols.forEach((c,j)=>{const cell=row.getCell(j+2);cell.font={name:'Times New Roman',size:12};
+    cell.alignment={horizontal:['name','addr','father','mother'].includes(c.key)?'left':'center',vertical:'middle',wrapText:true};cell.border=bd});
+  });
+  ws.addRow([]);
+  const fr=ws.addRow([footerText()]);if(total>1)ws.mergeCells(fr.number,1,fr.number,total);
+  fr.getCell(1).font={name:'Times New Roman',size:12,bold:true};fr.getCell(1).alignment={horizontal:'left',vertical:'middle'};
+  ws.columns=[{width:7},...K.cols.map(c=>({width:Math.round(Math.max(110,c.w)/7)}))];
+  finalSave(outName('xlsx'),new Blob([await wb.xlsx.writeBuffer()],{type:XLSX_MIME}),'xlsx');
+ }catch(err){
+  try{
+   if(!window.XLSX){toast('Excel kutubxonasi yuklanmadi');return}
+   const d=tableData(),aoa=[[docTitle()],d.head,...d.body,[],[footerText()]],total=d.head.length;
+   const ws=XLSX.utils.aoa_to_sheet(aoa);
+   ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:total-1}},{s:{r:aoa.length-1,c:0},e:{r:aoa.length-1,c:total-1}}];
+   ws['!cols']=[{wch:7},...K.cols.map(c=>({wch:Math.round(c.w/7)}))];
+   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,sheetName());
+   finalSave(outName('xlsx'),new Blob([XLSX.write(wb,{bookType:'xlsx',type:'array'})],{type:XLSX_MIME}),'xlsx');
+  }catch(e2){toast('Excel tayyorlashda xato: '+((e2&&e2.message)||'xato'))}
+ }
+};
+
+let _SERIF=null;
+async function serifFontB64(){
+ if(_SERIF)return _SERIF;
+ const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
+ _SERIF=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSerif.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSerif-Bold.ttf')]);
+ try{return await _SERIF}catch(e){_SERIF=null;throw e}
+}
+$('#kr-pdf').onclick=async()=>{
+ if(!pdfReady())return
+ if(!K.st.length){toast("Avval o'quvchilarni kiriting yoki Excel fayl yuklang");return}
+ try{
+  toast('PDF tayyorlanmoqda...');
+  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
+  const pageW=d.internal.pageSize.getWidth(),pageH=d.internal.pageSize.getHeight(),margin=10,avail=pageW-2*margin;
+  let FF='helvetica';
+  try{const[reg,bold]=await serifFontB64();d.addFileToVFS('DejaVuSerif.ttf',reg);d.addFont('DejaVuSerif.ttf','DejaVuSerif','normal');d.addFileToVFS('DejaVuSerif-Bold.ttf',bold);d.addFont('DejaVuSerif-Bold.ttf','DejaVuSerif','bold');FF='DejaVuSerif'}catch(e){}
+  const A=s=>{s=String(s).replace(/[ʻʼ’‘`´]/g,"'");return FF==='helvetica'?trCyrl(s):s};
+  const data=tableData(),num=K.st.length;
+  d.setFont(FF,'bold');d.setFontSize(14);d.setTextColor(22,42,74);
+  const tl=d.splitTextToSize(A(docTitle()),avail);
+  d.text(tl,pageW/2,11,{align:'center',maxWidth:avail});
+  const titleH=d.getTextDimensions(tl,{fontSize:14}).h,infoY=11+titleH+3.2;
+  d.setFont(FF,'normal');d.setFontSize(10);d.setTextColor(55,65,80);
+  d.text(A(footerText()),pageW/2,infoY,{align:'center'});
+  d.setDrawColor(22,42,74);d.setLineWidth(.7);d.line(margin,infoY+2,pageW-margin,infoY+2);
+  d.setDrawColor(170,185,205);d.setLineWidth(.25);d.line(margin,infoY+2.7,pageW-margin,infoY+2.7);
+  // Ustun kengliklari haqiqiy matn uzunligiga qarab hisoblanadi: uzun FISH ham, telefon ham to'liq chiqadi.
+  const fixedW={birth:23,phone:32,cert:34},flexMin={name:44,addr:36,father:38,mother:38};
+  const maxLen=k=>{let m=0;for(let i=0;i<num;i++){const s=String(K.st[i][k]||'').trim();if(s.length>m)m=s.length}return m};
+  const numW=10,fixedTotal=Object.keys(fixedW).reduce((a,k)=>a+(fixedW[k]||0),0);
+  const flex=K.cols.filter(c=>!fixedW[c.key]);
+  const flexRoom=avail-numW-fixedTotal;
+  let want=flex.map(c=>Math.max(flexMin[c.key]||34,Math.min(90,maxLen(c.key)*1.5+8)));
+  let sum=want.reduce((a,b)=>a+b,0);
+  if(sum>flexRoom){want=want.map((w,i)=>Math.max(flexMin[flex[i].key]||34,w*flexRoom/sum));sum=want.reduce((a,b)=>a+b,0);if(sum>flexRoom)want=want.map(w=>w*flexRoom/sum)}
+  else{const add=(flexRoom-sum)/want.length;want=want.map(w=>w+add)}
+  const flexW={};flex.forEach((c,i)=>{flexW[c.key]=want[i]});
+  const widths=K.cols.map(c=>fixedW[c.key]||flexW[c.key]||36);
+  const cs={0:{cellWidth:numW,halign:'center'}};
+  K.cols.forEach((c,i)=>{cs[i+1]={cellWidth:widths[i],halign:['name','addr','father','mother'].includes(c.key)?'left':'center'}});
+  const fs=num<=12?9:num<=20?8.4:num<=30?7.8:7,headFs=Math.min(8.8,fs+.5);
+  d.autoTable({
+   startY:infoY+6,head:[data.head.map(A)],body:data.body.map(r=>r.map(A)),theme:'grid',
+   margin:{left:margin,right:margin},tableWidth:'width',
+   styles:{font:FF,fontSize:fs,cellPadding:num>30?1.15:1.35,valign:'middle',overflow:'linebreak',lineColor:[150,162,178],lineWidth:.16,textColor:[25,35,50],minCellHeight:num>30?7:8},
+   headStyles:{fillColor:[31,78,121],textColor:255,fontStyle:'bold',fontSize:headFs,halign:'center',valign:'middle',minCellHeight:11,lineColor:[31,78,121],lineWidth:.2},
+   alternateRowStyles:{fillColor:[247,250,254]},columnStyles:cs,
+   didParseCell:x=>{
+    if(x.section!=='body')return;
+    const txt=String(x.cell.raw==null?'':x.cell.raw),w=x.cell.styles.cellWidth||30,perLine=Math.max(6,w/1.65);
+    if(txt.length>perLine*2.6)x.cell.styles.fontSize=Math.max(6.2,fs-1.2);
+    else if(txt.length>perLine*1.5)x.cell.styles.fontSize=Math.max(6.8,fs-.6);
+   }
+  });
+  let fy=((d.lastAutoTable&&d.lastAutoTable.finalY)||infoY+20)+5;
+  if(fy>pageH-18){d.addPage();fy=14}
+  d.setFont(FF,'bold');d.setFontSize(10);d.setTextColor(22,42,74);
+  d.text(A('Sinf rahbari: '+(norm(K.meta.teacher)||'__________________')),margin,fy);
+  d.text(A("O'quvchilar soni: "+num),pageW-margin,fy,{align:'right'});
+  d.setDrawColor(120);d.setLineWidth(.2);d.line(margin,fy+1.2,margin+62,fy+1.2);
+  const pages=d.internal.getNumberOfPages();
+  for(let i=1;i<=pages;i++){
+   d.setPage(i);d.setFont(FF,'normal');d.setFontSize(8);d.setTextColor(110);
+   d.text(A('Sahifa '+i+' / '+pages),pageW-margin,pageH-6,{align:'right'});
+  }
+  finalSave(outName('pdf'),new Blob([d.output('arraybuffer')],{type:'application/pdf'}),'pdf');
+ }catch(err){toast('PDF tayyorlashda xato: '+((err&&err.message)||'xato'))}
+};
+
+window.addEventListener('focus',()=>{const t=$('#kr-title-cell');if(t)t.textContent=docTitle();renderHint()});
+renderMeta();render();
+})();
+    </script>
+
     <!-- ===== Choraklik hisobchisi (aloqida, nomlari ajratilgan) ===== -->
-    <script src="./choraklik.js"></script>
+    <script src="/choraklik.js?v=4"></script>
 
     <!-- ===== Dizayn navigatsiyasi ===== -->
     <script>
@@ -1586,8 +2479,8 @@ render();
             path: '/choraklik', robots: 'index, follow'
         },
         chsb: { title: 'CHSB hisobot | Maktab Hisobot', desc: "CHSB hisobot bo'limi tayyorlanmoqda.", path: '/chsb', robots: 'noindex, follow' },
-        li: { title: 'LI hisobot | Maktab Hisobot', desc: "LI hisobot bo'limi tayyorlanmoqda.", path: '/li', robots: 'noindex, follow' },
-        kuratorlik: { title: 'Kuratorlik hisobot | Maktab Hisobot', desc: "Kuratorlik hisobot bo'limi tayyorlanmoqda.", path: '/kuratorlik', robots: 'noindex, follow' },
+        li: { title: 'LI hisobot | Maktab Hisobot', desc: "Loyiha ishlari (LI) bo'yicha o'quvchilar ballari, foizlari va baholarini avtomatik hisoblash.", path: '/li', robots: 'index, follow' },
+        kuratorlik: { title: 'Kuratorlik hisobot | Maktab Hisobot', desc: 'Kuratorlik hisobotini shakllantirish va yuklab olish.', path: '/kuratorlik', robots: 'index, follow' },
         malumotlarim: { title: "Ma'lumotlarim | Maktab Hisobot", desc: 'Hisobingiz, tarifingiz va yuklab olish statistikasi.', path: '/malumotlarim', robots: 'noindex, follow' },
         admin: { title: 'Admin panel | Maktab Hisobot', desc: 'Administrator paneli.', path: '/admin', robots: 'noindex, nofollow' }
     };
@@ -1610,7 +2503,7 @@ render();
                 name: 'Telegram orqali kirish shartmi?',
                 acceptedAnswer: {
                     '@type': 'Answer',
-                    text: "Yo'q. Sayt brauzerda ham ishlaydi. Telegram orqali kirish hisobni saqlash va tayyor faylni botga yuborish uchun qulay."
+                    text: "Hisobotlarni hisoblash brauzerda ishlaydi, lekin tayyor faylni yuklab olish va hisobingizni saqlash uchun Telegram orqali kirish kerak. Kirish bilan 3 ta bepul kredit beriladi."
                 }
             },
             {
@@ -1695,8 +2588,27 @@ render();
     })();
     function resetToHome(e){e.preventDefault();switchTab('home')}
     function toggleLangDropdown(){document.getElementById('langDropdown').classList.toggle('hidden')}
-    function selectLang(lang){document.getElementById('currentLang').textContent=lang;document.getElementById('langDropdown').classList.add('hidden');showToast(`Til o'zgartirildi: ${lang}`)}
-    function toggleMobileMenu(){document.getElementById('mobileDrawer').classList.toggle('hidden')}
+    function selectLang(lang){
+        const labels={uz:"O'zb",ru:'Рус',kk:'Қар'};
+        document.getElementById('currentLang').textContent=labels[lang]||lang;
+        document.getElementById('langDropdown').classList.add('hidden');
+        if(window.MH_I18N)window.MH_I18N.setLang(lang);
+        showToast(`Til o'zgartirildi: ${labels[lang]||lang}`);
+    }
+    // Sahifa yuklanganda saqlangan tilni tiklaymiz
+    (function(){try{
+        const l=localStorage.getItem('mh_lang')||'uz';
+        const labels={uz:"O'zb",ru:'Рус',kk:'Қар'};
+        const el=document.getElementById('currentLang');if(el)el.textContent=labels[l]||"O'zb";
+    }catch(e){}})();
+    function toggleMobileMenu(force){
+        const d=document.getElementById('mobileDrawer'),b=document.getElementById('mobileMenuBtn');
+        if(!d)return;
+        const open=(typeof force==='boolean')?force:d.classList.contains('hidden');
+        d.classList.toggle('hidden',!open);
+        if(b)b.setAttribute('aria-expanded',open?'true':'false');
+    }
+    function closeMobileMenu(){toggleMobileMenu(false)}
     window.addEventListener('click',function(e){
         const c=document.getElementById('langDropdownContainer');
         if(c&&!c.contains(e.target))document.getElementById('langDropdown').classList.add('hidden');
@@ -1704,7 +2616,7 @@ render();
     let toastTimeout;
     function showToast(message){
         const toast=document.getElementById('toastNotification'),text=document.getElementById('toastText');
-        text.textContent=message;
+        text.textContent=(window.MH_T?window.MH_T(message):message);
         toast.classList.remove('opacity-0','pointer-events-none');toast.classList.add('opacity-100');
         clearTimeout(toastTimeout);
         toastTimeout=setTimeout(()=>{toast.classList.remove('opacity-100');toast.classList.add('opacity-0','pointer-events-none')},2500);

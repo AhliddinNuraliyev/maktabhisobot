@@ -216,7 +216,6 @@ async function statsView(from, base) {
   const pay = await paymentStats(u.id);
   const parts = [
     '📊 <b>Statistika</b>\n',
-    '📅 A\'zo bo\'lgan sana: ' + esc(dateText(u.created_at)),
     '📥 Jami yuklab olishlar: ' + esc(String(+(u.download_count || 0))),
     '🎁 Qolgan kreditlar: <b>' + esc(String(+(u.download_credits || 0))) + '</b>',
     '💎 Premium: ' + (u.is_premium ? 'Ha ⭐' : 'Yo‘q'),

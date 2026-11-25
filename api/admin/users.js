@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
 
     return L.send(res, 200, { ok: true, count: rows.length, totals, users: rows });
   } catch (e) {
-    return L.send(res, 500, { ok: false, description: String((e && e.message) || e) });
+    console.error('[admin] users error:', e && e.message);
+    return L.send(res, 500, { ok: false, description: 'Foydalanuvchilar olinmadi' });
   }
 };

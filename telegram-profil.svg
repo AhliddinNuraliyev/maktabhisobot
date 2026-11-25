@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="title desc">
+  <title id="title">Maktabhisobot Telegram profili</title>
+  <desc id="desc">To‘q ko‘k fonda ochilgan kitob va MH monogrammi, yuqorida limoni rangli quyosh.</desc>
+  <rect width="1024" height="1024" fill="#182361"/>
+  <g stroke="#B6DF1E" stroke-width="32" stroke-linecap="butt">
+    <line x1="335.34" y1="314" x2="262.58" y2="272"/>
+    <line x1="380.88" y1="259.72" x2="326.88" y2="195.38"/>
+    <line x1="442.22" y1="224.3" x2="413.5" y2="145.36"/>
+    <line x1="512" y1="212" x2="512" y2="128"/>
+    <line x1="581.78" y1="224.3" x2="610.5" y2="145.36"/>
+    <line x1="643.12" y1="259.72" x2="697.12" y2="195.38"/>
+    <line x1="688.66" y1="314" x2="761.42" y2="272"/>
+  </g>
+  <path d="M344 416A168 168 0 0 1 680 416Z" fill="#B6DF1E"/>
+  <path d="M244 428C244 398 266 378 296 378C384 378 464 394 512 440C560 394 640 378 728 378C758 378 780 398 780 428V736C780 764 758 782 730 782C644 782 564 794 512 840C460 794 380 782 294 782C266 782 244 764 244 736Z" fill="#182361" stroke="#FFFFFF" stroke-width="44" stroke-linejoin="round" stroke-linecap="round"/>
+  <g stroke="#FFFFFF" stroke-width="40" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M368 688V512L440 596L512 512V688" fill="none"/>
+    <line x1="512" y1="604" x2="656" y2="604"/>
+    <line x1="656" y1="512" x2="656" y2="688"/>
+  </g>
+</svg>

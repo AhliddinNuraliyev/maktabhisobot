@@ -38,7 +38,10 @@ function verifyWebhook(rawBody, headers) {
   const sigHeader = String(headers['x-checkout-signature'] || '');
 
   const now = Math.floor(Date.now() / 1000);
-  if (!ts || Math.abs(now - Number(ts)) > 300) return { ok: false, reason: 'stale_timestamp' };
+  const tsNum = Number(ts);
+  if (!ts || !Number.isFinite(tsNum) || Math.abs(now - tsNum) > 300) {
+    return { ok: false, reason: 'stale_timestamp' };
+  }
 
   const expected = 'v1=' + crypto.createHmac('sha256', WEBHOOK_SECRET)
     .update(ts + '.' + delivery + '.' + rawBody)

@@ -1,13 +1,18 @@
 {
   "rewrites": [
     { "source": "/favicon.ico", "destination": "/maktabhisobot_icon.svg.png" },
+    { "source": "/googlefb298df7e444d3ed.html", "destination": "/googlefb298df7e444d3ed.txt" },
     { "source": "/bsb", "destination": "/index.html" },
     { "source": "/chsb", "destination": "/index.html" },
     { "source": "/li", "destination": "/index.html" },
     { "source": "/kuratorlik", "destination": "/index.html" },
     { "source": "/choraklik", "destination": "/index.html" },
     { "source": "/malumotlarim", "destination": "/index.html" },
-    { "source": "/admin", "destination": "/index.html" }
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/((?!api/|favicon.ico|robots.txt|sitemap.xml).*)", "destination": "/index.html" }
+  ],
+  "crons": [
+    { "path": "/api/billing/health", "schedule": "15 3 * * *" }
   ],
   "headers": [
     {

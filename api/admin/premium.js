@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
 
     return L.send(res, 200, { ok: true, id: id, premium: premium });
   } catch (e) {
-    return L.send(res, 500, { ok: false, description: String((e && e.message) || e) });
+    console.error('[admin] premium error:', e && e.message);
+    return L.send(res, 500, { ok: false, description: 'Tarif o\'zgartirilmadi' });
   }
 };

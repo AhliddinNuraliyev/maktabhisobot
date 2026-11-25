@@ -4,14 +4,17 @@ const TZ = require('./_tz');
 // Foydalanuvchi o'z to'lov holatini so'raydi. Agar webhook kelmay qolgan
 // bo'lsa, Tezcheckdan to'g'ridan-to'g'ri so'rab kreditni tiklaymiz.
 async function reconcile(payment) {
-  if (!payment || payment.state === 'succeeded' || !payment.bill_id) return false;
+  // Kredit berilgan bo'lsa, holat 'succeeded' bo'lsa ham qayta tekshirish shart emas.
+  // Lekin eski xato tufayli 'succeeded' + 0 kredit bo'lib qolgan to'lovlarni tiklaymiz.
+  if (!payment || Number(payment.credits_granted || 0) > 0 || !payment.bill_id) return false;
   const r = await TZ.tzRequest('/bills/' + encodeURIComponent(payment.bill_id), { method: 'POST' });
   const d = r.data && r.data.data;
   const bill = d && d.bill;
   const pay = d && d.payment;
   if (!r.ok || !bill || !bill.paid || !pay || pay.state !== 'succeeded') return false;
 
-  // Idempotent: mh_grant_payment faqat muvaffaqiyatli va live da beradi
+  // SQL funksiyasi qatorni FOR UPDATE bilan qulflaydi: webhook bilan poyga bo'lsa ham
+  // kredit ikki marta berilmaydi. Qaytgan son — haqiqatda berilgan kreditlar.
   await L.rpc('mh_grant_payment', {
     p_reference: payment.reference,
     p_user_id: payment.user_id,
@@ -22,7 +25,9 @@ async function reconcile(payment) {
     p_fee_minor: Number(pay.fee_minor || 0),
     p_environment: String(bill.environment || 'test'),
     p_credits: bill.environment === 'live' ? TZ.CREDITS_PER_PAYMENT : 0,
-    p_problem_category: null
+    p_problem_category: null,
+    p_state: 'succeeded',
+    p_succeeded: true
   });
   return true;
 }
@@ -36,7 +41,8 @@ module.exports = async (req, res) => {
   if (!payload || !payload.sub) return L.send(res, 401, { ok: false, description: 'Kirish talab qilinadi' });
 
   try {
-    const uid = await L.userIdFromToken(token);
+    // uid tokendan — qo'shimcha SELECT yo'q.
+    const uid = L.uidFromPayload(payload) || await L.userIdFromToken(token);
     if (!uid) return L.send(res, 401, { ok: false });
 
     const reference = String((req.method === 'GET'
@@ -55,7 +61,9 @@ module.exports = async (req, res) => {
     // Faqat aniq so'rov bo'lgandagina Tezcheckga murojaat (har safar emas)
     let recovered = false;
     const wantCheck = String((new URL(req.url || '/', 'https://x')).searchParams.get('check') || '') === '1';
-    if (wantCheck && rows && rows.length && rows[0].state === 'pending' && rows[0].bill_id) {
+    if (wantCheck && rows && rows.length &&
+        Number(rows[0].credits_granted || 0) === 0 && rows[0].bill_id &&
+        rows[0].state !== 'failed' && rows[0].state !== 'canceled') {
       try {
         recovered = await reconcile(rows[0]);
         if (recovered) {
@@ -84,6 +92,7 @@ module.exports = async (req, res) => {
       downloads: +(u.download_count || 0)
     });
   } catch (e) {
-    return L.send(res, 500, { ok: false, description: String((e && e.message) || e) });
+    console.error('[billing] status error:', e && e.message);
+    return L.send(res, 500, { ok: false, description: 'To\'lov holati olinmadi' });
   }
 };

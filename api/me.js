@@ -10,7 +10,14 @@ module.exports = async (req, res) => {
     const rows = await L.sb('/rest/v1/mh_users?telegram_id=eq.' + encodeURIComponent(String(payload.sub)) + '&select=*&limit=1');
     if (!rows || !rows.length) return L.send(res, 200, Object.assign({}, base, { authenticated: false }));
     const user = rows[0];
-    const stats = await L.getUserStats(user.id);
+    // Kredit faqat kirish paytida atomik RPC bilan beriladi (mh_grant_signup_bonus).
+    // /api/me faqat o'qiydi. Statistika allaqachon kelgan qatordan olinadi —
+    // ilgari getUserStats alohida so'rov yuborardi (bir chaqiruvda 2 so'rov edi).
+    const stats = {
+      downloads: +(user.download_count || 0),
+      premium: !!user.is_premium,
+      credits: +(user.download_credits || 0)
+    };
     return L.send(res, 200, Object.assign({}, base, {
       authenticated: true,
       user: {
@@ -33,8 +40,9 @@ module.exports = async (req, res) => {
       stats: stats
     }));
   } catch (e) {
+    console.warn('[me] load failed:', e && e.message);
     return L.send(res, 200, Object.assign({}, base, {
-      authenticated: false, warning: String((e && e.message) || e)
+      authenticated: false, warning: 'Ma\'lumotlar vaqtincha olinmadi'
     }));
   }
 };

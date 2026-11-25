@@ -131,7 +131,13 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 // O'quvchilar ko'p bo'lsa, 1-betga (A4 landscape) sig'ishi uchun shriftni kichraytiramiz
 const fitFont = n => n > 45 ? 9 : n > 38 ? 10 : n > 30 ? 11 : 12;
 let cur = null, RU = false;
-const L = (u, r) => RU ? r : u;
+// Foydalanuvchi tanlagan til ustun turadi; tanlanmagan bo'lsa jurnal tiliga qarab (RU) ishlaymiz.
+const L = (u, r) => {
+  const g = (window.MH_I18N && window.MH_I18N.getLang && window.MH_I18N.getLang()) || 'uz';
+  if (g === 'kk') return window.MH_T ? window.MH_T(u) : u;
+  if (g === 'ru') return r || (window.MH_T ? window.MH_T(u) : u);
+  return RU ? r : u;
+};
 const fm = v => v == null ? '' : Math.round(v * 100) / 100;
 
 function barChart(title, items, opt = {}) {
@@ -332,6 +338,9 @@ function svgToPng(svg, scale = 2) {
 
 $('xl').onclick = async () => {
   if (!cur || !cur.st.length) { $('msg').textContent = 'Avval jurnal faylini tanlang.'; return; }
+  if (typeof window.mhCanDownload === 'function' && !window.mhCanDownload()) return;
+  // Kredit fayl yaratilishidan OLDIN rezerv qilinadi.
+  if (typeof window.mhReserveCredit === 'function' && !(await window.mhReserveCredit('xlsx'))) return;
   const overlay = document.createElement('div');
   overlay.className = 'q-busy';
   overlay.textContent = 'Excel tayyorlanmoqda, biroz kuting…';
@@ -538,15 +547,29 @@ $('xl').onclick = async () => {
 
     const buf = await wb.xlsx.writeBuffer();
     const blob = new Blob([buf], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    // 1) Avval faylni darhol brauzerga yuklab olishni boshlaymiz
+    const fileName = xlsxFileName();
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = xlsxFileName();
+    a.download = fileName;
     a.click();
-    if (typeof window.bumpDownload === 'function') window.bumpDownload('xlsx');
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     $('msg').textContent = '';
+    // 2) Keyin, hech narsani kutmasdan, bot orqali foydalanuvchining o'z chatiga yuboramiz.
+    //    Kichik kechikish brauzer yuklab olishni ko'zga ko'rinadigan qilish uchun.
+    if (typeof window.mhSendToTelegram === 'function') {
+      setTimeout(() => {
+        try {
+          window.mhSendToTelegram(fileName, blob, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            .then(r => { if (r && r.ok && $('msg')) $('msg').textContent = 'Fayl Telegram botga ham yuborildi'; })
+            .catch(() => {});
+        } catch (e) {}
+      }, 1500);
+    }
   } catch (err) {
     $('msg').textContent = err.message;
+    // Fayl yaratilmadi — rezerv qilingan kreditni qaytaramiz.
+    if (typeof window.mhRefundCredit === 'function') window.mhRefundCredit();
   } finally {
     overlay.remove();
   }
@@ -554,8 +577,90 @@ $('xl').onclick = async () => {
 
 window.qPrint = function () {
   document.body.classList.add('q-print');
-  try { window.print(); } catch (e) {}
-  setTimeout(function () { document.body.classList.remove('q-print'); }, 300);
-  window.addEventListener('afterprint', function () { document.body.classList.remove('q-print'); }, { once: true });
+  let done = false;
+  const cleanup = function () {
+    if (done) return;
+    done = true;
+    document.body.classList.remove('q-print');
+    window.removeEventListener('afterprint', cleanup);
+  };
+  window.addEventListener('afterprint', cleanup);
+  try { window.print(); } catch (e) { cleanup(); return; }
+  // Faqat afterprint kelmay qolgan brauzerlar uchun zaxira (dialog yopilganda ishlaydi)
+  setTimeout(cleanup, 60000);
 };
+
+// Choraklik hisobotini PDF qilib yuklab olish
+const qPdfImpl = async function () {
+  if (!cur) { if ($('msg')) $('msg').textContent = 'Avval jurnalni yuklang'; return; }
+  // Barcha eksport turlari kredit hisobiga o'tadi (Excel bilan bir xil).
+  if (typeof window.mhCanDownload === 'function' && !window.mhCanDownload()) return;
+  if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF.prototype.autoTable !== 'function') {
+    if ($('msg')) $('msg').textContent = 'PDF kutubxonasi yuklanmadi. Internetni tekshiring.';
+    return;
+  }
+  // Kredit PDF yaratilishidan OLDIN rezerv qilinadi.
+  if (typeof window.mhReserveCredit === 'function' && !(await window.mhReserveCredit('pdf'))) return;
+  const doc = new window.jspdf.jsPDF({orientation: 'landscape', unit: 'mm', format: 'a4', compress: true});
+  let FF = 'helvetica';
+  try {
+    if (typeof window.mhPdfFonts === 'function') {
+      const fonts = await window.mhPdfFonts();
+      doc.addFileToVFS('DejaVu.ttf', fonts[0]);
+      doc.addFont('DejaVu.ttf', 'DejaVu', 'normal');
+      doc.addFileToVFS('DejaVu-Bold.ttf', fonts[1]);
+      doc.addFont('DejaVu-Bold.ttf', 'DejaVu', 'bold');
+      FF = 'DejaVu';
+    }
+  } catch (e) { /* shrift yuklanmasa standart shrift ishlatiladi */ }
+  // Sarlavhalar jurnal tili emas, foydalanuvchi tanlagan UI tiliga qarab chiqadi.
+  const head = [
+    [L('Sinf', 'Класс') + ': ' + (cur.info.sinf || ''), L('Fan', 'Предмет') + ': ' + (cur.info.fan || '')],
+    [L('O‘qituvchi', 'ФИО учителя') + ': ' + (cur.info.fio || '')]
+  ];
+  const labels = ['№', RU ? 'Фамилия и имя ученика' : 'O‘quvchining ism va familiyasi']
+    .concat(cur.cols.map(function (o) { return o.lbl + (o.max != null ? ' (' + o.max + ')' : ''); }))
+    .concat(cur.chor ? [cur.chor.label] : []);
+  const body = cur.st.map(function (s) {
+    return [String(s.n), s.name].concat(cur.cols.map(function (o, i) { return fm(s.v[i]); }))
+      .concat(cur.chor ? [s.chRaw] : []);
+  });
+  doc.setFont(FF, 'bold'); doc.setFontSize(12);
+  doc.text(L('Choraklik hisobot', 'Четвертной отчёт'), 10, 12);
+  doc.setFont(FF, 'normal'); doc.setFontSize(9);
+  doc.autoTable({
+    head: head.concat([labels]), body: body, startY: 20, theme: 'grid',
+    margin: {left: 8, right: 8}, styles: {font: FF, fontSize: 8, cellPadding: 1.5},
+    headStyles: {fillColor: [235, 240, 250], textColor: 20}
+  });
+  const fileName = 'choraklik-hisobot.pdf';
+  const blob = doc.output('blob');
+  // Avval yuklab olishni boshlaymiz, keyin hisob va bot yuborish fonada.
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = fileName;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  if (typeof window.mhSendToTelegram === 'function') {
+    setTimeout(() => {
+      try {
+        window.mhSendToTelegram(fileName, blob, 'application/pdf')
+          .then(r => { if (r && r.ok && $('msg')) $('msg').textContent = 'Fayl Telegram botga ham yuborildi'; })
+          .catch(() => {});
+      } catch (e) {}
+    }, 1500);
+  }
+};
+// Xato bo'lsa rezerv qilingan kredit qaytariladi, foydalanuvchi xabar oladi.
+window.qPdf = async function () {
+  try { return await qPdfImpl(); }
+  catch (e) {
+    if (typeof window.mhRefundCredit === 'function') window.mhRefundCredit();
+    if ($('msg')) $('msg').textContent = (e && e.message) || 'PDF yaratilmadi';
+  }
+};
+const pdfBtn = $('pdf'); if (pdfBtn) pdfBtn.onclick = function () { window.qPdf(); };
+
+// Excel kutubxonasini faqat eksport kerak bo'lganda yuklaymiz (har sahifada emas)
+// loadExcelJS chaqiruvi export funksiyasining o'zida mavjud.
 })();

@@ -46,7 +46,8 @@ exports.POST = async function (request) {
     const check = TZ.verifyWebhook(rawBody, headers);
     if (!check.ok) {
       if (check.reason === 'secret_not_configured') {
-        return json({ received: true, ignored: 'secret_not_configured' }, 200);
+        console.error('[tezcheck] WEBHOOK_SECRET sozlanmagan — to\'lovlar qabul qilinmayapti');
+        return json({ received: false, reason: 'secret_not_configured' }, 503);
       }
       return json({ received: false, reason: check.reason }, 401);
     }
@@ -102,13 +103,15 @@ exports.POST = async function (request) {
 
     const succeeded = (f.state === 'succeeded') && !problemCategory;
     const environment = f.environment || payment.environment || 'test';
-    // Idempotency: agar bu to'lovga kredit allaqachon berilgan bo'lsa, qayta bermaymiz
+    // Idempotency: SQL funksiyasi FOR UPDATE bilan qulflaydi va credits_granted ni
+    // tekshiradi. Bu tekshiruv esa eski SQL o'rnatilmagan holatda ham zaxira himoya.
     const alreadyGranted = payment.state === 'succeeded' && Number(payment.credits_granted || 0) > 0;
     const credits = (!alreadyGranted && succeeded && environment === 'live') ? TZ.CREDITS_PER_PAYMENT : 0;
 
     // 5) Atomik yangilash
+    let granted = 0;
     try {
-      await L.rpc('mh_grant_payment', {
+      granted = await L.rpc('mh_grant_payment', {
         p_reference: payment.reference,
         p_user_id: payment.user_id,
         p_bill_id: f.billId || payment.bill_id || '',
@@ -118,7 +121,11 @@ exports.POST = async function (request) {
         p_fee_minor: f.feeMinor || 0,
         p_environment: environment,
         p_credits: credits,
-        p_problem_category: problemCategory
+        p_problem_category: problemCategory,
+        // Holatni to'g'ridan-to'g'ri yuboramiz: payment.processing kabi
+        // hodisalarda problem null bo'ladi, lekin to'lov hali tugamagan.
+        p_state: f.state || '',
+        p_succeeded: succeeded
       });
     } catch (e) {
       console.error('[tezcheck] grant failed:', e.message);
@@ -129,7 +136,7 @@ exports.POST = async function (request) {
     try {
       await L.sb('/rest/v1/mh_webhook_events', {
         method: 'POST',
-        headers: { Prefer: 'return=minimal' },
+        headers: { Prefer: 'resolution=ignore-duplicates,return=minimal' },
         body: JSON.stringify({ id: eventId, type: type })
       });
     } catch (e) {
@@ -140,7 +147,7 @@ exports.POST = async function (request) {
       received: true,
       state: f.state,
       environment,
-      credits_granted: credits,
+      credits_granted: Number(granted) || credits,
       matchedBy
     });
   } catch (e) {
