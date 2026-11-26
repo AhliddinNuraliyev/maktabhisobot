@@ -1902,7 +1902,14 @@ function chartsPNG(c,n){
  y.fillStyle='#7A879B';y.font='9px '+F;y.textAlign='right';
  y.fillText("Och rang - mezon, ko'k - o'rtacha",W-R,base+20);
  out.push(b.cv.toDataURL('image/png'));
- return {imgs:out,W,H}}
+ /* Excel uchun ikkala diagramma BITTA rasmga yig'iladi (yonma-yon).
+    Avval har biri alohida 240pt qatorga joylanardi — hisobot bloki 2 betga
+    sig'may, diagramma 3-betga chiqib ketardi. */
+ const GAP=24,GW=W*2+GAP;
+ const all=document.createElement('canvas');all.width=GW*2;all.height=H*2;
+ const z=all.getContext('2d');z.scale(2,2);z.fillStyle='#fff';z.fillRect(0,0,GW,H);
+ z.drawImage(a.cv,0,0,W,H);z.drawImage(b.cv,W+GAP,0,W,H);
+ return {imgs:out,all:all.toDataURL('image/png'),W,H,GW,GH:H}}
 
 $('#xls').onclick=async()=>{
  if(!profOk()||!reportOk())return;
@@ -1958,14 +1965,20 @@ $('#xls').onclick=async()=>{
 
   const sHeads=['5 baho','4 baho','3 baho','2 baho',"O'zlashtirish","Sifat ko'rsatkichi","O'rtacha foiz"];
   const colW=[8,38,...Array(n).fill(10),12,9,7,26];
-  const sgroups=(()=>{const g=[];let s=1;
-   for(let k=0;k<7;k++){
-    const minW=k<4?8:15,maxEnd=k===6?COLS:COLS-(6-k);
-    let w=0,e=s;
-    while(e<=maxEnd&&(k===6||w<minW||e===s)){w+=colW[e-1]||10;e++}
-    if(e<=s)e=Math.min(s+1,maxEnd+1);
-    g.push([s,e-1]);s=e;
+  /* Hisobot jadvali varaqning butun eniga teng taqsimlanadi (PDF'dagi ko'rinish):
+     7 ta ustun guruhi eni bo'yicha eng tekis bo'linadigan qilib tanlanadi */
+  const sgroups=(()=>{const px=k=>(colW[k-1]||10)*7+5;
+   const cum=[0];for(let q=1;q<=COLS;q++)cum[q]=cum[q-1]+px(q);
+   const avg=cum[COLS]/7,dp=[],cut=[];
+   for(let k=0;k<=7;k++){dp.push(new Array(COLS+1).fill(Infinity));cut.push(new Array(COLS+1).fill(0))}
+   dp[0][0]=0;
+   for(let k=1;k<=7;k++)for(let i=k;i<=COLS-(7-k);i++)for(let j=k-1;j<i;j++){
+    if(!isFinite(dp[k-1][j]))continue;
+    const w=cum[i]-cum[j],cst=dp[k-1][j]+(w-avg)*(w-avg);
+    if(cst<dp[k][i]){dp[k][i]=cst;cut[k][i]=j}
    }
+   const g=[];let i=COLS;
+   for(let k=7;k>=1;k--){const j=cut[k][i];g.unshift([j+1,i]);i=j}
    return g})();
   const shr=ws.getRow(sr+1);
   sHeads.forEach((v,i)=>{
@@ -1976,7 +1989,7 @@ $('#xls').onclick=async()=>{
   });
   const sval=ws.getRow(sr+2);
   const gOrder=[5,4,3,2];
-  const svalues=[...gOrder.map(g=>`${c.cnt[g]} ta`),c.ozl,c.sif,c.avgP];
+  const svalues=[...gOrder.map(g=>`${c.cnt[g]} ta`),Math.round(c.ozl),Math.round(c.sif),c.avgP];
   svalues.forEach((v,i)=>{
    const [c1,c2]=sgroups[i];
    if(c2>c1)ws.mergeCells(sr+2,c1,sr+2,c2);
@@ -1988,23 +2001,44 @@ $('#xls').onclick=async()=>{
   });
   shr.height=30;sval.height=20;
 
-  const fr=sr+4;
+  ws.columns=[{width:8},{width:38},...Array(n).fill({width:10}),{width:12},{width:9},{width:7},{width:26}];
+
+  /* ---- Diagrammalar: Hisobot jadvalidan keyin, yonma-yon bitta rasm ---- */
+  const ch=chartsPNG(c,n);
+  const CH_W=1000;                                  // rasm eni (px) — A4 yotiq sahifaga sig'adi
+  const CH_H=Math.round(CH_W*ch.GH/ch.GW);          // proporsional balandlik
+  const chRow=sr+4;                                 // diagramma turadigan qator (1-asosli)
+  ws.getRow(chRow-1).height=12;
+  ws.getRow(chRow).height=Math.ceil(CH_H*0.75)+6;   // rasm balandligi (px→pt) + bo'sh joy
+  ws.addImage(wb.addImage({base64:ch.all,extension:'png'}),
+   {tl:{col:0,row:chRow-1},ext:{width:CH_W,height:CH_H}});
+
+  /* ---- O'qituvchi imzosi va sana — eng pastda (PDF'dagi kabi) ---- */
+  const fr=chRow+2;
   ws.mergeCells(fr,1,fr,Math.max(2,Math.min(4,COLS-3)));
   const fc=ws.getCell(fr,1);fc.value=`${m.fan||'______'} fan o'qituvchisi: ${m.oqituvchi||'____________'}`;fc.font={name:'Calibri',size:10};fc.alignment={horizontal:'left',vertical:'middle',wrapText:true};
   ws.mergeCells(fr,COLS-1,fr,COLS);
   const dc=ws.getCell(fr,COLS-1);dc.value='Sana: '+fd(m.sana);dc.font={name:'Calibri',size:10};dc.alignment={horizontal:'right',vertical:'middle'};
+  const endRow=fr;
 
-  ws.columns=[{width:8},{width:38},...Array(n).fill({width:10}),{width:12},{width:9},{width:7},{width:26}];
-
-  const ch=chartsPNG(c,n);let ir=fr+1;
-  ch.imgs.forEach(d=>{
-   ws.getRow(ir).height=14;ir++;
-   ws.getRow(ir).height=240;
-   const id=wb.addImage({base64:d,extension:'png'});
-   ws.addImage(id,{tl:{col:0,row:ir-1},ext:{width:ch.W,height:ch.H}});
-   ir++;
-  });
-  ws.getRow(ir).height=14;
+  /* ---- Chop etish: 1-bet — faqat jadval, 2-bet — Hisobot + diagramma ----
+     Masshtab shunday tanlanadiki, jadval 1-betga to'liq sig'sin va Hisobot
+     har doim yangi betdan (2-bet) boshlansin. */
+  const xlc=k=>{let s='';while(k>0){const q=(k-1)%26;s=String.fromCharCode(65+q)+s;k=Math.floor((k-1)/26)}return s};
+  const AVAIL_W=778,AVAIL_H=505;                    // chop maydoni (pt): 0.4"/0.5" chegaralar
+  const cwid=[8,38,...Array(n).fill(10),12,9,7,26];
+  const totalW=cwid.reduce((a,w)=>a+w*7+5,0)*0.75;  // jadval eni (pt)
+  const rh=r=>ws.getRow(r).height||15;
+  const sumH=(a,b)=>{let s=0;for(let r=a;r<=b;r++)s+=rh(r);return s};
+  const tableH=sumH(1,arNum);                       // sarlavha + o'quvchilar + o'rtacha
+  const scW=Math.max(.4,Math.min(1,AVAIL_W/totalW));// eniga sig'sin (majburiy)
+  const scH=AVAIL_H/tableH;                         // jadval 1-betga sig'sin
+  let sc=scH>=.6?Math.min(scW,scH):scW;             // juda mayda tushsa — faqat eniga moslash
+  sc=Math.floor(sc*100)/100;
+  ws.pageSetup.fitToPage=false;
+  ws.pageSetup.scale=Math.round(sc*100);
+  ws.rowBreaks=[{id:arNum+1,max:16383,man:1}];      // Hisobot doim yangi betdan boshlanadi
+  ws.pageSetup.printArea='A1:'+xlc(COLS)+endRow;
 
   const buf=await wb.xlsx.writeBuffer();
   await dl(fname('xlsx'),buf);
