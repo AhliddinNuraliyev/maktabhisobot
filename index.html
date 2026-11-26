@@ -187,6 +187,8 @@ td input{width:2.8rem}
 @media(max-width:520px){.mh-scroll-top{right:12px;bottom:70px;width:46px;height:46px}}
 /* Kuratorlik jadvali */
 .kr-wrap{overflow-x:auto;max-width:100%}
+.kr-help{margin:8px 0 0;font-size:.82rem;line-height:1.45;color:var(--mut)}
+.kr-empty{margin:6px 0 0;font-size:.82rem;color:var(--mut)}
 table.krt{border-collapse:collapse;width:100%;min-width:1320px;font-family:"Times New Roman",Georgia,serif;font-size:13px}
 .krt th,.krt td{border:1px solid #64748b;padding:5px 6px;vertical-align:middle}
 .krt thead th{background:#eaf1f9;font-weight:700;text-align:center;position:relative;cursor:pointer;transition:background .15s,color .15s}
@@ -311,6 +313,7 @@ body.mh-gate-open{overflow:hidden}
  section{padding:12px;border-radius:8px}
  label.f{flex:1 1 140px}
  .sub-min{font-size:.78rem;line-height:1.4;margin:6px 0 10px}
+ .kr-help,.kr-empty{font-size:.75rem;line-height:1.35;margin:6px 0 0}
  input,select{font-size:16px;padding:8px 10px}
  .btn{padding:10px 14px}
  #dlrow .btn{flex:1 1 100%}
@@ -836,8 +839,8 @@ body.mh-gate-open{overflow:hidden}
    <button class="btn o" id="kr-restore" type="button">Ustunlarni tiklash</button>
    <button class="btn o" id="kr-clear" type="button">Hammasini tozalash</button>
   </div>
-  <p class="sub" style="margin:8px 0 0">Excel faylni <b>emaktab.uz</b> jurnalidan (B ustun, 11-qatordan) yuklang yoki tayyor guvohnoma ro'yxatini yuklang — barcha ustunlar avtomatik to'ldiriladi. Istalgan ustun sarlavhasiga bosing va tasdiqlang: ustun o'chiriladi.</p>
-  <p class="sub" id="kr-empty">Hozircha o'quvchi yo'q. Excel faylni yuklang yoki qo'lda qo'shing.</p>
+  <p class="sub kr-help">Excel faylni emaktab.uz dan yuklang. Ustun sarlavhasiga bosing — ustun o'chiriladi.</p>
+  <p class="sub kr-empty" id="kr-empty">Hozircha o'quvchi yo'q.</p>
   <p class="mob-hint" data-scroll-hint="kr" hidden>Jadval keng — qolgan ustunlarni ko'rish uchun chapga suring 👉</p>
   <div class="wrap kr-wrap"><table id="kr-T" class="krt"></table></div>
  </section>
@@ -1784,7 +1787,7 @@ $('#file').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)
  try{const wb=XLSX.read(await f.arrayBuffer(),{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''}),names=[];
   rows.slice(10).forEach(r=>{const c=String(r[1]??'').trim();if(!c)return;if(!/\p{L}{2}/u.test(c))return;if(HDR.test(c))return;names.push(c.replace(/\s+/g,' '))});
   if(!names.length){toast("B ustunda 11-qatordan boshlab ismlar topilmadi. Fayl shaklini tekshiring.");return}
-  S.st=names.map(mk);render();save();toast(names.length+" ta o'quvchi yuklandi (B ustun, 11-qatordan)")}
+  S.st=names.map(mk);render();save();toast(names.length+" ta o'quvchi yuklandi")}
  catch(err){toast("Faylni o'qib bo'lmadi: "+(err.message||err))}};
 
 const head=()=>{const m=S.meta,b=(k,d)=>m[k]||d;const vil=m.viloyat?m.viloyat+', ':'';
@@ -2595,7 +2598,7 @@ $('#kr-file').onchange=async e=>{
   const full=readFullList(rows),list=full||readJournalNames(rows);
   if(!list.length){toast('Fayldan o\'quvchilar topilmadi. FISH ustuni yoki B ustun 11-qatorni tekshiring.');return}
   K.st=list;render();save();
-  toast(list.length+" ta o'quvchi yuklandi"+(full?' (to\'liq ro\'yxat)':' (B ustun, 11-qatordan)'));
+  toast(list.length+" ta o'quvchi yuklandi"+(full?' (to\'liq ro\'yxat)':''));
  }catch(err){toast("Faylni o'qib bo'lmadi: "+((err&&err.message)||'xato'))}
 };
 

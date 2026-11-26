@@ -107,7 +107,8 @@
     ['Kuratorlik hisoboti', 'Кураторский отчёт', 'Куратор ҳисобаты'],
     ['1. Sinf ma\'lumotlari', '1. Данные класса', '1. Клас мағлыўматлары'],
     ['Ustunlarni tiklash', 'Восстановить столбцы', 'Бағанларды қайта тиклеў'],
-    ['Excel faylni <b>emaktab.uz</b> jurnalidan (B ustun, 11-qatordan) yuklang yoki tayyor guvohnoma ro\'yxatini yuklang — barcha ustunlar avtomatik to\'ldiriladi. Istalgan ustun sarlavhasiga bosing va tasdiqlang: ustun o\'chiriladi.', 'Загрузите Excel-файл из журнала <b>emaktab.uz</b> (столбец B, с 11-й строки) или готовый список свидетельств — все столбцы заполнятся автоматически. Нажмите на заголовок любого столбца и подтвердите: столбец будет удалён.', 'Excel файлды <b>emaktab.uz</b> журналынан (В бағаны, 11-қатардан) яки тайын гуўаҳатнама дизiminен жүклең — барлық бағанлар өзи толтырылады. Ҳәр қандай баған басына басып, тастықлаң: баған өшириледи.'],
+    ['Excel faylni emaktab.uz dan yuklang. Ustun sarlavhasiga bosing — ustun o\'chiriladi.', 'Загрузите Excel-файл с emaktab.uz. Нажмите на заголовок столбца — он удалится.', 'Excel файлды emaktab.uz дан жүклең. Баған басына басың — баған өшириледи.'],
+    ['Hozircha o\'quvchi yo\'q.', 'Пока нет учеников.', 'Әзірше оқыўшы жоқ.'],
     ['Yuklab olganda fayl kompyuteringizga saqlanadi va bot orqali Telegram\'ga ham yuboriladi; qolgan kredit 1 ga kamayadi.', 'При скачивании файл сохраняется на компьютере и также отправляется в Telegram через бота; оставшийся кредит уменьшается на 1.', 'Жүклеп алғанда файл компьютериңизге сақланады ҳәм бот арқалы Telegram ǵа да жибериледи; қалған кредит 1ге азаяды.'],
 
     // Choraklik
