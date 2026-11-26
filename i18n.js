@@ -37,6 +37,9 @@
     ['Til o\'zgartirildi: O\'zbekcha', 'Язык изменён: Русский', 'Тил өзгертти: Қарақалпақша'],
     ['O\'zbekcha', 'O\'zbekcha', 'O\'zbekcha'], ['Русский', 'Русский', 'Русский'], ['Қарақалпақша', 'Қарақалпақша', 'Қарақалпақша'],
 
+    // Asosiy sahifa — Telegram kanal banneri
+    ["Hisobotlardan foydalanish yo'riqnomalari va yangiliklar — Telegram kanalimizda", 'Инструкции по использованию отчётов и новости — в нашем Telegram-канале', 'Ҳисобатлардан пайдаланыў қолланбалары ҳәм жаңалықлар — Telegram каналымызда'],
+    ["Kanalga o'tib, barcha ma'lumotlarni o'qing →", 'Перейдите на канал и прочитайте всю информацию →', 'Каналға өтип, барлық мағлыўматларды оқың →'],
     // Asosiy sahifa
     ['Maktablar uchun elektron hisobot', 'Электронный отчёт для школ', 'Мектеплер ушын электрон ҳисобат'],
     ['BSB, CHSB va choraklik hisobotlarni bir necha daqiqada tayyorlang', 'Подготовьте отчёты BSB, CHSB и за четверть за несколько минут', 'BSB, CHSB ҳәм шерек ҳисобатларын бирнеше минутта тайынлаң'],

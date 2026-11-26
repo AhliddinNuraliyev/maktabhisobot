@@ -404,6 +404,27 @@ body.mh-gate-open{overflow:hidden}
     }
 
     /* ===== Bosh sahifa (landing) ===== */
+    /* Birinchi banner: Telegram kanalga yo'naltirish */
+    .home-channel{display:flex;align-items:center;gap:18px;margin-bottom:16px;padding:14px 18px;border:1px solid #d6e6f8;border-radius:14px;background:linear-gradient(100deg,#ffffff 0%,#f4faff 62%,#eaf5ff 100%);box-shadow:0 8px 26px rgba(0,114,188,.10);text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s}
+    .home-channel:hover{transform:translateY(-2px);border-color:#0088cc;box-shadow:0 14px 32px rgba(0,114,188,.18)}
+    .home-channel:focus-visible{outline:3px solid rgba(0,136,204,.35);outline-offset:2px}
+    .home-channel-logo{flex:0 0 auto;display:block;width:196px;max-width:100%;height:auto;mix-blend-mode:multiply}
+    .home-channel-text{flex:1 1 auto;min-width:0}
+    .home-channel-text strong{display:block;font-size:15px;line-height:1.4;color:#14213a}
+    .home-channel-text>span{display:block;margin-top:4px;font-size:12.5px;font-weight:700;color:#0072bc}
+    .home-channel-cta{flex:0 0 auto;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#0088cc;color:#fff;box-shadow:0 6px 14px rgba(0,136,204,.28)}
+    .home-channel-cta svg{width:22px;height:22px;fill:currentColor}
+    @media(max-width:640px){
+      .home-channel{gap:10px;padding:12px 14px;align-items:flex-start}
+      .home-channel-logo{width:150px}
+      .home-channel-text strong{font-size:13px}
+      .home-channel-text>span{font-size:12px}
+      .home-channel-cta{width:36px;height:36px}
+    }
+    @media(max-width:430px){
+      .home-channel{flex-wrap:wrap}
+      .home-channel-logo{width:100%;max-width:180px}
+    }
     .home-hero{position:relative;overflow:hidden;padding:30px 26px;border-radius:14px;background:linear-gradient(135deg,#ffffff 0%,#f0f7ff 55%,#e6f2ff 100%);border:1px solid #d6e6f8;box-shadow:0 10px 34px rgba(0,114,188,.10)}
     .home-hero:before{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(0,114,188,.16),transparent 68%);pointer-events:none}
     .home-kicker{position:relative;display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:5px 10px;border-radius:999px;background:#e3f0fc;color:#0063a3;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
@@ -667,6 +688,16 @@ body.mh-gate-open{overflow:hidden}
         <div id="workspaceCanvas" class="w-full rounded-md transition-all duration-200">
             <!-- Asosiy sahifa (/) — ommaviy landing -->
             <div id="module-home" class="module active">
+                <!-- Birinchi e'tibor: foydalanuvchilarni Telegram kanalga yo'naltirish -->
+                <a id="homeChannelLink" class="home-channel" href="https://t.me/maktabhisobot_uz" target="_blank" rel="noopener noreferrer" aria-label="Maktab Hisobot Telegram kanaliga o'tish">
+                    <img class="home-channel-logo" src="/maktabhisobot_logo_horizontal.svg.png" alt="Maktab Hisobot" width="1600" height="400">
+                    <span class="home-channel-text">
+                        <strong>Hisobotlardan foydalanish yo'riqnomalari va yangiliklar — Telegram kanalimizda</strong>
+                        <span>Kanalga o'tib, barcha ma'lumotlarni o'qing →</span>
+                    </span>
+                    <span class="home-channel-cta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.94 4.3a1.2 1.2 0 0 0-1.22-.2L3.1 10.95c-.86.33-.83 1.55.05 1.83l4.34 1.4 1.63 5.09c.2.62 1 .8 1.45.32l2.38-2.38 4.2 3.09c.55.4 1.34.11 1.5-.56l3.25-14.3c.08-.37-.04-.74-.3-1zM9.42 13.9l-.5 3.1-1.1-3.44 8.66-5.35-7.06 5.69z"/></svg></span>
+                </a>
+
                 <section class="home-hero" aria-labelledby="homeTitle">
                     <p class="home-kicker">Maktablar uchun elektron hisobot</p>
                     <h1 id="homeTitle">BSB, CHSB va choraklik hisobotlarni bir necha daqiqada tayyorlang</h1>
@@ -2139,6 +2170,8 @@ $('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!await pdfReady(
 
 (async()=>{try{DL=window.claude&&await window.claude.use('downloads')}catch(e){DL=null}})();
 const tgEl=$('#tg'); if(tgEl)tgEl.addEventListener('click',e=>{if(isTG()){try{e.preventDefault();window.Telegram.WebApp.openTelegramLink('https://t.me/AHLIDDIN_NURALIYEV')}catch(x){}}});
+/* Kanal banneri: oddiy brauzerda <a> ishlaydi, Mini App ichida Telegram orqali ochiladi */
+const chEl=$('#homeChannelLink'); if(chEl)chEl.addEventListener('click',e=>{if(isTG()){try{e.preventDefault();window.Telegram.WebApp.openTelegramLink('https://t.me/maktabhisobot_uz')}catch(x){}}});
 render();
 loadMe();
 /* Telegram tomonidagi chiqishdan keyin saytga qaytdik — kirish oynasini o'zimiz ochamiz */
