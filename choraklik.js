@@ -595,9 +595,21 @@ const qPdfImpl = async function () {
   if (!cur) { if ($('msg')) $('msg').textContent = 'Avval jurnalni yuklang'; return; }
   // Barcha eksport turlari kredit hisobiga o'tadi (Excel bilan bir xil).
   if (typeof window.mhCanDownload === 'function' && !window.mhCanDownload()) return;
-  if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF.prototype.autoTable !== 'function') {
-    if ($('msg')) $('msg').textContent = 'PDF kutubxonasi yuklanmadi. Internetni tekshiring.';
-    return;
+  // Kutubxona <script> teg bilan yuklanmagan bo'lsa (CDN bloklangan, sekin tarmoq),
+  // indeksdagi umumiy yuklagich orqali qayta urinamiz: lokal /vendor, keyin CDN'lar.
+  // jsPDF 2.5.1 da autoTable plagini jsPDF.API ga yoziladi (prototype'ga emas),
+  // shuning uchun ikkisi ham tekshiriladi.
+  const pdfLibReady = function () {
+    const J = window.jspdf && window.jspdf.jsPDF;
+    return !!(J && ((J.API && typeof J.API.autoTable === 'function') || typeof J.prototype.autoTable === 'function'));
+  };
+  if (!pdfLibReady()) {
+    if ($('msg')) $('msg').textContent = 'PDF kutubxonasi yuklanmoqda...';
+    const ok = typeof window.mhEnsurePdf === 'function' ? await window.mhEnsurePdf() : false;
+    if (!ok) {
+      if ($('msg')) $('msg').textContent = 'PDF kutubxonasi yuklanmadi. Internetni tekshiring.';
+      return;
+    }
   }
   // Kredit PDF yaratilishidan OLDIN rezerv qilinadi.
   if (typeof window.mhReserveCredit === 'function' && !(await window.mhReserveCredit('pdf'))) return;

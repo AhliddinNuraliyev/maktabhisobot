@@ -880,11 +880,15 @@ nav[aria-label="Asosiy menyu"] .nav-tab{scroll-snap-align:start}
     <!-- ===== Kutubxonalar ===== -->
     <script src="https://telegram.org/js/telegram-web-app.js?64"></script>
     <!-- SheetJS 0.20.3 — 0.18.5 dagi ma'lum CVE'lar (prototip ifloslanishi, ReDoS) tuzatilgan.
-         Asosiy CDN ishlamasa, eski manbadan zaxira yuklanadi (maktab tarmoqlari uchun). -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+         Endi asosiy nusxa saytning o'zida (/vendor) — maktab tarmoqlari va CDN bloklangan
+         holatlarda ham ishlaydi. Lokal fayl topilmasa, CDN'lardan zaxira yuklanadi. -->
+    <script src="/vendor/xlsx.full.min.js"></script>
+    <script>window.XLSX||document.write('<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"><\/script>');</script>
     <script>window.XLSX||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"><\/script>');</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <!-- jsPDF + autoTable — lokal nusxa. Yuklanmasa, pdfReady() CDN'lardan qayta urinadi
+         (cdnjs ba'zi provayderlarda bloklangan, shu sabab bitta CDN'ga bog'lanmaymiz). -->
+    <script src="/vendor/jspdf.umd.min.js"></script>
+    <script src="/vendor/jspdf.plugin.autotable.min.js"></script>
 
     <!-- ===== Asosiy hisobchi logikasi (to'liq saqlangan) ===== -->
     <script>
@@ -907,12 +911,64 @@ try{const x=localStorage.getItem('bsb1');if(x)S=Object.assign(S,JSON.parse(x))}c
 if(S.th&&+S.th[5]===86&&+S.th[4]===71&&+S.th[3]===56)S.th={5:86,4:66,3:30};
 let tm;const save=()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem('bsb1',JSON.stringify(S))}catch(e){}},300)};
 function toast(t){const e=$('#toast');e.textContent=(window.MH_T?window.MH_T(t):t);e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),3200)}
-// jsPDF va autoTable plagi ikkisi ham yuklangan bo'lishi shart
-function pdfReady(){
- if(!window.jspdf||!window.jspdf.jsPDF||typeof window.jspdf.jsPDF.prototype.autoTable!=='function'){
-  toast('PDF kutubxonasi yuklanmadi. Internetni tekshiring.');return false;
- }
- return true;
+// jsPDF va autoTable plagi ikkisi ham yuklangan bo'lishi shart.
+// MUHIM: kutubxona <script> teg bilan yuklanmasa (CDN bloklangan, sekin tarmoq,
+// reklama bloklagichi), shu yerda navbat bilan lokal nusxa va bir nechta CDN sinaladi.
+const PDF_CORE_SRC=['/vendor/jspdf.umd.min.js',
+ 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js',
+ 'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js',
+ 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'];
+const PDF_PLUGIN_SRC=['/vendor/jspdf.plugin.autotable.min.js',
+ 'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js',
+ 'https://unpkg.com/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js',
+ 'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js'];
+function pdfCoreOk(){return !!(window.jspdf&&window.jspdf.jsPDF)}
+// DIQQAT: jsPDF 2.5.1 da autoTable plagini metodni jsPDF.API ga qo'shadi,
+// prototype'ga EMAS (instans yaratilganda API nusxalanadi). Shu sabab
+// "prototype.autoTable" ni tekshirish har doim false bo'lib, PDF tugmasi
+// kutubxona joyida bo'lsa ham xato berardi. Endi API va prototype ikkisi tekshiriladi.
+function pdfReadyNow(){
+ if(!pdfCoreOk())return false;
+ const J=window.jspdf.jsPDF;
+ return typeof(J.API&&J.API.autoTable)==='function'||typeof J.prototype.autoTable==='function';
+}
+function pdfLoadScript(src,test){
+ return new Promise(res=>{
+  let done=false;
+  const fin=ok=>{if(done)return;done=true;res(!!ok)};
+  const s=document.createElement('script');
+  s.src=src;s.async=true;
+  s.onload=()=>fin(test());
+  s.onerror=()=>fin(false);
+  document.head.appendChild(s);
+  setTimeout(()=>fin(test()),12000); // osilib qolgan so'rovni kutib o'tirmaymiz
+ });
+}
+async function pdfLoadAny(list,test){
+ for(const src of list){if(test())return true;if(await pdfLoadScript(src,test))return true}
+ return !!test();
+}
+let _pdfLibs=null;
+// Kutubxonalarni kerak bo'lganda yuklaydi. true/false qaytaradi (xabar chiqarmaydi).
+function ensurePdfLibs(){
+ if(pdfReadyNow())return Promise.resolve(true);
+ if(_pdfLibs)return _pdfLibs;
+ _pdfLibs=(async()=>{
+  try{
+   if(!pdfCoreOk()&&!await pdfLoadAny(PDF_CORE_SRC,pdfCoreOk))return false;
+   if(!pdfReadyNow()&&!await pdfLoadAny(PDF_PLUGIN_SRC,pdfReadyNow))return false;
+   return pdfReadyNow();
+  }catch(e){return false}
+ })().then(ok=>{if(!ok)_pdfLibs=null;return ok});
+ return _pdfLibs;
+}
+window.mhEnsurePdf=ensurePdfLibs; // choraklik.js ham shundan foydalanadi
+async function pdfReady(){
+ if(pdfReadyNow())return true;
+ toast('PDF kutubxonasi yuklanmoqda...');
+ if(await ensurePdfLibs())return true;
+ toast('PDF kutubxonasi yuklanmadi. Internetni tekshiring.');
+ return false;
 }
 
 /* Tasdiq oynasi (o'quvchi/ustun o'chirish va boshqa harakatlar uchun umumiy) */
@@ -1038,7 +1094,14 @@ function tgEscKey(e){if(e.key==='Escape')closeTelegramLogin()}
 // Zaxira usul: Telegram Login Widget (unda xabar Telegram xizmat akkauntidan keladi).
 let tgPollTimer=null,tgPollTick=null,tgNonce='',tgWidgetLoaded=false,tgPollGen=0,tgPollBusy=false;
 // tgPollGen: har to'xtatishda oshadi — kechikib kelgan javob eski holatga ta'sir qilmaydi.
-function stopTgPoll(){tgPollGen++;if(tgPollTimer){clearInterval(tgPollTimer);tgPollTimer=null}tgPollTick=null}
+function stopTgPoll(){tgPollGen++;if(tgPollTimer){clearTimeout(tgPollTimer);clearInterval(tgPollTimer);tgPollTimer=null}tgPollTick=null}
+// Har bir poll /api/telegram-login -> bitta Supabase SELECT demak. Fixed 4s + 150 urinish
+// (10 daqiqa) bitta kirmagan foydalanuvchidan 150 ta o'qish so'rovini yuborardi.
+// Endi: avval 4s, keyin 6s, oxirida 10s va jami 45 urinish (~5 daqiqa).
+// Foydalanuvchi botdagi «Saytga qaytish» tugmasi bilan ?tglogin=... orqali
+// qaytsa, poll to'xtagan bo'lsa ham kirish yakunlanadi (pastga qarang).
+const TG_POLL_MAX=45;
+function tgPollDelay(n){return n<=15?4000:(n<=30?6000:10000)}
 function tgStatus(text,kind){
  const el=$('#tgBotStatus');if(!el)return;
  if(!text){el.hidden=true;el.textContent='';return}
@@ -1123,9 +1186,14 @@ function pollBotLogin(){
  if(!tgNonce)return;
  const gen=tgPollGen;
  let tries=0;
+ const scheduleNext=()=>{
+  if(!tgNonce||gen!==tgPollGen)return;
+  if(tgPollTimer)clearTimeout(tgPollTimer);
+  tgPollTimer=setTimeout(tgPollTick,tgPollDelay(tries));
+ };
  tgPollTick=async()=>{
   if(!tgNonce||gen!==tgPollGen)return;
-  // Bitta oynada bir vaqtda ikkita so'rov ketmasin: interval, focus va
+  // Bitta oynada bir vaqtda ikkita so'rov ketmasin: timer, focus va
   // visibilitychange bir-biriga qo'shilib, bir martalik nonce ni ikki marta
   // ishlatib yuborardi (ikkinchi javob «used» bo'lib xato chiqardi).
   if(tgPollBusy)return;
@@ -1136,7 +1204,8 @@ function pollBotLogin(){
   finally{tgPollBusy=false}
   if(gen!==tgPollGen)return; // bu javob eskirgan — holat allaqachon o'zgargan
   if(!j){
-   if(tries>=150){stopTgPoll();tgStatus('Server bilan aloqa yo‘q. Qaytadan urinib ko‘ring.','err');tgBotBtnEnable()}
+   if(tries>=TG_POLL_MAX){stopTgPoll();tgStatus('Server bilan aloqa yo‘q. Qaytadan urinib ko‘ring.','err');tgBotBtnEnable()}
+   else scheduleNext();
    return;
   }
   if(j.status==='ok'){stopTgPoll();tgNonce='';await applyLogin(j);return}
@@ -1152,15 +1221,17 @@ function pollBotLogin(){
   if(j.status==='expired'){
    stopTgPoll();tgNonce='';tgStatus('Havola eskirgan. «Telegram botda tasdiqlash» tugmasini qaytadan bosing.','err');tgBotBtnEnable();return;
   }
-  if(tries>=150){stopTgPoll();tgStatus('Vaqt tugadi. Qaytadan urinib ko‘ring.','err');tgBotBtnEnable()}
+  if(tries>=TG_POLL_MAX){
+   stopTgPoll();tgStatus('Havola tasdiqlanmadi. Botdagi «Saytga qaytish» tugmasini bosing yoki qaytadan urinib ko‘ring.','err');tgBotBtnEnable();return;
+  }
+  scheduleNext();
  };
- tgPollTimer=setInterval(tgPollTick,4000);
  tgPollTick();
 }
 // Telegram'ga o'tilganda tab yashirinadi — poll to'xtatiladi (Supabase'ga
 // behuda so'rov ketmaydi), saytga qaytilganda darhol bir marta tekshiriladi.
-function tgPollResume(){if(!tgNonce||!tgPollTick)return;if(!tgPollTimer)tgPollTimer=setInterval(tgPollTick,4000);tgPollTick()}
-function tgPollPause(){if(tgPollTimer){clearInterval(tgPollTimer);tgPollTimer=null}}
+function tgPollResume(){if(!tgNonce||!tgPollTick)return;if(tgPollTimer){clearTimeout(tgPollTimer);tgPollTimer=null}tgPollTick()}
+function tgPollPause(){if(tgPollTimer){clearTimeout(tgPollTimer);tgPollTimer=null}}
 window.addEventListener('focus',tgPollResume);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)tgPollPause();else tgPollResume()});
 async function applyLogin(j){
@@ -1315,9 +1386,14 @@ async function loadMe(force){
   const tid=AUTH.user?String(AUTH.user.telegram_id||''):'';
   // Profilni faqat birinchi yuklashda yoki akkaunt almashganda yangilaymiz.
   // Har fokusda qayta yozish oynadagi saqlanmagan ma'lumotlarni yo'q qilardi.
-  if(AUTH.user&&(!lastMeTgId||tid!==lastMeTgId))afterAuthProfile(j,false);
+  const profileApplied=!!(AUTH.user&&(!lastMeTgId||tid!==lastMeTgId));
+  if(profileApplied)afterAuthProfile(j,false);
   lastMeTgId=tid;
   renderAuth();
+  // LI hisobchisi profilni shu lokal event orqali oladi. Ilgari u mustaqil
+  // /api/me so'rovi yuborardi — sahifa ochilganda 2 ta Supabase SELECT ketardi.
+  // Birinchi yuklash/almashishda afterAuthProfile o'zi event yuboradi (ikki marta yubormaymiz).
+  if(AUTH.user&&!profileApplied&&j.profile){try{window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},j.profile)}))}catch(e){}}
  })();
  try{return await meInflight}finally{meInflight=null}
 }
@@ -1787,7 +1863,7 @@ function drawCharts(d,A,FF){
 function pdfHead(){const c=calc(),n=S.n;
  return[['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\n\n${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh']]}
 
-$('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!pdfReady())return
+$('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!await pdfReady())return
  const{rows}=data(),n=S.n;let FF='helvetica';
  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
  try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
@@ -1913,7 +1989,8 @@ function applyProfile(p,replace){
 }
 try{const b=JSON.parse(localStorage.getItem('bsb1')||'{}');if(b&&b.meta)applyProfile(b.meta)}catch(e){}
 if(!S.meta.sana){const d=new Date();S.meta.sana=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');save()}
-(function(){fetch('/api/me',{credentials:'same-origin'}).then(r=>r.json()).then(j=>{if(j&&j.profile)applyProfile(j.profile)}).catch(()=>{})})();
+// /api/me endi faqat loadMe() orqali chaqiriladi (60s kesh + bitta so'rov).
+// Profil bu yerga 'mh:profile' eventi bilan keladi — qo'shimcha HTTP yo'q.
 // Asosiy sahifada profil o'zgarganda (akkaunt almashish yoki saqlash) LI ham yangilanadi
 window.addEventListener('mh:profile',e=>{if(e&&e.detail)applyProfile(e.detail,true)});
 
@@ -2103,7 +2180,7 @@ async function pdfFontB64(){if(_FB64)return _FB64;const get=async u=>{const r=aw
  try{return await _FB64}catch(e){_FB64=null;throw e}}
 window.mhPdfFonts=pdfFontB64; // choraklik moduli ham shu shriftlardan foydalanadi
 $('#li-pdf').onclick=async()=>{
- if(!pdfReady())return
+ if(!await pdfReady())return
  const {rows}=data(),n=S.n;let FF='helvetica';
  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
  try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
@@ -2379,7 +2456,7 @@ async function serifFontB64(){
  try{return await _SERIF}catch(e){_SERIF=null;throw e}
 }
 $('#kr-pdf').onclick=async()=>{
- if(!pdfReady())return
+ if(!await pdfReady())return
  if(!K.st.length){toast("Avval o'quvchilarni kiriting yoki Excel fayl yuklang");return}
  try{
   toast('PDF tayyorlanmoqda...');

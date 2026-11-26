@@ -245,6 +245,7 @@
     ['Excel tayyorlashda xato: ', 'Ошибка при подготовке Excel: ', 'Excel тайынлаўда қателик: '],
     ['PDF kutubxonasi yuklanmadi.', 'Библиотека PDF не загружена.', 'PDF китапханасы жүкленбеди.'],
     ['PDF tayyorlanmoqda...', 'Подготовка PDF...', 'PDF тайынланып атыр...'],
+    ['PDF kutubxonasi yuklanmoqda...', 'Загружается библиотека PDF...', 'PDF kitapxanası júklenip atır...'],
     ['PDF tayyorlashda xato: ', 'Ошибка при подготовке PDF: ', 'PDF тайынлаўда қателик: '],
     ['Baho noto\'g\'ri!', 'Неверная оценка!', 'Баҳа надурыс!'],
     ['Baho noto\'g\'ri', 'Неверная оценка', 'Баҳа надурыс'],
