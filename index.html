@@ -1822,8 +1822,17 @@ const CYR={'А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'
 const trCyrl=s=>String(s).replace(/[Ѐ-ӿ]/g,c=>CYR[c]||c);
 let _FB64=null;
 function b64(buf){const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
-async function pdfFontB64(){if(_FB64)return _FB64;const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
- _FB64=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf')]);
+/* Shriftlar ham saytning o'zida (/vendor/fonts) — CDN bloklangan tarmoqda ham
+   PDF'dagi kirill/lotin diakritiklari to'g'ri chiqadi. Lokal nusxa bo'lmasa jsDelivr. */
+const PDF_FONT_BASES=['/vendor/fonts/','https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/'];
+window.mhFontB64=async function(file){
+ for(const base of PDF_FONT_BASES){
+  try{const r=await fetch(base+file);if(r.ok)return b64(await r.arrayBuffer())}catch(e){}
+ }
+ throw new Error('font');
+};
+async function pdfFontB64(){if(_FB64)return _FB64;
+ _FB64=Promise.all([window.mhFontB64('DejaVuSans.ttf'),window.mhFontB64('DejaVuSans-Bold.ttf')]);
  try{return await _FB64}catch(e){_FB64=null;throw e}}
 
 function summary(){const c=calc();return{
@@ -1864,6 +1873,7 @@ function pdfHead(){const c=calc(),n=S.n;
  return[['T/R',"O'quvchilar F.I.SH",...Array.from({length:n},(_,j)=>`${j+1}-savol\n\n${String(S.max[j]).trim()||'–'}`),`To'plagan ball\nJami: ${r1(c.mt)}`,'Foiz (%)','Baho','Izoh']]}
 
 $('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!await pdfReady())return
+ try{
  const{rows}=data(),n=S.n;let FF='helvetica';
  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
  try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
@@ -1897,7 +1907,8 @@ $('#pdf').onclick=async()=>{if(!profOk()||!reportOk())return;if(!await pdfReady(
  drawCharts(d,A,FF);
  d.setFont(FF,'normal');d.setFontSize(10);d.setTextColor(20);
  d.text(A(sm.teacher),10,195);d.text(A('Sana: '+fd(S.meta.sana)),287,195,{align:'right'});
- await dl(fname('pdf'),d.output('arraybuffer'))};
+ await dl(fname('pdf'),d.output('arraybuffer'))
+ }catch(e){toast("PDF tayyorlashda xato: "+((e&&(e.message||e.code))||'xato'))}};
 
 (async()=>{try{DL=window.claude&&await window.claude.use('downloads')}catch(e){DL=null}})();
 const tgEl=$('#tg'); if(tgEl)tgEl.addEventListener('click',e=>{if(isTG()){try{e.preventDefault();window.Telegram.WebApp.openTelegramLink('https://t.me/AHLIDDIN_NURALIYEV')}catch(x){}}});
@@ -2138,9 +2149,12 @@ const isTG=()=>!!(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebAp
 try{if(isTG()){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand()}}catch(e){}
 async function dl(name,d,type){
  if(!window.mhCanDownload())return;
+ // Kredit AVVAL rezerv qilinadi (BSB bilan bir xil tartib): rezerv bo'lmasa fayl saqlanmaydi.
+ const kind=/\.pdf$/i.test(name)?'pdf':'xlsx';
+ if(typeof window.mhReserveCredit==='function'&&!(await window.mhReserveCredit(kind)))return;
  const blob=d instanceof Blob?d:new Blob([d],{type:type||'application/octet-stream'});
- saveBlob(name,blob,type);toast(name+' yuklab olindi');
- try{fetch('/api/event',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({kind:/\.pdf$/i.test(name)?'download_pdf':'download_xlsx'})}).then(r=>r.json()).then(j=>{if(j&&j.stats){AUTH.stats=j.stats;renderAccountStats()}}).catch(()=>{})}catch(e){}
+ try{saveBlob(name,blob,type);toast(name+' yuklab olindi')}
+ catch(e){if(typeof window.mhRefundCredit==='function')window.mhRefundCredit();toast("Yuklab bo'lmadi: "+((e&&(e.message||e.code))||'xato'));return}
  // Botga yuborish fonada: yuklab olishni kutmaydi
  try{window.mhSendToTelegram(name,blob,type).then(r=>{
   if(r&&r.ok)toast(name+' · Telegram botga ham yuborildi');
@@ -2175,12 +2189,13 @@ const CYR={'А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'
 const trCyrl=s=>String(s).replace(/[Ѐ-ӿ]/g,c=>CYR[c]||c);
 let _FB64=null;
 function b64(buf){const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
-async function pdfFontB64(){if(_FB64)return _FB64;const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
- _FB64=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf')]);
+async function pdfFontB64(){if(_FB64)return _FB64;
+ _FB64=Promise.all([window.mhFontB64('DejaVuSans.ttf'),window.mhFontB64('DejaVuSans-Bold.ttf')]);
  try{return await _FB64}catch(e){_FB64=null;throw e}}
 window.mhPdfFonts=pdfFontB64; // choraklik moduli ham shu shriftlardan foydalanadi
 $('#li-pdf').onclick=async()=>{
  if(!await pdfReady())return
+ try{
  const {rows}=data(),n=S.n;let FF='helvetica';
  const d=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
  try{toast('PDF tayyorlanmoqda...');const[reg,bold]=await pdfFontB64();d.addFileToVFS('DejaVuSans.ttf',reg);d.addFont('DejaVuSans.ttf','DejaVu','normal');d.addFileToVFS('DejaVuSans-Bold.ttf',bold);d.addFont('DejaVuSans-Bold.ttf','DejaVu','bold');FF='DejaVu'}catch(e){FF='helvetica'}
@@ -2232,7 +2247,7 @@ $('#li-pdf').onclick=async()=>{
  d.text(A(`${m.fan||'______'} fan o'qituvchisi: ${m.oqituvchi||'____________'}`),10,203);
  d.text(A('Sana: '+fd(m.sana)),287,203,{align:'right'});
  await dl(fname('pdf'),d.output('arraybuffer'),'application/pdf');
-};
+ }catch(e){toast("PDF tayyorlashda xato: "+((e&&(e.message||e.code))||'xato'))}};
 function drawCharts(d,A,FF,c){
  const n=S.n,f=c.f||1;
  d.setFont(FF,'bold');d.setFontSize(11);d.setTextColor(20);d.text(A(`Baholar taqsimoti (${f} nafar)`),75,50,{align:'center'});
@@ -2451,8 +2466,7 @@ $('#kr-xls').onclick=async()=>{
 let _SERIF=null;
 async function serifFontB64(){
  if(_SERIF)return _SERIF;
- const get=async u=>{const r=await fetch(u);if(!r.ok)throw new Error('font');return b64(await r.arrayBuffer())};
- _SERIF=Promise.all([get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSerif.ttf'),get('https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSerif-Bold.ttf')]);
+ _SERIF=Promise.all([window.mhFontB64('DejaVuSerif.ttf'),window.mhFontB64('DejaVuSerif-Bold.ttf')]);
  try{return await _SERIF}catch(e){_SERIF=null;throw e}
 }
 $('#kr-pdf').onclick=async()=>{
