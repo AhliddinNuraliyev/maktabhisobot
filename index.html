@@ -1860,30 +1860,31 @@ function chartCanvas(w,h){
  const x=cv.getContext('2d');x.scale(dpr,dpr);x.fillStyle='#fff';x.fillRect(0,0,w,h);
  return {cv,x}}
 function chartsPNG(c,n){
- const F='system-ui,"Segoe UI",Roboto,Arial,sans-serif',W=560,H=205;
+ /* Balandligi PDF'dagi diagrammalarga moslangan (A4 betni to'ldiradi) */
+ const F='system-ui,"Segoe UI",Roboto,Arial,sans-serif',W=560,H=420;
  const out=[];
  const a=chartCanvas(W,H),x=a.x;
- x.fillStyle='#14213a';x.font='bold 14px '+F;x.textAlign='center';
- x.fillText(`Baholar taqsimoti (${c.f} nafar)`,W/2,24);
+ x.fillStyle='#14213a';x.font='bold 16px '+F;x.textAlign='center';
+ x.fillText(`Baholar taqsimoti (${c.f} nafar)`,W/2,26);
  const G=[[5,c.cnt[5],'#17794A'],[4,c.cnt[4],'#1F5FBF'],[3,c.cnt[3],'#A8670C'],[2,c.cnt[2],'#B3261E']];
  const gmax=Math.max(1,...G.map(g=>g[1]));
- const bx=78,bw=W-78-84,bh=16,gap=18,y0=48;
+ const bx=88,bw=W-88-90,bh=40,gap=48,y0=84;
  G.forEach(([g,cnt,col],i)=>{
   const y=y0+i*(bh+gap);
-  x.fillStyle=col;x.font='bold 13px '+F;x.textAlign='right';
-  x.fillText('"'+g+'" baho',bx-10,y+13);
+  x.fillStyle=col;x.font='bold 15px '+F;x.textAlign='right';
+  x.fillText('"'+g+'" baho',bx-10,y+25);
   x.fillStyle='#EDF1F8';x.fillRect(bx,y,bw,bh);
   if(cnt>0){x.fillStyle=col;x.fillRect(bx,y,Math.max(2,bw*cnt/gmax),bh)}
-  x.fillStyle='#14213a';x.font='12px '+F;x.textAlign='left';
-  x.fillText(`${cnt} ta (${c.f?Math.round(cnt/c.f*100):0}%)`,bx+bw+10,y+13);
+  x.fillStyle='#14213a';x.font='14px '+F;x.textAlign='left';
+  x.fillText(`${cnt} ta (${c.f?Math.round(cnt/c.f*100):0}%)`,bx+bw+10,y+25);
  });
  out.push(a.cv.toDataURL('image/png'));
 
  const b=chartCanvas(W,H),y=b.x;
- y.fillStyle='#14213a';y.font='bold 14px '+F;y.textAlign='center';
- y.fillText("Savollar bo'yicha o'rtacha",W/2,24);
- const L=34,R=12,T=44,base=H-28,maxH=base-T,plotW=W-L-R;
- const vmax=Math.max(1,...c.mx),slot=plotW/n,bw2=Math.min(26,slot*0.46);
+ y.fillStyle='#14213a';y.font='bold 16px '+F;y.textAlign='center';
+ y.fillText("Savollar bo'yicha o'rtacha",W/2,26);
+ const L=34,R=12,T=48,base=H-40,maxH=base-T,plotW=W-L-R;
+ const vmax=Math.max(1,...c.mx),slot=plotW/n,bw2=Math.min(30,slot*0.46);
  y.strokeStyle='#9AA8BD';y.lineWidth=1;
  y.beginPath();y.moveTo(L,base);y.lineTo(L+plotW,base);y.moveTo(L,base);y.lineTo(L,T-4);y.stroke();
  for(let j=0;j<n;j++){
@@ -1891,16 +1892,16 @@ function chartsPNG(c,n){
   const mh=c.mx[j]/vmax*maxH,ah=c.avg[j]/vmax*maxH;
   y.fillStyle='#E1E8F2';y.fillRect(cx,base-mh,bw2,Math.max(mh,.5));
   if(ah>0){y.fillStyle='#1F5FBF';y.fillRect(cx,base-ah,bw2,Math.max(ah,.5))}
-  y.fillStyle='#5B6A82';y.font='9px '+F;y.textAlign='center';
-  y.fillText(String(j+1),cx+bw2/2,base+12);
+  y.fillStyle='#5B6A82';y.font='11px '+F;y.textAlign='center';
+  y.fillText(String(j+1),cx+bw2/2,base+14);
   if(ah>0&&c.avg[j]>0){
    const val=String(r1(c.avg[j]));
-   if(ah>16){y.fillStyle='#fff';y.fillText(val,cx+bw2/2,base-ah+12)}
-   else{y.fillStyle='#1F5FBF';y.fillText(val,cx+bw2/2,base-ah-4)}
+   if(ah>16){y.fillStyle='#fff';y.fillText(val,cx+bw2/2,base-ah+14)}
+   else{y.fillStyle='#1F5FBF';y.fillText(val,cx+bw2/2,base-ah-5)}
   }
  }
- y.fillStyle='#7A879B';y.font='9px '+F;y.textAlign='right';
- y.fillText("Och rang - mezon, ko'k - o'rtacha",W-R,base+20);
+ y.fillStyle='#7A879B';y.font='11px '+F;y.textAlign='right';
+ y.fillText("Och rang - mezon, ko'k - o'rtacha",W-R,base+24);
  out.push(b.cv.toDataURL('image/png'));
  /* Excel uchun ikkala diagramma BITTA rasmga yig'iladi (yonma-yon).
     Avval har biri alohida 240pt qatorga joylanardi — hisobot bloki 2 betga
