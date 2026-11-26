@@ -1990,7 +1990,7 @@ $('#xls').onclick=async()=>{
   });
   const sval=ws.getRow(sr+2);
   const gOrder=[5,4,3,2];
-  const svalues=[...gOrder.map(g=>`${c.cnt[g]} ta`),Math.round(c.ozl),Math.round(c.sif),c.avgP];
+  const svalues=[...gOrder.map(g=>`${c.cnt[g]} ta`),Math.round(c.ozl),Math.round(c.sif),r1(c.avgP)];
   svalues.forEach((v,i)=>{
    const [c1,c2]=sgroups[i];
    if(c2>c1)ws.mergeCells(sr+2,c1,sr+2,c2);
