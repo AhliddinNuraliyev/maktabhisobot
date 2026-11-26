@@ -80,14 +80,13 @@
     ['Hammasini tozalash', 'Очистить всё', 'Ҳаммесин тазалаў'],
     ['Excel faylni ', 'Excel-файл ', 'Excel файлын '],
     ['platformasidan kerakli sinf jurnalini eksport qilib yuklang. Yangi fayl yuklansa, kiritilgan ballar o\'chadi.', 'экспортируйте нужный классный журнал с платформы. При загрузке нового файла введённые баллы удалятся.', 'платформасынан керекли клас журналын экспортлап жүклең. Жаңа файл жүкленсе, киргизилген байлар өшириледи.'],
-    ['Excel faylni <b>emaktab.uz</b> platformasidan kerakli sinf jurnalini eksport qilib yuklang. Yangi fayl yuklansa, kiritilgan ballar o\'chadi.', 'Загрузите журнал, экспортированный с платформы <b>emaktab.uz</b>. При загрузке нового файла введённые баллы удалятся.', 'Excel файлды <b>emaktab.uz</b> платформасынан экспортлап жүклең. Жаңа файл жүкленсе, киргизилген байлар өшириледи.'],
+    ['Excel faylni emaktab.uz dan eksport qilib yuklang. Yangi fayl yuklansa, ballar o\'chadi.', 'Загрузите файл, экспортированный с emaktab.uz. При загрузке нового файла баллы удалятся.', 'Excel файлды emaktab.uz дан экспортлап жүклең. Жаңа файл жүкленсе, байлар өшириледи.'],
     ['Savollar soni', 'Количество вопросов', 'Сораўлар саны'],
     ['"5" baho (% dan)', 'Оценка "5" (от %)', '"5" баҳа (% ден)'],
     ['"4" baho (% dan)', 'Оценка "4" (от %)', '"4" баҳа (% ден)'],
     ['"3" baho (% dan)', 'Оценка "3" (от %)', '"3" баҳа (% ден)'],
-    ['Har bir savol ustuni sarlavhasidagi kichkina katakka shu savolning eng yuqori ballini (mezon) yozing. Faqat son kiriting. Mezondan yuqori ball yozilsa, <b>"Baho noto\'g\'ri"</b> ogohlantirishi chiqadi va u qabul qilinmaydi. Baho foizi chegaralarini o\'z mezoningizga moslang.', 'В маленькой ячейке в заголовке каждого столбца вопроса укажите максимальный балл (критерий). Вводите только число. Если балл превысит критерий, появится предупреждение <b>"Неверная оценка"</b> и значение не будет принято. Настройте процентные границы оценок под свой критерий.', 'Ҳәр бир сораў бағанының басындағы кишкене қатарға сол сораўдың ең жоқары байын (өлшем) жазың. Тек сан киргизиң. Өлшемнен артық бай жазылса, <b>"Баҳа надурыс"</b> ескертиўи шығады ҳәм қабылланбайды. Баҳа процент шегараларын өз өлшемиңизге маслаң.'],
-    ['Har bir savol ustunidagi kichik katakka shu savolning eng yuqori ballini (mezon) yozing. Mezondan yuqori ball qabul qilinmaydi.', 'В маленькой ячейке каждого столбца вопроса укажите максимальный балл (критерий). Балл выше критерия не принимается.', 'Ҳәр бир сораў бағанындағы кишкене қатарға сол сораўдың ең жоқары байын жазың. Өлшемнен артық бай қабылланбайды.'],
-    ['Hozircha o\'quvchi yo\'q. Excel faylni yuklang yoki qo\'lda qo\'shing.', 'Пока нет учеников. Загрузите Excel-файл или добавьте вручную.', 'Ҳәзирше оқыўшы жоқ. Excel файлын жүклең яки қолда қосың.'],
+    ['Har bir savol uchun mezon ballini yozing.', 'Для каждого вопроса укажите критерий (максимальный балл).', 'Ҳәр бир сораў ушын өлшем байын жазың.'],
+    ['O\'quvchi yo\'q — Excel yuklang yoki qo\'lda qo\'shing.', 'Учеников нет — загрузите Excel или добавьте вручную.', 'Оқыўшы жоқ — Excel жүклең яки қолда қосың.'],
     ['PDF yuklab olish', 'Скачать PDF', 'PDF жүклеп алыў'],
     ['Excel yuklab olish', 'Скачать Excel', 'Excel жүклеп алыў'],
     ['Chop etish', 'Печать', 'Басып шығарыў'],
@@ -99,11 +98,9 @@
     ['Loyiha ishi (LI) natijalari hisobchisi', 'Калькулятор результатов проектной работы (LI)', 'Лойиҳа иси (LI) нәтийжелери ҳисоблағышы'],
     ['Ro\'yxatni yuklang, savollar soni va mezon ballarini kiriting — jami ball, foiz, baho, izoh va sinf hisoboti o\'zi chiqadi.', 'Загрузите список, введите количество вопросов и критерии — общий балл, процент, оценка, комментарий и отчёт класса рассчитаются автоматически.', 'Дизимди жүклең, сораўлар саны ҳәм өлшем байларын киргизиң — жамий бай, процент, баҳа, түсиндириў ҳәм клас ҳисобаты өзи шығады.'],
     ['1. Loyiha va hisobot ma\'lumotlari', '1. Данные проекта и отчёта', '1. Лойиҳа ҳәм ҳисобат мағлыўматлары'],
-    ['Excel faylni <b>emaktab.uz</b> platformasidan eksport qilib yuklang. O\'quvchilar ism-familiyasi avtomatik olinadi. Yangi fayl yuklansa, kiritilgan ballar o\'chadi.', 'Загрузите Excel-файл, экспортированный с платформы <b>emaktab.uz</b>. Имена учеников подставляются автоматически. При загрузке нового файла введённые баллы удалятся.', 'Excel файлды <b>emaktab.uz</b> платформасынан экспортлап жүклең. Оқыўшылардың ат-фамилиясы өзи алынады. Жаңа файл жүкленсе, киргизилген байлар өшириледи.'],
 
     // Kuratorlik
     ['Kuratorlik hisoboti', 'Кураторский отчёт', 'Куратор ҳисобаты'],
-    ['Sinf o\'quvchilarining to\'liq ro\'yxatini tayyorlang: F.I.SH, tug\'ilgan sana, manzil, ota-onasi, telefon va guvohnoma seriyasi.', 'Подготовьте полный список учеников класса: ФИО, дата рождения, адрес, родители, телефон и серия свидетельства.', 'Клас оқыўшыларының толық дизимин тайынлаң: А.Ф.И., туўылған сәне, адрес, ата-анасы, телефон ҳәм гуўаҳатнама сериясы.'],
     ['1. Sinf ma\'lumotlari', '1. Данные класса', '1. Клас мағлыўматлары'],
     ['Ustunlarni tiklash', 'Восстановить столбцы', 'Бағанларды қайта тиклеў'],
     ['Excel faylni <b>emaktab.uz</b> jurnalidan (B ustun, 11-qatordan) yuklang yoki tayyor guvohnoma ro\'yxatini yuklang — barcha ustunlar avtomatik to\'ldiriladi. Istalgan ustun sarlavhasiga bosing va tasdiqlang: ustun o\'chiriladi.', 'Загрузите Excel-файл из журнала <b>emaktab.uz</b> (столбец B, с 11-й строки) или готовый список свидетельств — все столбцы заполнятся автоматически. Нажмите на заголовок любого столбца и подтвердите: столбец будет удалён.', 'Excel файлды <b>emaktab.uz</b> журналынан (В бағаны, 11-қатардан) яки тайын гуўаҳатнама дизiminен жүклең — барлық бағанлар өзи толтырылады. Ҳәр қандай баған басына басып, тастықлаң: баған өшириледи.'],
@@ -117,7 +114,6 @@
 
     // Ma'lumotlarim / hisob
     ['O\'qituvchi ma\'lumotlari', 'Данные учителя', 'Оқытыўшы мағлыўматлары'],
-    ['Viloyat, tuman, maktab va o\'qituvchi ma\'lumotlari doimiy saqlanadi va har bir hisobotning boshiga avtomatik qo\'yiladi. Sinf, fan, chorak kabi o\'zgaruvchi ma\'lumotlarni BSB hisoboti ichida kiriting.', 'Данные области, района, школы и учителя сохраняются постоянно и автоматически добавляются в начало каждого отчёта. Переменные данные (класс, предмет, четверть) вводятся в отчёте BSB.', 'Уәлаят, район, мектеп ҳәм оқытыўшы мағлыўматлары дайым сақланады ҳәм ҳәр бир ҳисобаттың басына өзи қойылады. Клас, пән, шерек сыяқлы өзгеретуғын мағлыўматларды BSB ҳисобаты ишинде киргизиң.'],
     ['Ma\'lumotlarni saqlash', 'Сохранить данные', 'Мағлыўматларды сақлаў'],
     ['Tozalash', 'Очистить', 'Тазалаў'],
     ['Hisob holati', 'Состояние аккаунта', 'Ҳисоб жағдайы'],
@@ -254,7 +250,6 @@
     ['Baho noto\'g\'ri', 'Неверная оценка', 'Баҳа надурыс'],
     ['Diqqat: ', 'Внимание: ', 'Диққат: '],
     [' ta baho mezondan yuqori!', ' оценки превышают критерий!', ' баҳа өлшемнен артық!'],
-    ['Amaldagi chegaralar: ', 'Текущие границы: ', 'Ҳазирги шегаралар: '],
     [' va yuqori', ' и выше', ' ҳәм одан жоқары'],
     [' dan', ' от', ' ден'], [' undan past — ', ' ниже — ', ' одан төмен — '],
     ['Chegaralar tuzatildi: ', 'Границы исправлены: ', 'Шегаралар түзетилди: '],
@@ -358,8 +353,6 @@
     ['Hisobotlarni hisoblash brauzerda ishlaydi, lekin tayyor faylni yuklab olish va hisobingizni saqlash uchun Telegram orqali kirish kerak. Kirish bilan 3 ta bepul kredit beriladi.', 'Отчёты рассчитываются в браузере, но для скачивания готового файла и сохранения аккаунта требуется вход через Telegram. При входе даётся 3 бесплатных отчёта.', 'Hisobatlar brauzerde esaplanadı, biraq tayın fayldı júklep alıw hám akkauntıńızdı saqlaw ushın Telegram arqalı kiriw kerek. Kirgende 3 tegin hisobat beriledi.'],
 
     // <b> ichida bo'lingan matn va kichik yorliqlar
-    ['Har bir savol ustuni sarlavhasidagi kichkina katakka shu savolning eng yuqori ballini (mezon) yozing. Faqat son kiriting. Mezondan yuqori ball yozilsa,', 'В маленькой ячейке в заголовке каждого столбца вопроса укажите максимальный балл (критерий). Вводите только число. Если балл превысит критерий,', 'Hár bir soraw baǵanı basındaǵı kishkene qatarǵa sol sorawdıń eń joqarı bayın (ólshem) jazıń. Tek san kirgiziń. Ólshemnen artıq bay jazılsa,'],
-    ['ogohlantirishi chiqadi va u qabul qilinmaydi. Baho foizi chegaralarini o\'z mezoningizga moslang.', 'появится предупреждение и значение не будет принято. Настройте процентные границы оценок под свой критерий.', 'eskertiw shıǵadı hám qabıllanbaydı. Baha procent shegaraların óz ólshemińizge maslań.'],
     ['Sinf harfi', 'Буква класса', 'Klas harpi'],
     ['Menyuni ochish', 'Открыть меню', 'Meniwdi ashıw'],
     ['Asosiy menyu', 'Главное меню', 'Bas menu'],
@@ -395,7 +388,6 @@
     [/^BSB hisoboti boshida maydonlarni to'?ldiring: (.+)$/, function (m) { return 'Заполните поля в начале отчёта BSB: ' + m[1]; }, function (m) { return 'BSB ҳисобатының басындағы қатарларды толтырың: ' + m[1]; }],
     [/^Baho chegaralari tuzatildi: (.+)$/, function (m) { return 'Границы оценок исправлены: ' + m[1]; }, function (m) { return 'Баҳа шегаралары түзетилди: ' + m[1]; }],
     [/^Chegaralar tuzatildi: (.+)$/, function (m) { return 'Границы исправлены: ' + m[1]; }, function (m) { return 'Шегаралар түзетилди: ' + m[1]; }],
-    [/^Amaldagi chegaralar: (.+)$/, function (m) { return 'Текущие границы: ' + m[1]; }, function (m) { return 'Ҳазирги шегаралар: ' + m[1]; }],
     [/^Baho chegaralari: (.+)$/, function (m) { return 'Границы оценок: ' + m[1]; }, function (m) { return 'Баҳа шегаралары: ' + m[1]; }],
     [/^(.+) yuklab olindi$/, function (m) { return m[1] + ' скачано'; }, function (m) { return m[1] + ' жүклеп алынды'; }],
     [/^(.+) · Telegram botga ham yuborildi$/, function (m) { return m[1] + ' · также отправлено через Telegram-бота'; }, function (m) { return m[1] + ' · Telegram боты арқалы да жиберилди'; }],
