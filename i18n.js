@@ -27,6 +27,7 @@
     ['Ma\'lumotlarim', 'Мои данные', 'Мағлыўматларым'], ['Boshqa Telegram akkaunti', 'Другой аккаунт Telegram', 'Басқа Telegram аккаунты'],
     ['BSB HISOBOT', 'BSB ОТЧЁТ', 'BSB ҲИСОБАТЫ'], ['CHSB HISOBOT', 'CHSB ОТЧЁТ', 'CHSB ҲИСОБАТЫ'],
     ['LI HISOBOT', 'LI ОТЧЁТ', 'LI ҲИСОБАТЫ'], ['KURATORLIK HISOBOT', 'КУРАТОРСКИЙ ОТЧЁТ', 'КУРАТОР ҲИСОБАТЫ'],
+    ['Jadval keng — qolgan ustunlarni ko\'rish uchun chapga suring 👉', 'Таблица широкая — смахните влево, чтобы увидеть остальные столбцы 👉', 'Кесте кең — қалған бағаналарды көриў ушын шапқа сүйрең 👉'],
     ['CHORAKLIK HISOBOT', 'ЧЕТВЕРТНОЙ ОТЧЁТ', 'ШЕРЕК ҲИСОБАТЫ'],
     ['MA\'LUMOTLARIM', 'МОИ ДАННЫЕ', 'МАҒЛЫЎМАТЛАРЫМ'], ['ADMIN', 'АДМИН', 'АДМИН'],
     ['Admin', 'Админ', 'Админ'], ['Admin panel', 'Панель администратора', 'Админ панели'],
