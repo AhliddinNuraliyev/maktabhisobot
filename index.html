@@ -273,6 +273,9 @@ nav[aria-label="Asosiy menyu"] .nav-tab{scroll-snap-align:start}
  .mh-pop-body{padding:16px 18px calc(20px + env(safe-area-inset-bottom,0px))}
  .mh-tgbtn{min-height:52px;font-size:1rem}
  .mh-pop-actions button{min-height:48px}
+ /* Majburiy oynada har bir maydon butun qatorni egallaydi (barmoq bilan oson) */
+ #profilePromptMeta label.f{flex:1 1 100%}
+ #profilePromptMeta select,#profilePromptMeta input{font-size:16px;padding:9px 10px}
  .mh-link{min-height:44px;font-size:.86rem}
 }
 @keyframes mhSheet{from{transform:translateY(26px);opacity:.65}to{transform:translateY(0);opacity:1}}
@@ -284,10 +287,15 @@ nav[aria-label="Asosiy menyu"] .nav-tab{scroll-snap-align:start}
 .mh-gift:before{content:"";width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.16)}
 .mh-pop-actions{display:flex;gap:10px;margin-top:16px;position:sticky;bottom:0;background:#fff;padding-bottom:4px}
 .mh-pop-actions button{flex:1;min-height:42px;border-radius:9px;cursor:pointer;font:700 .88rem/1 system-ui,"Segoe UI",Roboto,Arial,sans-serif}
-#ppSave{background:#0088cc;color:#fff;border:1px solid #0088cc}
+/* Majburiy ma'lumot oynasi: bitta tugma, yopish yo'q */
+.mh-pop-actions.one{display:block}
+#ppSave{width:100%;min-height:48px;background:#0088cc;color:#fff;border:1px solid #0088cc;font-size:.95rem}
 #ppSave:hover{background:#0072bc}
-#ppLater{background:#f1f5f9;color:#334155;border:1px solid #e2e8f0}
-#ppLater:hover{background:#e2e8f0}
+#ppSave[disabled]{opacity:.6;cursor:default}
+.mh-gate-err{display:none;margin:10px 0 0;padding:9px 11px;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c;border-radius:8px;font-size:.8rem;line-height:1.35;font-weight:600}
+.mh-gate-err.on{display:block}
+#profilePromptMeta label.f.bad>select,#profilePromptMeta label.f.bad>input{border-color:#dc2626;background:#fff5f5}
+body.mh-gate-open{overflow:hidden}
 .mh-premium-icon{background:linear-gradient(135deg,#f7b731,#ff7a00)}
 .mh-price{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:13px 15px;border:1px solid #bbf7d0;border-radius:12px;background:#f0fdf4}
 .mh-price strong{color:#065f46;font-size:1rem}
@@ -1459,7 +1467,7 @@ async function saveProfileToCloud(silent){
  if(String(m.maktab||'').trim()&&!/^\d{1,4}$/.test(String(m.maktab).trim())){toast("Maktab raqami faqat raqamlardan iborat bo'lishi kerak");return false}
  const j=await api('/api/profile',{method:'POST',body:JSON.stringify({viloyat:m.viloyat||'',tuman:m.tuman||'',maktab:m.maktab||'',oqituvchi:m.oqituvchi||''})});
  if(j&&j.ok){saveAccountProfile(String(AUTH.user.telegram_id||''));if(!silent)toast("Ma'lumotlar saqlandi");return true}
- toast("Saqlashda xato");return false;
+ if(!silent)toast("Saqlashda xato");return false;
 }
 // Ma'lumotlar har bir Telegram akkauntiga alohida saqlanadi. Akkaunt almashganda
 // localStorage dagi eski ma'lumotlar qolmasligi uchun ularni serverdan oladi.
@@ -1486,55 +1494,69 @@ function afterAuthProfile(me,ask,always){
  window.MH_PROFILE=Object.assign({},S.meta);
  try{window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},S.meta)}))}catch(e){}
  const complete=PROFILE_FIELDS.every(k=>String(S.meta[k]||'').trim());
- if(ask&&(always||!complete))setTimeout(()=>openProfilePrompt(),450);
+ // Qurilmada to'liq, serverda bo'sh bo'lsa — jimgina bulutga yozamiz. Foydalanuvchini
+ // bezovta qilmaymiz, lekin admin ro'yxatida ma'lumot ko'rinadi.
+ if(complete&&!serverHas&&AUTH.user)saveProfileToCloud(true);
+ // To'liq bo'lmasa oyna HAR DOIM chiqadi — qaysi yo'l bilan kirganidan qat'i nazar
+ // (bot, mini app, login widget yoki eski sessiya bilan qaytgan).
+ if(!complete)setTimeout(()=>openProfilePrompt(),450);
 }
-function ppEscKey(e){if(e.key==='Escape')closeProfilePrompt()}
-function closeProfilePrompt(){const h=$('#profilePromptHost');if(h)h.dataset.dirty='';if(h)h.remove();document.removeEventListener('keydown',ppEscKey)}
-// Telegram tasdiqlagandan so'ng: faqat ma'lumotlar to'ldirilmagan bo'lsa so'raymiz.
-// To'liq saqlangan profil ikkinchi kirishda qayta so'ralmaydi.
-function openProfilePrompt(reason){
+// Bu oyna yopilmaydi: faqat ma'lumot saqlangandan keyin yopiladi.
+function closeProfilePrompt(){const h=$('#profilePromptHost');if(h)h.dataset.dirty='';if(h)h.remove();document.body.classList.remove('mh-gate-open')}
+// Kirishdan keyingi majburiy oyna: 4 ta maydon to'ldirilmaguncha sayt ochilmaydi.
+// Yopish (×), «Keyinroq», fon yoki Escape yo'q — bitta «Saqlash» tugmasi.
+function openProfilePrompt(){
  if($('#profilePromptHost'))return;
  if($('#tgLoginHost'))closeTelegramLogin(); // ikki oyna bir vaqtda ochilmasin
  if(!AUTH.user){window.mhOpenLogin('Avval Telegram orqali kiring');return}
  const h=document.createElement('div');h.id='profilePromptHost';h.className='mh-pop';
  const name=[AUTH.user.first_name,AUTH.user.last_name].filter(Boolean).join(' ')||AUTH.user.username||'';
- const complete=['viloyat','tuman','maktab','oqituvchi'].every(k=>String(S.meta[k]||'').trim());
- const text=reason||(complete
-  ? "Bu akkaunt uchun saqlangan ma'lumotlaringiz quyida keltirilgan. Tekshirib chiqing va kerak bo'lsa o'zgartiring — ular faqat shu akkauntga tegishli."
-  : "Bu Telegram akkaunti uchun ma'lumotlaringiz topilmadi yoki to'liq emas. Viloyat, tuman, maktab raqami va F.I.Sh.ni kiriting — ular faqat shu akkauntga saqlanadi.");
  h.innerHTML=`<div class="mh-pop-card" role="dialog" aria-modal="true" aria-labelledby="ppTitle">
-  <button type="button" class="mh-x" id="ppX" aria-label="Yopish">✕</button>
   <div class="mh-pop-top">
    <div class="mh-pop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg></div>
-   <h3 id="ppTitle">O'qituvchi ma'lumotlari</h3>
-   <p>${esc(text)}</p>
-   ${name?`<p style="margin-top:8px;font-weight:700;color:#0072bc">${esc(name)}</p>`:''}
+   <h3 id="ppTitle">Ma'lumotlaringizni kiriting</h3>
+   <p>4 ta maydonni to'ldiring — keyin sayt ochiladi.</p>
+   ${name?`<p style="margin-top:6px;font-weight:700;color:#0072bc">${esc(name)}</p>`:''}
   </div>
   <div class="mh-pop-body">
    <div class="row" id="profilePromptMeta"></div>
-   <p class="mh-fine" style="text-align:left">Ma'lumotlar doimiy saqlanadi va har bir hisobotning boshiga avtomatik qo'yiladi. Sinf, fan, chorak kabi o'zgaruvchi ma'lumotlarni BSB hisoboti ichida kiriting.</p>
-   <div class="mh-pop-actions"><button type="button" id="ppSave">Ma'lumotlarni saqlash</button><button type="button" id="ppLater">Keyinroq</button></div>
+   <p class="mh-fine" style="text-align:left">Bu ma'lumotlar har bir hisobot boshiga avtomatik qo'yiladi.</p>
+   <div class="mh-gate-err" id="ppErr"></div>
+   <div class="mh-pop-actions one"><button type="button" id="ppSave">Saqlash va davom etish</button></div>
   </div>
  </div>`;
  document.body.appendChild(h);
+ document.body.classList.add('mh-gate-open');
  const box=$('#profilePromptMeta');
  box.innerHTML=profileFieldsHTML();
- box.addEventListener('input',e=>{h.dataset.dirty='1';onMetaInput(e);window.MH_PROFILE=Object.assign({},S.meta)});
+ box.addEventListener('input',e=>{
+  h.dataset.dirty='1';onMetaInput(e);window.MH_PROFILE=Object.assign({},S.meta);
+  const lb=e.target.closest&&e.target.closest('label.f');
+  if(lb&&String(e.target.value||'').trim())lb.classList.remove('bad');
+ });
+ const errEl=$('#ppErr');
+ const showErr=t=>{if(!errEl)return;errEl.textContent=t;errEl.classList.add('on')};
+ const markBad=()=>{
+  let miss=0;
+  box.querySelectorAll('label.f').forEach(l=>l.classList.remove('bad'));
+  PROFILE_FIELDS.forEach(k=>{
+   if(String(S.meta[k]||'').trim())return;
+   miss++;
+   const el=box.querySelector(`[data-k="${k}"]`),lb=el&&el.closest('label.f');
+   if(lb)lb.classList.add('bad');
+  });
+  return miss;
+ };
  $('#ppSave').onclick=async()=>{
-  const miss=['viloyat','tuman','maktab','oqituvchi'].filter(k=>!String(S.meta[k]||'').trim());
-  if(miss.length){toast("Maydonlarni to'ldiring: "+miss.join(', '));return}
-  const btn=$('#ppSave');btn.disabled=true;
+  if(errEl)errEl.classList.remove('on');
+  if(markBad()){showErr("4 ta maydonni to'ldiring — qizil bilan belgilangan maydonlar bo'sh.");const f=box.querySelector('label.f.bad');if(f)try{f.scrollIntoView({block:'center'})}catch(e){}return}
+  const btn=$('#ppSave');btn.disabled=true;const label=btn.textContent;btn.textContent='Saqlanmoqda...';
   const ok=await saveProfileToCloud(true);
-  btn.disabled=false;
-  if(!ok)return;
+  if(!ok){btn.disabled=false;btn.textContent=label;showErr("Saqlanmadi. Internetni tekshirib, qayta urinib ko'ring.");return}
   saveAccountProfile(String(AUTH.user.telegram_id||''));
   window.dispatchEvent(new CustomEvent('mh:profile',{detail:Object.assign({},S.meta)}));
-  closeProfilePrompt();toast("Ma'lumotlar shu akkauntga saqlandi");
+  closeProfilePrompt();toast("Ma'lumotlar saqlandi");
  };
- $('#ppLater').onclick=closeProfilePrompt;
- $('#ppX').onclick=closeProfilePrompt;
- h.addEventListener('click',e=>{if(e.target===h)closeProfilePrompt()});
- document.addEventListener('keydown',ppEscKey);
 }
 window.mhOpenProfilePrompt=openProfilePrompt;
 let meLastOk=0,meInflight=null;
@@ -1624,6 +1646,7 @@ renderMeta(); renderProfile(); renderProfileHint();
 function onMetaInput(e){
  const k=e.target.dataset.k;if(!k)return;let val=e.target.value;
  if(k==='harf'){val=String(val).trim().toUpperCase();e.target.value=val}
+ if(k==='maktab'){val=String(val).replace(/\D/g,'').slice(0,4);if(e.target.value!==val)e.target.value=val}
  S.meta[k]=val;
  if(k==='viloyat'){S.meta.tuman='';renderProfile();renderProfileHint()}
  else if(['viloyat','tuman','maktab','oqituvchi'].includes(k)){renderProfileHint()}
