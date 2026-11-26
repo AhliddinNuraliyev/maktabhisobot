@@ -148,8 +148,10 @@ function dateText(v) {
 
 async function userRow(tid) {
   try {
+    // Faqat ko'rsatiladigan ustunlar — select=* keraksiz egress qaytaradi.
     const rows = await L.sb('/rest/v1/mh_users?telegram_id=eq.' +
-      encodeURIComponent(String(tid)) + '&select=*&limit=1');
+      encodeURIComponent(String(tid)) +
+      '&select=id,first_name,last_name,username,is_premium,download_credits,download_count,viloyat,tuman,maktab,oqituvchi&limit=1');
     return rows && rows.length ? rows[0] : null;
   } catch (e) {
     console.error('[bot] user lookup failed:', e && e.message);

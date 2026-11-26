@@ -66,6 +66,13 @@ module.exports = async (req, res) => {
     return res.status(401).json({ ok: false, description: 'Kirish talab qilinadi' });
   }
 
+  // Replay tekshiruvi (mh_use_auth_hash) har yuborishda Supabase'ga yozadi.
+  // Maktablarda bir IP dan ko'p o'quvchi chiqishi mumkin, shuning uchun
+  // chegara yumshoq: oddiy fayl yuborishga yetarli, skriptni to'xtatadi.
+  if (!L.rateLimit('send:' + L.clientIp(req), 15, 60000)) {
+    return res.status(429).json({ ok: false, description: 'Juda ko\'p so\'rov. Bir daqiqadan keyin urinib ko\'ring' });
+  }
+
   // 2) Faqat o'ziga yuborishi mumkin.
   if (String(body.chat_id || '') !== userId) {
     return res.status(403).json({ ok: false, description: "Ruxsat yo'q" });

@@ -52,10 +52,11 @@ module.exports = async (req, res) => {
     let rows;
     if (reference) {
       rows = await L.sb('/rest/v1/mh_payments?reference=eq.' + encodeURIComponent(reference) +
-        '&user_id=eq.' + encodeURIComponent(uid) + '&select=*&limit=1');
+        '&user_id=eq.' + encodeURIComponent(uid) +
+        '&select=reference,state,environment,credits_granted,bill_id,user_id&limit=1');
     } else {
       rows = await L.sb('/rest/v1/mh_payments?user_id=eq.' + encodeURIComponent(uid) +
-        '&select=*&order=created_at.desc&limit=1');
+        '&select=reference,state,environment,credits_granted,bill_id,user_id&order=created_at.desc&limit=1');
     }
 
     // Faqat aniq so'rov bo'lgandagina Tezcheckga murojaat (har safar emas)
@@ -67,7 +68,8 @@ module.exports = async (req, res) => {
       try {
         recovered = await reconcile(rows[0]);
         if (recovered) {
-          rows = await L.sb('/rest/v1/mh_payments?reference=eq.' + encodeURIComponent(rows[0].reference) + '&select=*&limit=1');
+          rows = await L.sb('/rest/v1/mh_payments?reference=eq.' + encodeURIComponent(rows[0].reference) +
+            '&select=reference,state,environment,credits_granted&limit=1');
         }
       } catch (e) {
         console.warn('[billing] reconcile failed:', e.message);
